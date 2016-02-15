@@ -209,6 +209,112 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\address.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\checkinout.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\coordinate.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\countrycode.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\customer.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\customer_view.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IPMRVParkModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPMRVParkModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IPMRVParkModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IPMRVParkModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPMRVParkModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\member.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\outofservice.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\party.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\payment.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\paymentmode.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\person.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\placemarkpolygon.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\powersupply.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\provincecode.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\reservationeach.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\reservationgroup.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rvsite.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rvsite_coord_view.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\siterate.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sitesize.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sitetype.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\staff.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\styleurl.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tempcountry.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tempperson.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\temppersonorig.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tempprovince.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\temprvsite.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tempstyleurl.cs">
+      <DependentUpon>IPMRVParkModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -268,7 +374,24 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <EntityDeploy Include="Models\IPMRVParkModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IPMRVParkModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\IPMRVParkModel.edmx.diagram">
+      <DependentUpon>IPMRVParkModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Models\IPMRVParkModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IPMRVParkModel.edmx</DependentUpon>
+      <LastGenOutput>IPMRVParkModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IPMRVParkModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IPMRVParkModel.edmx</DependentUpon>
+      <LastGenOutput>IPMRVParkModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -343,16 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IPMRVPark.Contracts\IPMRVPark.Contracts.csproj">
-      <Project>{d91c80e6-aa6a-4597-ba4c-7c9d60598ccb}</Project>
-      <Name>IPMRVPark.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IPMRVPark.Models\IPMRVPark.Models.csproj">
-      <Project>{fab812d6-8fb6-4527-b4b0-7c7748446a65}</Project>
-      <Name>IPMRVPark.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

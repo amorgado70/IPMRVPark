@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using IPMRVPark.WebUI.Models;
 
-namespace IPMRVPark.WebUI.Controllers
+namespace IPMRVPark.Controllers
 {
     public class CustomersController : Controller
     {

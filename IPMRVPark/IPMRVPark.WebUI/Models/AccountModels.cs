@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace IPMRVPark.WebUI.Models
+namespace IPMRVPark.WebUI.Controllers
 {
     public class UsersContext : DbContext
     {

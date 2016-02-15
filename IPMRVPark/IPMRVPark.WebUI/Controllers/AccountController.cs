@@ -8,10 +8,10 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using IPMRVPark.WebUI.Filters;
-using IPMRVPark.WebUI.Models;
+using IPMRVPark.Filters;
+using IPMRVPark.WebUI.Controllers;
 
-namespace IPMRVPark.WebUI.Controllers
+namespace IPMRVPark.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

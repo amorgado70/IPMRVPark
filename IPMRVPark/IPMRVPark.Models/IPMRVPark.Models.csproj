@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountModels.cs" />
     <Compile Include="address.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

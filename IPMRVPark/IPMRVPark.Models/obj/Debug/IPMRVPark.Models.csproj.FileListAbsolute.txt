@@ -5,4 +5,3 @@ C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Models\obj\Debu
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\IPMRVPark.Models.dll.config
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.dll
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.xml
-C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.csprojResolveAssemblyReference.cache

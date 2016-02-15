@@ -1,4 +1,11 @@
-﻿namespace IPMRVPark.WebUI
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Web.WebPages.OAuth;
+using IPMRVPark.WebUI.Controllers;
+
+namespace IPMRVPark
 {
     public static class AuthConfig
     {
