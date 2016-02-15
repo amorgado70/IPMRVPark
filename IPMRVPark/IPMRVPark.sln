@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMRVPark.DAL", "IPMRVPark.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMRVPark.Models", "IPMRVPark.Models\IPMRVPark.Models.csproj", "{FAB812D6-8FB6-4527-B4B0-7C7748446A65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMRVPark.WebUI", "IPMRVPark\IPMRVPark.WebUI.csproj", "{66280040-94E7-4495-A480-300B59B5D935}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMRVPark.WebUI", "IPMRVPark.WebUI\IPMRVPark.WebUI.csproj", "{66280040-94E7-4495-A480-300B59B5D935}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
