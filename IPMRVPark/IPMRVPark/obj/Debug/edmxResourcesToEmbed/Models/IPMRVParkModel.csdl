@@ -1,0 +1,793 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ipmrvparkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityType Name="address">
+    <Key>
+      <PropertyRef Name="idAddress" />
+    </Key>
+    <Property Name="idAddress" Type="Int32" Nullable="false" />
+    <Property Name="street" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="provinceCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="postalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="countryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="countrycode1" Relationship="Self.Address_countryCode_FK" FromRole="address" ToRole="countrycode" />
+    <NavigationProperty Name="provincecode1" Relationship="Self.Address_provinceCode_FK" FromRole="address" ToRole="provincecode" />
+  </EntityType>
+  <EntityType Name="checkinout">
+    <Key>
+      <PropertyRef Name="idCheckInOut" />
+    </Key>
+    <Property Name="idCheckInOut" Type="Int32" Nullable="false" />
+    <Property Name="idReservationGroup" Type="Int32" Nullable="false" />
+    <Property Name="idReservationEach" Type="Int32" Nullable="false" />
+    <Property Name="idRVSite" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="arrivalDate" Type="DateTime" />
+    <Property Name="departureDate" Type="DateTime" />
+    <NavigationProperty Name="reservationeach" Relationship="Self.CheckInOut_Reservation_FK" FromRole="checkinout" ToRole="reservationeach" />
+    <NavigationProperty Name="rvsite" Relationship="Self.CheckInOut_RVSite_FK" FromRole="checkinout" ToRole="rvsite" />
+  </EntityType>
+  <EntityType Name="coordinate">
+    <Key>
+      <PropertyRef Name="idPlacemarkPolygon" />
+      <PropertyRef Name="seqCoordinate" />
+    </Key>
+    <Property Name="idPlacemarkPolygon" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="seqCoordinate" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="longitude" Type="Decimal" />
+    <Property Name="latitude" Type="Decimal" />
+    <NavigationProperty Name="placemarkpolygon" Relationship="Self.Coordinates_PlacemarkPolygon_FK" FromRole="coordinates" ToRole="placemarkpolygon" />
+  </EntityType>
+  <EntityType Name="countrycode">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="addresses" Relationship="Self.Address_countryCode_FK" FromRole="countrycode" ToRole="address" />
+    <NavigationProperty Name="provincecodes" Relationship="Self.provinceCode_countryCode_FK" FromRole="countrycode" ToRole="provincecode" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="idCustomer" />
+    </Key>
+    <Property Name="idCustomer" Type="Int32" Nullable="false" />
+    <Property Name="cellPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="homePhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="faxNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="idAddress" Type="Int32" />
+    <Property Name="comments" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="person" Relationship="Self.Customer_Person_FK" FromRole="customer" ToRole="person" />
+    <NavigationProperty Name="reservationgroups" Relationship="Self.ReservationGroup_Customer_FK" FromRole="customer" ToRole="reservationgroup" />
+  </EntityType>
+  <EntityType Name="member">
+    <Key>
+      <PropertyRef Name="idMember" />
+    </Key>
+    <Property Name="idMember" Type="Int32" Nullable="false" />
+    <Property Name="idParty" Type="Int32" Nullable="false" />
+    <Property Name="cellPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="petDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="comments" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="party" Relationship="Self.Member_Party_PK" FromRole="member" ToRole="party" />
+    <NavigationProperty Name="person" Relationship="Self.Member_Person_FK" FromRole="member" ToRole="person" />
+  </EntityType>
+  <EntityType Name="outofservice">
+    <Key>
+      <PropertyRef Name="idOutOfService" />
+    </Key>
+    <Property Name="idOutOfService" Type="Int32" Nullable="false" />
+    <Property Name="idRVSite" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="startDate" Type="DateTime" />
+    <Property Name="endDate" Type="DateTime" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="rvsite" Relationship="Self.OutOfservice_RVSite_FK" FromRole="outofservice" ToRole="rvsite" />
+  </EntityType>
+  <EntityType Name="party">
+    <Key>
+      <PropertyRef Name="idParty" />
+    </Key>
+    <Property Name="idParty" Type="Int32" Nullable="false" />
+    <Property Name="numberOfMembers" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="members" Relationship="Self.Member_Party_PK" FromRole="party" ToRole="member" />
+    <NavigationProperty Name="reservationeaches" Relationship="Self.ReservationEach_Party_FK" FromRole="party" ToRole="reservationeach" />
+  </EntityType>
+  <EntityType Name="payment">
+    <Key>
+      <PropertyRef Name="idPayment" />
+    </Key>
+    <Property Name="idPayment" Type="Int32" Nullable="false" />
+    <Property Name="idPaymentMode" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="paymentmode" Relationship="Self.Payment_PaymentMode_FK" FromRole="payment" ToRole="paymentmode" />
+    <NavigationProperty Name="reservationgroups" Relationship="Self.ReservationGroup_Payment_FK" FromRole="payment" ToRole="reservationgroup" />
+  </EntityType>
+  <EntityType Name="paymentmode">
+    <Key>
+      <PropertyRef Name="idPaymentMode" />
+    </Key>
+    <Property Name="idPaymentMode" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="payments" Relationship="Self.Payment_PaymentMode_FK" FromRole="paymentmode" ToRole="payment" />
+  </EntityType>
+  <EntityType Name="person">
+    <Key>
+      <PropertyRef Name="idPerson" />
+    </Key>
+    <Property Name="idPerson" Type="Int32" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="mainPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="customer" Relationship="Self.Customer_Person_FK" FromRole="person" ToRole="customer" />
+    <NavigationProperty Name="member" Relationship="Self.Member_Person_FK" FromRole="person" ToRole="member" />
+    <NavigationProperty Name="staff" Relationship="Self.Person_Staff_FK" FromRole="person" ToRole="staff" />
+  </EntityType>
+  <EntityType Name="placemarkpolygon">
+    <Key>
+      <PropertyRef Name="idPlacemarkPolygon" />
+    </Key>
+    <Property Name="idPlacemarkPolygon" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idStyleUrl" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="coordinates" Relationship="Self.Coordinates_PlacemarkPolygon_FK" FromRole="placemarkpolygon" ToRole="coordinates" />
+    <NavigationProperty Name="rvsite" Relationship="Self.PlacemarkPolygon_RVSite_FK" FromRole="placemarkpolygon" ToRole="rvsite" />
+    <NavigationProperty Name="styleurl" Relationship="Self.PlacemarkPolygon_StyleUrl_FK" FromRole="placemarkpolygon" ToRole="styleurl" />
+  </EntityType>
+  <EntityType Name="powersupply">
+    <Key>
+      <PropertyRef Name="idPowerSupply" />
+    </Key>
+    <Property Name="idPowerSupply" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="sitetypes" Relationship="Self.SiteType_PowerSupply_FK" FromRole="powersupply" ToRole="sitetype" />
+  </EntityType>
+  <EntityType Name="provincecode">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="countryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="addresses" Relationship="Self.Address_provinceCode_FK" FromRole="provincecode" ToRole="address" />
+    <NavigationProperty Name="countrycode1" Relationship="Self.provinceCode_countryCode_FK" FromRole="provincecode" ToRole="countrycode" />
+  </EntityType>
+  <EntityType Name="reservationeach">
+    <Key>
+      <PropertyRef Name="idReservationGroup" />
+      <PropertyRef Name="idReservationEach" />
+    </Key>
+    <Property Name="idReservationGroup" Type="Int32" Nullable="false" />
+    <Property Name="idReservationEach" Type="Int32" Nullable="false" />
+    <Property Name="idRVSite" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idParty" Type="Int32" Nullable="false" />
+    <Property Name="arrivalDate" Type="DateTime" Nullable="false" />
+    <Property Name="departureDate" Type="DateTime" Nullable="false" />
+    <Property Name="totalAmount" Type="Decimal" />
+    <Property Name="isCancelled" Type="Boolean" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="checkinouts" Relationship="Self.CheckInOut_Reservation_FK" FromRole="reservationeach" ToRole="checkinout" />
+    <NavigationProperty Name="party" Relationship="Self.ReservationEach_Party_FK" FromRole="reservationeach" ToRole="party" />
+    <NavigationProperty Name="rvsite" Relationship="Self.Reservation_RVSite_FK" FromRole="reservationeach" ToRole="rvsite" />
+    <NavigationProperty Name="reservationgroup" Relationship="Self.ReservationEach_ReservationGroup_FK" FromRole="reservationeach" ToRole="reservationgroup" />
+  </EntityType>
+  <EntityType Name="reservationgroup">
+    <Key>
+      <PropertyRef Name="idReservationGroup" />
+    </Key>
+    <Property Name="idReservationGroup" Type="Int32" Nullable="false" />
+    <Property Name="idCustomer" Type="Int32" Nullable="false" />
+    <Property Name="idStaff" Type="Int32" Nullable="false" />
+    <Property Name="totalAmount" Type="Decimal" />
+    <Property Name="idPayment" Type="Int32" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="customer" Relationship="Self.ReservationGroup_Customer_FK" FromRole="reservationgroup" ToRole="customer" />
+    <NavigationProperty Name="payment" Relationship="Self.ReservationGroup_Payment_FK" FromRole="reservationgroup" ToRole="payment" />
+    <NavigationProperty Name="reservationeaches" Relationship="Self.ReservationEach_ReservationGroup_FK" FromRole="reservationgroup" ToRole="reservationeach" />
+    <NavigationProperty Name="staff" Relationship="Self.ReservationGroup_Staff_FK" FromRole="reservationgroup" ToRole="staff" />
+  </EntityType>
+  <EntityType Name="rvsite">
+    <Key>
+      <PropertyRef Name="idRVSite" />
+    </Key>
+    <Property Name="idRVSite" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="checkinouts" Relationship="Self.CheckInOut_RVSite_FK" FromRole="rvsite" ToRole="checkinout" />
+    <NavigationProperty Name="outofservices" Relationship="Self.OutOfservice_RVSite_FK" FromRole="rvsite" ToRole="outofservice" />
+    <NavigationProperty Name="placemarkpolygon" Relationship="Self.PlacemarkPolygon_RVSite_FK" FromRole="rvsite" ToRole="placemarkpolygon" />
+    <NavigationProperty Name="reservationeaches" Relationship="Self.Reservation_RVSite_FK" FromRole="rvsite" ToRole="reservationeach" />
+  </EntityType>
+  <EntityType Name="siterate">
+    <Key>
+      <PropertyRef Name="idSiteRate" />
+    </Key>
+    <Property Name="idSiteRate" Type="Int32" Nullable="false" />
+    <Property Name="idSiteType" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="eventYear" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="period" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="rate" Type="Decimal" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="sitesize">
+    <Key>
+      <PropertyRef Name="idSiteSize" />
+    </Key>
+    <Property Name="idSiteSize" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="sitetypes" Relationship="Self.SiteType_SiteSize_FK" FromRole="sitesize" ToRole="sitetype" />
+  </EntityType>
+  <EntityType Name="sitetype">
+    <Key>
+      <PropertyRef Name="idSiteType" />
+    </Key>
+    <Property Name="idSiteType" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idSiteSize" Type="Int32" Nullable="false" />
+    <Property Name="idPowerSupply" Type="Int32" Nullable="false" />
+    <Property Name="isUnserviced" Type="Boolean" />
+    <Property Name="isForHandicapped" Type="Boolean" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="powersupply" Relationship="Self.SiteType_PowerSupply_FK" FromRole="sitetype" ToRole="powersupply" />
+    <NavigationProperty Name="sitesize" Relationship="Self.SiteType_SiteSize_FK" FromRole="sitetype" ToRole="sitesize" />
+    <NavigationProperty Name="styleurl" Relationship="Self.SiteType_StyleUrl_FK" FromRole="sitetype" ToRole="styleurl" />
+  </EntityType>
+  <EntityType Name="staff">
+    <Key>
+      <PropertyRef Name="idStaff" />
+    </Key>
+    <Property Name="idStaff" Type="Int32" Nullable="false" />
+    <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="person" Relationship="Self.Person_Staff_FK" FromRole="staff" ToRole="person" />
+    <NavigationProperty Name="reservationgroups" Relationship="Self.ReservationGroup_Staff_FK" FromRole="staff" ToRole="reservationgroup" />
+  </EntityType>
+  <EntityType Name="styleurl">
+    <Key>
+      <PropertyRef Name="idStyleUrl" />
+    </Key>
+    <Property Name="idStyleUrl" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="backgroundColor" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="lastUpdate" Type="DateTime" />
+    <NavigationProperty Name="placemarkpolygons" Relationship="Self.PlacemarkPolygon_StyleUrl_FK" FromRole="styleurl" ToRole="placemarkpolygon" />
+    <NavigationProperty Name="sitetype" Relationship="Self.SiteType_StyleUrl_FK" FromRole="styleurl" ToRole="sitetype" />
+  </EntityType>
+  <EntityType Name="tempcountry">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tempperson">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="street" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="provinceCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="countryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="postalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="mainPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="alternatePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="collegeEmail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="temppersonalEmail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="birthdate" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="temppersonorig">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="street" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="provinceCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="countryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="postalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="mainPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="alternatePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="collegeEmail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="temppersonalEmail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="birthdate" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="tempprovince">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="countryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="temprvsite">
+    <Key>
+      <PropertyRef Name="idPlacemarkPolygon" />
+    </Key>
+    <Property Name="idPlacemarkPolygon" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idStyleUrl" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="c1x" Type="Decimal" />
+    <Property Name="c1y" Type="Decimal" />
+    <Property Name="c2x" Type="Decimal" />
+    <Property Name="c2y" Type="Decimal" />
+    <Property Name="c3x" Type="Decimal" />
+    <Property Name="c3y" Type="Decimal" />
+    <Property Name="c4x" Type="Decimal" />
+    <Property Name="c4y" Type="Decimal" />
+  </EntityType>
+  <EntityType Name="tempstyleurl">
+    <Key>
+      <PropertyRef Name="idStyleUrl" />
+    </Key>
+    <Property Name="idStyleUrl" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="backgroundColor" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="customer_view">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="firstName" />
+      <PropertyRef Name="lastName" />
+      <PropertyRef Name="Province" />
+      <PropertyRef Name="Coountry" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="mainPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="cellPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="homePhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="faxNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="comments" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+    <Property Name="street" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="postalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Coountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="rvsite_coord_view">
+    <Key>
+      <PropertyRef Name="seqCoordinate" />
+    </Key>
+    <Property Name="idRVSite" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="backgroundColor" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="seqCoordinate" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="longitude" Type="Decimal" />
+    <Property Name="latitude" Type="Decimal" />
+  </EntityType>
+  <Association Name="Address_countryCode_FK">
+    <End Role="countrycode" Type="Self.countrycode" Multiplicity="1" />
+    <End Role="address" Type="Self.address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countrycode">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="address">
+        <PropertyRef Name="countryCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Address_provinceCode_FK">
+    <End Role="provincecode" Type="Self.provincecode" Multiplicity="1" />
+    <End Role="address" Type="Self.address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="provincecode">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="address">
+        <PropertyRef Name="provinceCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CheckInOut_Reservation_FK">
+    <End Role="reservationeach" Type="Self.reservationeach" Multiplicity="1" />
+    <End Role="checkinout" Type="Self.checkinout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reservationeach">
+        <PropertyRef Name="idReservationGroup" />
+        <PropertyRef Name="idReservationEach" />
+      </Principal>
+      <Dependent Role="checkinout">
+        <PropertyRef Name="idReservationGroup" />
+        <PropertyRef Name="idReservationEach" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CheckInOut_RVSite_FK">
+    <End Role="rvsite" Type="Self.rvsite" Multiplicity="1" />
+    <End Role="checkinout" Type="Self.checkinout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rvsite">
+        <PropertyRef Name="idRVSite" />
+      </Principal>
+      <Dependent Role="checkinout">
+        <PropertyRef Name="idRVSite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Coordinates_PlacemarkPolygon_FK">
+    <End Role="placemarkpolygon" Type="Self.placemarkpolygon" Multiplicity="1" />
+    <End Role="coordinates" Type="Self.coordinate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="placemarkpolygon">
+        <PropertyRef Name="idPlacemarkPolygon" />
+      </Principal>
+      <Dependent Role="coordinates">
+        <PropertyRef Name="idPlacemarkPolygon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="provinceCode_countryCode_FK">
+    <End Role="countrycode" Type="Self.countrycode" Multiplicity="1" />
+    <End Role="provincecode" Type="Self.provincecode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countrycode">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="provincecode">
+        <PropertyRef Name="countryCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Customer_Person_FK">
+    <End Role="person" Type="Self.person" Multiplicity="1" />
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="person">
+        <PropertyRef Name="idPerson" />
+      </Principal>
+      <Dependent Role="customer">
+        <PropertyRef Name="idCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReservationGroup_Customer_FK">
+    <End Role="customer" Type="Self.customer" Multiplicity="1" />
+    <End Role="reservationgroup" Type="Self.reservationgroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="idCustomer" />
+      </Principal>
+      <Dependent Role="reservationgroup">
+        <PropertyRef Name="idCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Member_Party_PK">
+    <End Role="party" Type="Self.party" Multiplicity="1" />
+    <End Role="member" Type="Self.member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="party">
+        <PropertyRef Name="idParty" />
+      </Principal>
+      <Dependent Role="member">
+        <PropertyRef Name="idParty" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Member_Person_FK">
+    <End Role="person" Type="Self.person" Multiplicity="1" />
+    <End Role="member" Type="Self.member" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="person">
+        <PropertyRef Name="idPerson" />
+      </Principal>
+      <Dependent Role="member">
+        <PropertyRef Name="idMember" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OutOfservice_RVSite_FK">
+    <End Role="rvsite" Type="Self.rvsite" Multiplicity="1" />
+    <End Role="outofservice" Type="Self.outofservice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rvsite">
+        <PropertyRef Name="idRVSite" />
+      </Principal>
+      <Dependent Role="outofservice">
+        <PropertyRef Name="idRVSite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReservationEach_Party_FK">
+    <End Role="party" Type="Self.party" Multiplicity="1" />
+    <End Role="reservationeach" Type="Self.reservationeach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="party">
+        <PropertyRef Name="idParty" />
+      </Principal>
+      <Dependent Role="reservationeach">
+        <PropertyRef Name="idParty" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Payment_PaymentMode_FK">
+    <End Role="paymentmode" Type="Self.paymentmode" Multiplicity="1" />
+    <End Role="payment" Type="Self.payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="paymentmode">
+        <PropertyRef Name="idPaymentMode" />
+      </Principal>
+      <Dependent Role="payment">
+        <PropertyRef Name="idPaymentMode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReservationGroup_Payment_FK">
+    <End Role="payment" Type="Self.payment" Multiplicity="0..1" />
+    <End Role="reservationgroup" Type="Self.reservationgroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="payment">
+        <PropertyRef Name="idPayment" />
+      </Principal>
+      <Dependent Role="reservationgroup">
+        <PropertyRef Name="idPayment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Person_Staff_FK">
+    <End Role="person" Type="Self.person" Multiplicity="1" />
+    <End Role="staff" Type="Self.staff" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="person">
+        <PropertyRef Name="idPerson" />
+      </Principal>
+      <Dependent Role="staff">
+        <PropertyRef Name="idStaff" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlacemarkPolygon_RVSite_FK">
+    <End Role="placemarkpolygon" Type="Self.placemarkpolygon" Multiplicity="1" />
+    <End Role="rvsite" Type="Self.rvsite" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="placemarkpolygon">
+        <PropertyRef Name="idPlacemarkPolygon" />
+      </Principal>
+      <Dependent Role="rvsite">
+        <PropertyRef Name="idRVSite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlacemarkPolygon_StyleUrl_FK">
+    <End Role="styleurl" Type="Self.styleurl" Multiplicity="1" />
+    <End Role="placemarkpolygon" Type="Self.placemarkpolygon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="styleurl">
+        <PropertyRef Name="idStyleUrl" />
+      </Principal>
+      <Dependent Role="placemarkpolygon">
+        <PropertyRef Name="idStyleUrl" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SiteType_PowerSupply_FK">
+    <End Role="powersupply" Type="Self.powersupply" Multiplicity="1" />
+    <End Role="sitetype" Type="Self.sitetype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="powersupply">
+        <PropertyRef Name="idPowerSupply" />
+      </Principal>
+      <Dependent Role="sitetype">
+        <PropertyRef Name="idPowerSupply" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reservation_RVSite_FK">
+    <End Role="rvsite" Type="Self.rvsite" Multiplicity="1" />
+    <End Role="reservationeach" Type="Self.reservationeach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="rvsite">
+        <PropertyRef Name="idRVSite" />
+      </Principal>
+      <Dependent Role="reservationeach">
+        <PropertyRef Name="idRVSite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReservationEach_ReservationGroup_FK">
+    <End Role="reservationgroup" Type="Self.reservationgroup" Multiplicity="1" />
+    <End Role="reservationeach" Type="Self.reservationeach" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reservationgroup">
+        <PropertyRef Name="idReservationGroup" />
+      </Principal>
+      <Dependent Role="reservationeach">
+        <PropertyRef Name="idReservationGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReservationGroup_Staff_FK">
+    <End Role="staff" Type="Self.staff" Multiplicity="1" />
+    <End Role="reservationgroup" Type="Self.reservationgroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="staff">
+        <PropertyRef Name="idStaff" />
+      </Principal>
+      <Dependent Role="reservationgroup">
+        <PropertyRef Name="idStaff" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SiteType_SiteSize_FK">
+    <End Role="sitesize" Type="Self.sitesize" Multiplicity="1" />
+    <End Role="sitetype" Type="Self.sitetype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="sitesize">
+        <PropertyRef Name="idSiteSize" />
+      </Principal>
+      <Dependent Role="sitetype">
+        <PropertyRef Name="idSiteSize" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SiteType_StyleUrl_FK">
+    <End Role="styleurl" Type="Self.styleurl" Multiplicity="1" />
+    <End Role="sitetype" Type="Self.sitetype" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="styleurl">
+        <PropertyRef Name="idStyleUrl" />
+      </Principal>
+      <Dependent Role="sitetype">
+        <PropertyRef Name="idSiteType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ipmrvparkDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="addresses" EntityType="Self.address" />
+    <EntitySet Name="checkinouts" EntityType="Self.checkinout" />
+    <EntitySet Name="coordinates" EntityType="Self.coordinate" />
+    <EntitySet Name="countrycodes" EntityType="Self.countrycode" />
+    <EntitySet Name="customers" EntityType="Self.customer" />
+    <EntitySet Name="members" EntityType="Self.member" />
+    <EntitySet Name="outofservices" EntityType="Self.outofservice" />
+    <EntitySet Name="parties" EntityType="Self.party" />
+    <EntitySet Name="payments" EntityType="Self.payment" />
+    <EntitySet Name="paymentmodes" EntityType="Self.paymentmode" />
+    <EntitySet Name="people" EntityType="Self.person" />
+    <EntitySet Name="placemarkpolygons" EntityType="Self.placemarkpolygon" />
+    <EntitySet Name="powersupplies" EntityType="Self.powersupply" />
+    <EntitySet Name="provincecodes" EntityType="Self.provincecode" />
+    <EntitySet Name="reservationeaches" EntityType="Self.reservationeach" />
+    <EntitySet Name="reservationgroups" EntityType="Self.reservationgroup" />
+    <EntitySet Name="rvsites" EntityType="Self.rvsite" />
+    <EntitySet Name="siterates" EntityType="Self.siterate" />
+    <EntitySet Name="sitesizes" EntityType="Self.sitesize" />
+    <EntitySet Name="sitetypes" EntityType="Self.sitetype" />
+    <EntitySet Name="staffs" EntityType="Self.staff" />
+    <EntitySet Name="styleurls" EntityType="Self.styleurl" />
+    <EntitySet Name="tempcountries" EntityType="Self.tempcountry" />
+    <EntitySet Name="temppersons" EntityType="Self.tempperson" />
+    <EntitySet Name="temppersonorigs" EntityType="Self.temppersonorig" />
+    <EntitySet Name="tempprovinces" EntityType="Self.tempprovince" />
+    <EntitySet Name="temprvsites" EntityType="Self.temprvsite" />
+    <EntitySet Name="tempstyleurls" EntityType="Self.tempstyleurl" />
+    <EntitySet Name="customer_view" EntityType="Self.customer_view" />
+    <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
+    <AssociationSet Name="Address_countryCode_FK" Association="Self.Address_countryCode_FK">
+      <End Role="countrycode" EntitySet="countrycodes" />
+      <End Role="address" EntitySet="addresses" />
+    </AssociationSet>
+    <AssociationSet Name="Address_provinceCode_FK" Association="Self.Address_provinceCode_FK">
+      <End Role="provincecode" EntitySet="provincecodes" />
+      <End Role="address" EntitySet="addresses" />
+    </AssociationSet>
+    <AssociationSet Name="CheckInOut_Reservation_FK" Association="Self.CheckInOut_Reservation_FK">
+      <End Role="reservationeach" EntitySet="reservationeaches" />
+      <End Role="checkinout" EntitySet="checkinouts" />
+    </AssociationSet>
+    <AssociationSet Name="CheckInOut_RVSite_FK" Association="Self.CheckInOut_RVSite_FK">
+      <End Role="rvsite" EntitySet="rvsites" />
+      <End Role="checkinout" EntitySet="checkinouts" />
+    </AssociationSet>
+    <AssociationSet Name="Coordinates_PlacemarkPolygon_FK" Association="Self.Coordinates_PlacemarkPolygon_FK">
+      <End Role="placemarkpolygon" EntitySet="placemarkpolygons" />
+      <End Role="coordinates" EntitySet="coordinates" />
+    </AssociationSet>
+    <AssociationSet Name="provinceCode_countryCode_FK" Association="Self.provinceCode_countryCode_FK">
+      <End Role="countrycode" EntitySet="countrycodes" />
+      <End Role="provincecode" EntitySet="provincecodes" />
+    </AssociationSet>
+    <AssociationSet Name="Customer_Person_FK" Association="Self.Customer_Person_FK">
+      <End Role="person" EntitySet="people" />
+      <End Role="customer" EntitySet="customers" />
+    </AssociationSet>
+    <AssociationSet Name="ReservationGroup_Customer_FK" Association="Self.ReservationGroup_Customer_FK">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="reservationgroup" EntitySet="reservationgroups" />
+    </AssociationSet>
+    <AssociationSet Name="Member_Party_PK" Association="Self.Member_Party_PK">
+      <End Role="party" EntitySet="parties" />
+      <End Role="member" EntitySet="members" />
+    </AssociationSet>
+    <AssociationSet Name="Member_Person_FK" Association="Self.Member_Person_FK">
+      <End Role="person" EntitySet="people" />
+      <End Role="member" EntitySet="members" />
+    </AssociationSet>
+    <AssociationSet Name="OutOfservice_RVSite_FK" Association="Self.OutOfservice_RVSite_FK">
+      <End Role="rvsite" EntitySet="rvsites" />
+      <End Role="outofservice" EntitySet="outofservices" />
+    </AssociationSet>
+    <AssociationSet Name="ReservationEach_Party_FK" Association="Self.ReservationEach_Party_FK">
+      <End Role="party" EntitySet="parties" />
+      <End Role="reservationeach" EntitySet="reservationeaches" />
+    </AssociationSet>
+    <AssociationSet Name="Payment_PaymentMode_FK" Association="Self.Payment_PaymentMode_FK">
+      <End Role="paymentmode" EntitySet="paymentmodes" />
+      <End Role="payment" EntitySet="payments" />
+    </AssociationSet>
+    <AssociationSet Name="ReservationGroup_Payment_FK" Association="Self.ReservationGroup_Payment_FK">
+      <End Role="payment" EntitySet="payments" />
+      <End Role="reservationgroup" EntitySet="reservationgroups" />
+    </AssociationSet>
+    <AssociationSet Name="Person_Staff_FK" Association="Self.Person_Staff_FK">
+      <End Role="person" EntitySet="people" />
+      <End Role="staff" EntitySet="staffs" />
+    </AssociationSet>
+    <AssociationSet Name="PlacemarkPolygon_RVSite_FK" Association="Self.PlacemarkPolygon_RVSite_FK">
+      <End Role="placemarkpolygon" EntitySet="placemarkpolygons" />
+      <End Role="rvsite" EntitySet="rvsites" />
+    </AssociationSet>
+    <AssociationSet Name="PlacemarkPolygon_StyleUrl_FK" Association="Self.PlacemarkPolygon_StyleUrl_FK">
+      <End Role="styleurl" EntitySet="styleurls" />
+      <End Role="placemarkpolygon" EntitySet="placemarkpolygons" />
+    </AssociationSet>
+    <AssociationSet Name="SiteType_PowerSupply_FK" Association="Self.SiteType_PowerSupply_FK">
+      <End Role="powersupply" EntitySet="powersupplies" />
+      <End Role="sitetype" EntitySet="sitetypes" />
+    </AssociationSet>
+    <AssociationSet Name="Reservation_RVSite_FK" Association="Self.Reservation_RVSite_FK">
+      <End Role="rvsite" EntitySet="rvsites" />
+      <End Role="reservationeach" EntitySet="reservationeaches" />
+    </AssociationSet>
+    <AssociationSet Name="ReservationEach_ReservationGroup_FK" Association="Self.ReservationEach_ReservationGroup_FK">
+      <End Role="reservationgroup" EntitySet="reservationgroups" />
+      <End Role="reservationeach" EntitySet="reservationeaches" />
+    </AssociationSet>
+    <AssociationSet Name="ReservationGroup_Staff_FK" Association="Self.ReservationGroup_Staff_FK">
+      <End Role="staff" EntitySet="staffs" />
+      <End Role="reservationgroup" EntitySet="reservationgroups" />
+    </AssociationSet>
+    <AssociationSet Name="SiteType_SiteSize_FK" Association="Self.SiteType_SiteSize_FK">
+      <End Role="sitesize" EntitySet="sitesizes" />
+      <End Role="sitetype" EntitySet="sitetypes" />
+    </AssociationSet>
+    <AssociationSet Name="SiteType_StyleUrl_FK" Association="Self.SiteType_StyleUrl_FK">
+      <End Role="styleurl" EntitySet="styleurls" />
+      <End Role="sitetype" EntitySet="sitetypes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
