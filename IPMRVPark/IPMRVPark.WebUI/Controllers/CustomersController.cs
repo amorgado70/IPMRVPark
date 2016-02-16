@@ -5,13 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IPMRVPark.WebUI.Models;
+using IPMRVPark.Models;
+using IPMRVPark.Contracts.Data;
 
 namespace IPMRVPark.Controllers
 {
     public class CustomersController : Controller
     {
-        private ipmrvparkDbContext db = new ipmrvparkDbContext();
+        private DataContext db = new DataContext();
 
         //
         // GET: /Customers/
