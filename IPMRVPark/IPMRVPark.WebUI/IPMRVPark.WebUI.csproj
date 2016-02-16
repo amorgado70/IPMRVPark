@@ -202,6 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RVSitesController.cs" />
@@ -457,6 +458,7 @@
     <Content Include="Views\RVSites\Create.cshtml" />
     <Content Include="Views\RVSites\Edit.cshtml" />
     <Content Include="Views\RVSites\Delete.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -466,6 +468,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IPMRVPark.Contracts\IPMRVPark.Contracts.csproj">
+      <Project>{d91c80e6-aa6a-4597-ba4c-7c9d60598ccb}</Project>
+      <Name>IPMRVPark.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPMRVPark.DAL\IPMRVPark.DAL.csproj">
+      <Project>{fa501d56-1bd8-46fa-8c5d-00dbec901320}</Project>
+      <Name>IPMRVPark.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPMRVPark.Models\IPMRVPark.Models.csproj">
+      <Project>{fab812d6-8fb6-4527-b4b0-7c7748446a65}</Project>
+      <Name>IPMRVPark.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

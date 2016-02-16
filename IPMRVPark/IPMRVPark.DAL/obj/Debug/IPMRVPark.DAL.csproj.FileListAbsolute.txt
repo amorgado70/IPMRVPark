@@ -13,3 +13,15 @@ C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.DAL\bin\Debug\M
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.DAL\bin\Debug\MySql.Web.dll
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Contracts.dll
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Contracts.pdb
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.DAL.dll.config
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.DAL.dll
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.DAL.pdb
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\EntityFramework.dll
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Contracts.dll
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Models.dll
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Contracts.pdb
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\IPMRVPark.Models.pdb
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\bin\Debug\EntityFramework.xml
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\obj\Debug\IPMRVPark.DAL.csprojResolveAssemblyReference.cache
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\obj\Debug\IPMRVPark.DAL.dll
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.DAL\obj\Debug\IPMRVPark.DAL.pdb
