@@ -21,8 +21,10 @@ namespace IPMRVPark.WebUI
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-            container.RegisterType<IRepositoryBase<countrycode>, CountryRepository>();
+            
             // e.g. container.RegisterType<ITestService, TestService>();            
+
+            container.RegisterType<IRepositoryBase<countrycode>, CountryRepository>();
 
             return container;
         }
