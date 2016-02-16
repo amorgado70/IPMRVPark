@@ -6,3 +6,4 @@ G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dl
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
+G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.csprojResolveAssemblyReference.cache
