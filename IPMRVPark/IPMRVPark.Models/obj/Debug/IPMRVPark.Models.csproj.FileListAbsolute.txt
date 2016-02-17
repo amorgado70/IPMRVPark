@@ -12,4 +12,3 @@ G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.dll
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.xml
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.dll
 G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.pdb
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.csprojResolveAssemblyReference.cache
