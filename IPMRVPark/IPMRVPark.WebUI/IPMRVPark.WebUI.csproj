@@ -223,6 +223,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomerViewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReservationViewController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -351,6 +352,11 @@
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\CustomerView\Index.cshtml" />
+    <Content Include="Views\ReservationView\Create.cshtml" />
+    <Content Include="Views\ReservationView\Delete.cshtml" />
+    <Content Include="Views\ReservationView\Details.cshtml" />
+    <Content Include="Views\ReservationView\Edit.cshtml" />
+    <Content Include="Views\ReservationView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
