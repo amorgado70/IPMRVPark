@@ -14,13 +14,16 @@ namespace IPMRVPark.Models
     
     public partial class rvsite_status_view
     {
-        public string idPlacemarkPolygon { get; set; }
-        public string customerName { get; set; }
-        public Nullable<int> idReservationOrder { get; set; }
-        public Nullable<int> idReservationItem { get; set; }
-        public Nullable<bool> inShoppingCart { get; set; }
-        public Nullable<bool> paymentReceived { get; set; }
-        public Nullable<System.DateTime> checkInDate { get; set; }
-        public Nullable<System.DateTime> outOfServiceUntil { get; set; }
+        public long id { get; set; }
+        public long Year { get; set; }
+        public string RVSite { get; set; }
+        public string SiteSize { get; set; }
+        public string PowerSupply { get; set; }
+        public string backgroundColor { get; set; }
+        public int isAvaialable { get; set; }
+        public Nullable<System.DateTime> ReservedFrom { get; set; }
+        public Nullable<System.DateTime> ReservedUntil { get; set; }
+        public Nullable<System.DateTime> OutOfServiceFrom { get; set; }
+        public Nullable<System.DateTime> OutOfServiceUntil { get; set; }
     }
 }

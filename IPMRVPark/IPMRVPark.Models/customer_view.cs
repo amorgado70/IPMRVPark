@@ -14,7 +14,7 @@ namespace IPMRVPark.Models
     
     public partial class customer_view
     {
-        public int id { get; set; }
+        public long id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string fullName { get; set; }

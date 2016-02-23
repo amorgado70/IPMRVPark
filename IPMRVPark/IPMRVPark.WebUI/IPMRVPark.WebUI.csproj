@@ -221,8 +221,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\CustomerViewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RVSitesController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -349,12 +349,8 @@
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Delete.cshtml" />
-    <Content Include="Views\RVSites\Index.cshtml" />
-    <Content Include="Views\RVSites\Details.cshtml" />
-    <Content Include="Views\RVSites\Create.cshtml" />
-    <Content Include="Views\RVSites\Edit.cshtml" />
-    <Content Include="Views\RVSites\Delete.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
+    <Content Include="Views\CustomerView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
