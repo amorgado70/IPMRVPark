@@ -11,7 +11,7 @@ namespace IPMRVPark.WebUI.Controllers
         //
         // GET: /PrototypeUI/
 
-        public ActionResult ReservationOrder()
+        public ActionResult ReservationOrderIndex()
         {
             return View();
         }
