@@ -8,10 +8,11 @@ namespace IPMRVPark.WebUI.Controllers
 {
     public class PrototypeUIController : Controller
     {
-        //
-        // GET: /PrototypeUI/
-
         public ActionResult ReservationOrderIndex()
+        {
+            return View();
+        }
+        public ActionResult ReservationOrderEdit()
         {
             return View();
         }

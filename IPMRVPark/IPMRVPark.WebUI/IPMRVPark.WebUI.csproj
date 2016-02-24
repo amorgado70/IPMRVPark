@@ -378,6 +378,7 @@
     <Content Include="Views\ReservationView\Edit.cshtml" />
     <Content Include="Views\ReservationView\Index.cshtml" />
     <Content Include="Views\PrototypeUI\ReservationOrderIndex.cshtml" />
+    <Content Include="Views\PrototypeUI\ReservationOrderEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

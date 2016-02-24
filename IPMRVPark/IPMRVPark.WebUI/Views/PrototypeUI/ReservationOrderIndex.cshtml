@@ -31,9 +31,6 @@
             Reservation Order #
         </div>
         <div class="col-sm-1">
-            Reservation Item #
-        </div>
-        <div class="col-sm-1">
             RV Site
         </div>
         <div class="col-sm-2">
@@ -49,29 +46,26 @@
             Total
         </div>
     </div>
-    @for (int i = 0; i < 5; i++)
+    @for (int i = 2; i < 9; i++)
             {
         <div class="row" style="padding:5px;">
             <div class="col-sm-1" style="margin-top:12px;">
                 @i
             </div>
             <div class="col-sm-1" style="margin-top:12px;">
-                @i
-            </div>
-            <div class="col-sm-1" style="margin-top:12px;">
-                @i
+                E - @i @i
             </div>
             <div class="col-sm-2" style="margin-top:12px;">
-                @i
+                Peter @i
             </div>
             <div class="col-sm-1" style="margin-top:12px;">
-                @i
+                @i @i / @i @i / @i @i
             </div>
             <div class="col-sm-1" style="margin-top:12px;">
-                @i
+                @i @i / @i @i / @i @i
             </div>
-            <div class="col-sm-1" style="margin-top:12px;">
-                @i
+            <div class="col-sm-2" style="margin-top:12px;">
+                $ @i , @i @i @i . @i @i
             </div>
             <div class="col-sm-2" style="margin-top:12px;">
                 <button type="button" class="btn btn-block" style="margin-top:-12px;">Edit Order</button>
