@@ -1,0 +1,5 @@
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.csprojResolveAssemblyReference.cache
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
