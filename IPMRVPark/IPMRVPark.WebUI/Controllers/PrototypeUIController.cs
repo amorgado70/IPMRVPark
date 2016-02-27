@@ -15,8 +15,8 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult EventMap()
         {
             return View();
-        }
-        public ActionResult Maintenance()
+        }        
+        public ActionResult Reservation()
         {
             return View();
         }

@@ -382,7 +382,7 @@
     <Content Include="Views\PrototypeUI\ReservationOrderEdit.cshtml" />
     <Content Include="Views\PrototypeUI\Home.cshtml" />
     <Content Include="Views\PrototypeUI\EventMap.cshtml" />
-    <Content Include="Views\PrototypeUI\Maintenance.cshtml" />
+    <Content Include="Views\PrototypeUI\Reservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
