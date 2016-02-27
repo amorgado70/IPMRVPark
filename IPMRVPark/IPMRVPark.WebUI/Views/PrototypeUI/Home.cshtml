@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="container-fluid">
+    <div class="row top-margin">
+        <div class="col-xs-10 col-xs-push-1">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-map-marker"></span>
+                @Html.ActionLink("IPM Event Map Display", "EventMap", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+    <div class="row top-margin">
+        <div class="col-xs-10 col-xs-push-1">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-tag"></span>
+                @Html.ActionLink("Site Reservation", "Home", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+    <div class="row top-margin">
+        <div class="col-xs-10 col-xs-push-1">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-cog"></span>
+                @Html.ActionLink("System Maintenance", "Home", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+</div>
