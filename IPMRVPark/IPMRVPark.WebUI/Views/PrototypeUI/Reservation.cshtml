@@ -8,7 +8,7 @@
 
 <!-- New Reservation-->
 <div class="container-fluid">
-    <!-- RV Site -->
+    <!-- RV Site Dates-->
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1">
             <span class="col-xs-1 glyphicon glyphicon-calendar"></span>
@@ -23,6 +23,7 @@
             <input type="date" class="form-control">
         </div>
     </div>
+    <!-- RV Site Tag-->
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1">
             <span class="col-xs-1 glyphicon glyphicon-tent"></span>
@@ -79,22 +80,155 @@
             <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
         </button>
     </div>
-    <div class="row">
-        <div class="col-xs-10 col-xs-push-1 form-group">
-            <label>Or Register As New Customer</label>
-            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
-                <span class="col-xs-2 glyphicon glyphicon-plus-sign"></span>
-                <span class="col-xs-8">New Customer</span>
-                <span class="glyphicon glyphicon-chevron-down"></span>
-                <span class="glyphicon glyphicon-chevron-up"></span>
+    <!-- New Customer-->
+    <div class="col-xs-10 col-xs-push-1 form-group">
+        <label>Or Register a New Customer</label>
+        <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
+            <span class="col-xs-2"></span>
+            <span class="col-xs-8">New Customer</span>
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </button>
+    </div>
+
+    <div id="newCustomer" class="collapse">
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>First Name</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="Homer" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Last Name</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="Watson" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Main Phone</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="(519) 341-4075" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>e-mail</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="hwatson@gmail.com" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Cell Phone</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="(519) 888-4075" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Home Phone</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="(519) 321-4075" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Fax Number</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="(519) 341-4075" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Street</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="50 Victoria St W" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>City</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="50 Victoria St W" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Province</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <select class="form-control">
+                    <option>Alberta</option>
+                    <option>British Columbia</option>
+                    <option>Quebec</option>
+                    <option>Ontario</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Country</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <select class="form-control">
+                    <option>Canada</option>
+                    <option>USA</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Postal Code</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <input type="text" class="form-control" placeholder="N2P 1W8" />
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-md-3 col-xs-10 col-xs-push-2">
+                <label>Comments</label>
+            </div>
+            <div class="col-md-5 col-xs-8 col-xs-push-2">
+                <textarea class="form-control" rows="5" id="comments"></textarea>
+            </div>
+        </div>
+        <div class="col-xs-10 col-xs-push-1 form-top-margin top-margin">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                <span class="col-xs-9">Confirm Registration</span>
             </button>
         </div>
     </div>
-    <!-- Total amount for site -->
+    <!-- List of other sites reserved for this same customer -->
+    <div class="col-xs-10 col-xs-push-1 form-group top-margin">
+        <label>View All RV Sites Reserved for This Customer</label>
+        <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#sitesCustomer">
+            <span class="col-xs-2"></span>
+            <span class="col-xs-8">Customer RV Sites</span>
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </button>
+    </div>
+    <div id="sitesCustomer" class="collapse form-group">
+
+    </div>
+    <!-- Total amount for this site -->
     <div class="row top-margin">
         <div class="col-xs-6 col-xs-push-1 form-group">
             <span class="glyphicon glyphicon-usd"></span>
-            <label>Total for Site</label>
+            <label>Total for This RV Site</label>
         </div>
         <div class="col-xs-4 col-xs-push-1" form-group>
             <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
@@ -110,6 +244,7 @@
             <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
         </div>
     </div>
+    <!-- Confirmation and Payment-->
     <div class="col-xs-10 col-xs-push-1">Verify entered information and total amount</div>
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1 form-group">
