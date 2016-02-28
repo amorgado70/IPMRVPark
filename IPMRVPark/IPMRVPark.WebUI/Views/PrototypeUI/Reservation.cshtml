@@ -58,6 +58,16 @@
             </button>
         </div>
     </div>
+    <!-- Total amount for this site -->
+    <div class="row top-margin">
+        <div class="col-xs-6 col-xs-push-1 form-group">
+            <span class="glyphicon glyphicon-usd"></span>
+            <label>Total for This RV Site</label>
+        </div>
+        <div class="col-xs-4 col-xs-push-1" form-group>
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
+        </div>
+    </div>
     <!-- Customer -->
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1">
@@ -83,15 +93,14 @@
     <!-- New Customer-->
     <div class="col-xs-10 col-xs-push-1 form-group">
         <label>Or Register a New Customer</label>
-        <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
+        <button class="btn btn-block btn-default customerRegistration" data-toggle="collapse" data-target="#newCustomer">
             <span class="col-xs-2"></span>
             <span class="col-xs-8">New Customer</span>
             <span class="glyphicon glyphicon-chevron-down"></span>
             <span class="glyphicon glyphicon-chevron-up"></span>
         </button>
     </div>
-
-    <div id="newCustomer" class="collapse">
+    <div id="newCustomer" class="collapse customerRegistration">
         <div class="row form-top-margin">
             <div class="col-md-3 col-xs-10 col-xs-push-2">
                 <label>First Name</label>
@@ -204,16 +213,40 @@
                 <textarea class="form-control" rows="5" id="comments"></textarea>
             </div>
         </div>
-        <div class="col-xs-10 col-xs-push-1 form-top-margin top-margin">
-            <button class="btn btn-block btn-default">
+        <div class="col-xs-10 col-xs-push-1 top-margin">
+            <button class="btn btn-block btn-default customerRegistration" data-toggle="collapse" data-target="#newCustomer">
                 <span class="col-xs-1 glyphicon glyphicon-ok"></span>
                 <span class="col-xs-9">Confirm Registration</span>
             </button>
         </div>
     </div>
+    <!-- Confirmation -->
+    <div class="col-xs-10 col-xs-push-1 top-margin">
+        <label>Selection summary: site X-88, Mary Denver, Jun-21/Jun-25, $ 850.00</label>
+    </div>
+    <div class="row top-margin">
+        <div class="col-xs-8 col-xs-push-2 form-group">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                <span class="col-xs-9">Confirm Site Selection</span>
+            </button>
+        </div>
+    </div>
+    <!-- Repeat Reservation -->
+    <div class="col-xs-10 col-xs-push-1 top-margin">
+        Select more sites for the same customer (group representative)
+    </div>
+    <div class="row top-margin">
+        <div class="col-xs-8 col-xs-push-2 col-xm-10 col-xm-push-1 form-group">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-1 glyphicon glyphicon-plus-sign"></span>
+                <span class="col-xs-9">Add More Site(s)</span>
+            </button>
+        </div>
+    </div>
     <!-- List of other sites reserved for this same customer -->
     <div class="col-xs-10 col-xs-push-1 form-group top-margin">
-        <label>View All RV Sites Reserved for This Customer</label>
+        <label>View All RV Sites Selected for This Customer</label>
         <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#sitesCustomer">
             <span class="col-xs-2"></span>
             <span class="col-xs-8">Customer RV Sites</span>
@@ -221,18 +254,33 @@
             <span class="glyphicon glyphicon-chevron-up"></span>
         </button>
     </div>
-    <div id="sitesCustomer" class="collapse form-group">
-
-    </div>
-    <!-- Total amount for this site -->
-    <div class="row top-margin">
-        <div class="col-xs-6 col-xs-push-1 form-group">
-            <span class="glyphicon glyphicon-usd"></span>
-            <label>Total for This RV Site</label>
-        </div>
-        <div class="col-xs-4 col-xs-push-1" form-group>
-            <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
-        </div>
+    <div id="sitesCustomer" class="col-xs-10 col-xs-push-1 collapse">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Arrival</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A-21</td>
+                    <td>160221</td>
+                    <td>$ 2,400.00</td>
+                    <td>Paid</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>A-23</td>
+                    <td>160221</td>
+                    <td>$ 2,400.00</td>
+                    <td>Unpaid</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <!-- Total amount for customer -->
     <div class="row top-margin">
@@ -244,31 +292,14 @@
             <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
         </div>
     </div>
-    <!-- Confirmation and Payment-->
-    <div class="col-xs-10 col-xs-push-1">Verify entered information and total amount</div>
-    <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1 form-group">
-            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
-                <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                <span class="col-xs-9">Confirm Site Reservation</span>
-            </button>
-        </div>
-    </div>
-    <div class="col-xs-10 col-xs-push-1">Then add more sites to the same customer (group representative)</div>
+    <!-- Payment-->
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1 col-xm-10 col-xm-push-1 form-group">
-            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
-                <span class="col-xs-1 glyphicon glyphicon-plus-sign"></span>
-                <span class="col-xs-9">Add More Site(s)</span>
-            </button>
-        </div>
-    </div>
-    <div class="col-xs-10 col-xs-push-1">Or proceed to payment</div>
-    <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1 col-xm-10 col-xm-push-1 form-group">
-            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#newCustomer">
-                <span class="col-xs-1 glyphicon glyphicon-usd"></span>
-                <span class="col-xs-9">Proceed To Payment</span>
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-usd"></span>
+                @Html.ActionLink("Proceed To Payment","Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+
             </button>
         </div>
     </div>
