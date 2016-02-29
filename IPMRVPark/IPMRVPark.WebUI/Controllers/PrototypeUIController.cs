@@ -12,6 +12,10 @@ namespace IPMRVPark.WebUI.Controllers
         {
             return View();
         }
+        public ActionResult Login()
+        {
+            return View();
+        }
         public ActionResult EventMap()
         {
             return View();
