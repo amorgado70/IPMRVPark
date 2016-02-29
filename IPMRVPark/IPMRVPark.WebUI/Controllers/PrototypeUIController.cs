@@ -20,6 +20,10 @@ namespace IPMRVPark.WebUI.Controllers
         {
             return View();
         }
+        public ActionResult Customer()
+        {
+            return View();
+        }
         public ActionResult ReservationOrderIndex()
         {
             return View();

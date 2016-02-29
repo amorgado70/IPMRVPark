@@ -383,6 +383,7 @@
     <Content Include="Views\PrototypeUI\Home.cshtml" />
     <Content Include="Views\PrototypeUI\EventMap.cshtml" />
     <Content Include="Views\PrototypeUI\Reservation.cshtml" />
+    <Content Include="Views\PrototypeUI\Customer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

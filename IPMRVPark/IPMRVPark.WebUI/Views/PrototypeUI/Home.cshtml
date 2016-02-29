@@ -16,7 +16,7 @@
         <div class="col-xs-10 col-xs-push-1">
             <button class="btn btn-block btn-default">
                 <span class="col-xs-2 glyphicon glyphicon-tag"></span>
-                @Html.ActionLink("New Site Reservation", "Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
+                @Html.ActionLink("New Reservation", "Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
                 <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
             </button>
         </div>
@@ -25,12 +25,29 @@
         <div class="col-xs-10 col-xs-push-1">
             <button class="btn btn-block btn-default">
                 <span class="col-xs-2 glyphicon glyphicon-search"></span>
-                @Html.ActionLink("Search and Edit a Site Reservation", "Home", "PrototypeUI", null, new { @class = "col-xs-8" })
+                @Html.ActionLink("Search a Reservation", "Home", "PrototypeUI", null, new { @class = "col-xs-8" })
                 <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
             </button>
         </div>
     </div>
-
+    <div class="row top-margin">
+        <div class="col-xs-10 col-xs-push-1">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-user"></span>
+                @Html.ActionLink("New Customer", "Customer", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
+    <div class="row top-margin">
+        <div class="col-xs-10 col-xs-push-1">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-2 glyphicon glyphicon-search"></span>
+                @Html.ActionLink("Search a Customer", "Home", "PrototypeUI", null, new { @class = "col-xs-8" })
+                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+    </div>
 
     <div class="row top-margin">
         <div class="col-xs-10 col-xs-push-1">

@@ -2,37 +2,36 @@
     ViewBag.Title = "Site Reservation";
 }
 
+@Html.ActionLink("Home", "Home", "PrototypeUI")
 <span class="glyphicon glyphicon-chevron-right"></span>
-<span class="glyphicon glyphicon-tag"></span>
 @Html.ActionLink("New Site Reservation", "Reservation", "PrototypeUI")
 
 <!-- New Reservation-->
 <div class="container-fluid">
     <!-- RV Site Dates-->
     <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1">
-            <span class="col-xs-1 glyphicon glyphicon-calendar"></span>
-            <label>Enter Arrival and Departure Dates</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-5 col-xs-push-1" form-group>
-            <input type="date" class="form-control">
-        </div>
-        <div class="col-xs-5 col-xs-push-1" form-group>
-            <input type="date" class="form-control">
+        <div class="form-group">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>Arrival Date</label>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <input type="date" class="form-control">
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>Departure Date</label>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <input type="date" class="form-control">
+            </div>
         </div>
     </div>
     <!-- RV Site Tag-->
     <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1">
-            <span class="col-xs-1 glyphicon glyphicon-tent"></span>
-            <label>Select an Available RV Site</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-10 col-sm-5 col-xs-push-1 form-group">
-            <div class="col-xs-5">
+        <div class="form-group">
+            <div class="col-sm-1 col-xs-12 form-top-margin">
+                <label>Site</label>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
                 <select class="form-control">
                     <option>Name</option>
                     @for (int i = 20; i < 36; i++)
@@ -41,7 +40,7 @@
                     }
                 </select>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
                 <select class="form-control">
                     <option>Type</option>
                     <option>25x40 30 amps lots</option>
@@ -49,212 +48,89 @@
                     <option>30x45 15 amps lots</option>
                 </select>
             </div>
-        </div>
-        <div class="col-xs-10 col-sm-5 col-xs-push-1">
-            <button class="btn btn-block btn-default">
-                <span class="col-xs-2 glyphicon glyphicon-map-marker"></span>
-                @Html.ActionLink("IPM Event Map Display", "EventMap", "PrototypeUI", null, new { @class = "col-xs-8" })
-                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
-            </button>
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <button class="btn btn-block btn-default">
+                    <span class="col-xs-2 glyphicon glyphicon-map-marker"></span>
+                    @Html.ActionLink("IPM Event Map Display", "EventMap", "PrototypeUI", null, new { @class = "col-xs-8" })
+                    <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+                </button>
+            </div>
         </div>
     </div>
-    <!-- Total amount for this site -->
+    <!-- Total amount for this site reservation -->
     <div class="row top-margin">
-        <div class="col-xs-6 col-xs-push-1 form-group">
-            <span class="glyphicon glyphicon-usd"></span>
-            <label>Total for This RV Site</label>
-        </div>
-        <div class="col-xs-4 col-xs-push-1" form-group>
-            <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
+        <div class="form-group">
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <label>Total Amount For This Site Reservation</label>
+            </div>
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 1,345.51" style="text-align:right" disabled>
+            </div>
         </div>
     </div>
     <!-- Customer -->
     <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1">
-            <span class="col-xs-1 glyphicon glyphicon-user"></span>
-            <label>Select a Registered Customer</label>
-        </div>
-    </div>
-    <div class="col-xs-10 col-sm-5 col-xs-push-1 form-group">
-        <select class="form-control">
-            @for (int i = 0; i < 8; i++)
-            {
-                <option>Mary Denver Holtz @i</option>
-            }
-        </select>
-    </div>
-    <div class="col-xs-10 col-sm-5 col-xs-push-1">
-        <button class="btn btn-block btn-default">
-            <span class="col-xs-2 glyphicon glyphicon-user"></span>
-            @Html.ActionLink("Customer Details", "Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
-            <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
-        </button>
-    </div>
-    <!-- New Customer-->
-    <div class="col-xs-10 col-xs-push-1 form-group">
-        <label>Or Register a New Customer</label>
-        <button class="btn btn-block btn-default customerRegistration" data-toggle="collapse" data-target="#newCustomer">
-            <span class="col-xs-2"></span>
-            <span class="col-xs-8">New Customer</span>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            <span class="glyphicon glyphicon-chevron-up"></span>
-        </button>
-    </div>
-    <div id="newCustomer" class="collapse customerRegistration">
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>First Name</label>
+        <div class="form-group">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>Customer</label>
             </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="Homer" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Last Name</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="Watson" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Main Phone</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="(519) 341-4075" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>e-mail</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="hwatson@gmail.com" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Cell Phone</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="(519) 888-4075" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Home Phone</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="(519) 321-4075" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Fax Number</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="(519) 341-4075" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Street</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="50 Victoria St W" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>City</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="50 Victoria St W" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Province</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
+            <div class="col-sm-4 col-xs-12 form-top-margin">
                 <select class="form-control">
-                    <option>Alberta</option>
-                    <option>British Columbia</option>
-                    <option>Quebec</option>
-                    <option>Ontario</option>
+                    <option>Select By Name</option>
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <option>Mary Denver Holtz @i</option>
+                    }
                 </select>
             </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Country</label>
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <button class="btn btn-block btn-default">
+                    <span class="col-xs-2 glyphicon glyphicon-plus-sign"></span>
+                    @Html.ActionLink("Register New Customer", "Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
+                    <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
+                </button>
             </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <select class="form-control">
-                    <option>Canada</option>
-                    <option>USA</option>
-                </select>
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Postal Code</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <input type="text" class="form-control" placeholder="N2P 1W8" />
-            </div>
-        </div>
-        <div class="row form-top-margin">
-            <div class="col-md-3 col-xs-10 col-xs-push-2">
-                <label>Comments</label>
-            </div>
-            <div class="col-md-5 col-xs-8 col-xs-push-2">
-                <textarea class="form-control" rows="5" id="comments"></textarea>
-            </div>
-        </div>
-        <div class="col-xs-10 col-xs-push-1 top-margin">
-            <button class="btn btn-block btn-default customerRegistration" data-toggle="collapse" data-target="#newCustomer">
-                <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                <span class="col-xs-9">Confirm Registration</span>
-            </button>
         </div>
     </div>
     <!-- Confirmation -->
-    <div class="col-xs-10 col-xs-push-1 top-margin">
-        <label>Selection summary: site X-88, Mary Denver, Jun-21/Jun-25, $ 850.00</label>
-    </div>
-    <div class="row top-margin">
-        <div class="col-xs-8 col-xs-push-2 form-group">
-            <button class="btn btn-block btn-default">
-                <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                <span class="col-xs-9">Confirm Site Selection</span>
-            </button>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>Reservation Summary</label>
+            </div>
+            <div class="col-sm-9 col-xs-12 form-top-margin">
+                <textarea class="form-control" rows="2" disabled>Site X-88, Mary Denver, Jun-21/Jun-25, CAD$ 2,850.00</textarea>
+            </div>
+            <div class="col-xs-12 form-top-margin">
+                <button class="btn btn-block btn-default">
+                    <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                    <span class="col-xs-9">Confirm Site Reservation</span>
+                </button>
+            </div>
         </div>
     </div>
     <!-- Repeat Reservation -->
-    <div class="col-xs-10 col-xs-push-1 top-margin">
-        Select more sites for the same customer (group representative)
-    </div>
     <div class="row top-margin">
-        <div class="col-xs-8 col-xs-push-2 col-xm-10 col-xm-push-1 form-group">
+        <div class="col-xs-12">
             <button class="btn btn-block btn-default">
                 <span class="col-xs-1 glyphicon glyphicon-plus-sign"></span>
-                <span class="col-xs-9">Add More Site(s)</span>
+                <span class="col-xs-9">Add More Site(s) For This Customer</span>
             </button>
         </div>
     </div>
     <!-- List of other sites reserved for this same customer -->
-    <div class="col-xs-10 col-xs-push-1 form-group top-margin">
-        <label>View All RV Sites Selected for This Customer</label>
-        <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#sitesCustomer">
-            <span class="col-xs-2"></span>
-            <span class="col-xs-8">Customer RV Sites</span>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            <span class="glyphicon glyphicon-chevron-up"></span>
-        </button>
+    <div class="row top-margin">
+        <div class="col-xs-12">
+            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#sitesCustomer" ">
+                <div class="col-xs-9">List All Sites - This Customer</div>
+                <div class="col-xs-1">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </div>
+            </button>
+        </div>
     </div>
-    <div id="sitesCustomer" class="col-xs-10 col-xs-push-1 collapse">
+    <div id="sitesCustomer" class="col-xs-12 collapse">
         <table class="table">
             <thead>
                 <tr>
@@ -282,24 +158,23 @@
             </tbody>
         </table>
     </div>
-    <!-- Total amount for customer -->
+    <!-- Account Balance for this customer -->
     <div class="row top-margin">
-        <div class="col-xs-6 col-xs-push-1 form-group">
-            <span class="glyphicon glyphicon-usd"></span>
-            <label>Total for Customer</label>
-        </div>
-        <div class="col-xs-4 col-xs-push-1" form-group>
-            <input type="text" min="0.00" step="any" class="form-control" placeholder="345.51" style="text-align:right" disabled>
+        <div class="form-group">
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <label>Account Balance For This Customer</label>
+            </div>
+            <div class="col-sm-6 col-xs-12 form-top-margin">
+                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 3,045.51" style="text-align:right" disabled>
+            </div>
         </div>
     </div>
     <!-- Payment-->
     <div class="row top-margin">
-        <div class="col-xs-10 col-xs-push-1 col-xm-10 col-xm-push-1 form-group">
+        <div class="col-xs-12">
             <button class="btn btn-block btn-default">
-                <span class="col-xs-2 glyphicon glyphicon-usd"></span>
-                @Html.ActionLink("Proceed To Payment","Reservation", "PrototypeUI", null, new { @class = "col-xs-8" })
-                <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
-
+                <span class="col-xs-1 glyphicon glyphicon-usd"></span>
+                @Html.ActionLink("Proceed To Payment", "Reservation", "PrototypeUI", null, new { @class = "col-xs-9" })
             </button>
         </div>
     </div>
