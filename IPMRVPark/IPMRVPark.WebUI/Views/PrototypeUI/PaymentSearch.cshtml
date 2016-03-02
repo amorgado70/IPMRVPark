@@ -1,18 +1,57 @@
 ﻿@{
-    ViewBag.Title = "Customer Registration";
-    ViewBag.PageTitle = "Customer Search";
+    ViewBag.Title = "Payments & Refunds";
+    ViewBag.PageTitle = "Payment Search";
 }
 
 @Html.ActionLink("Home", "Home", "PrototypeUI")
 <span class="glyphicon glyphicon-chevron-right"></span>
-Customer Registration
+Payments & Refunds
 <span class="glyphicon glyphicon-chevron-right"></span>
-@Html.ActionLink("Search Customer", "CustomerSearch", "PrototypeUI")
+@Html.ActionLink("Search Payment", "PaymentSearch", "PrototypeUI")
 
-<!-- Search Customer-->
+<!-- Search Payment -->
 <div class="container-fluid">
     <!-- Customer -->
     <div class="row top-margin">
+        <div class="form-group">
+            <div class="form-group">
+                <div class="radio-inline col-sm-6 col-xs-12 form-top-margin">
+                    <label class="radio-inline"><input type="radio" name="optradio" checked onClick="setAll()">All</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onClick="setRefund()">Payments</label>
+                    <label class="radio-inline"><input type="radio" name="optradio" onClick="setRefund()">Refunds</label>
+                </div>
+                <div class="col-sm-6 col-xs-12 form-top-margin">
+                    <input type="text" class="form-control" placeholder="Reason For Payment Or Refund" />
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-3">Amount</span>
+                </label>
+            </div>
+            <div class="col-sm-1 col-xs-4 form-top-margin">
+                From
+            </div>
+            <div class="col-sm-2 col-xs-8 form-top-margin">
+                <input type="text" class="form-control" placeholder="0.00" />
+            </div>
+            <div class="col-sm-1 col-xs-4 form-top-margin">
+                Till
+            </div>
+            <div class="col-sm-2 col-xs-8 form-top-margin">
+                <input type="text" class="form-control" placeholder="8,000.00" />
+            </div>
+            <div class="col-sm-1 col-xs-4 form-top-margin">
+                Date
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <input type="date" class="form-control" placeholder="05/05/20" />
+            </div>
+        </div>
+    </div>
+    <!-- Customer -->
+    <div class="row">
         <div class="form-group">
             <div class="col-sm-2 col-xs-12 form-top-margin">
                 <label>
@@ -32,7 +71,7 @@ Customer Registration
         </div>
     </div>
     <!-- RV Site Tag-->
-    <div class="row top-margin">
+    <div class="row">
         <div class="form-group">
             <div class="col-sm-2 col-xs-12 form-top-margin">
                 <label>
@@ -64,7 +103,7 @@ Customer Registration
     <div class="row top-margin">
         <div class="col-xs-12">
             <span class="col-xs-1 glyphicon glyphicon-list"></span>
-            List Of Customers That Match The Search Criteria
+            List Of Payments and Refunds That Match The Search Criteria
         </div>
     </div>
     <div class="col-xs-12">
@@ -74,7 +113,7 @@ Customer Registration
                     <th>Full Name</th>
                     <th>Sites</th>
                     <th>Total<br />Paid</th>
-                    <th>Current<br/>Balance</th>
+                    <th>Current<br />Balance</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,10 +128,9 @@ Customer Registration
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp; Select Customer & Go To Reservation</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; See Customer Details</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit Customer</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel Customer</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Add a Payment</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Add a Refund</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -107,10 +145,9 @@ Customer Registration
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp; Select & Return To Reservation</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; See Customer Details</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit Customer</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel Customer</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Add a Payment</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Add a Refund</a></li>
                         </ul>
                     </td>
                 </tr>

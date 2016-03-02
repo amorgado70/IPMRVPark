@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using IPMRVPark.Models;
+using IPMRVPark.Contracts.Repositories;
 
 namespace IPMRVPark.WebUI.Controllers
 {
@@ -40,6 +40,10 @@ namespace IPMRVPark.WebUI.Controllers
         {
             return View();
         }
+        public ActionResult PaymentSearch()
+        {
+            return View();
+        }
         public ActionResult ReservationOrderIndex()
         {
             return View();
@@ -48,6 +52,5 @@ namespace IPMRVPark.WebUI.Controllers
         {
             return View();
         }
-
     }
 }
