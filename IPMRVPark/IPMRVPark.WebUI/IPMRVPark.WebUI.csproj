@@ -385,6 +385,7 @@
     <Content Include="Views\PrototypeUI\Payment.cshtml" />
     <Content Include="Views\PrototypeUI\Login.cshtml" />
     <Content Include="Views\PrototypeUI\ReservationSearch.cshtml" />
+    <Content Include="Views\PrototypeUI\CustomerSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,7 +19,7 @@ Site Reservation
                     <span class="col-xs-3">Site</span>
                 </label>
             </div>
-            <div class="col-sm-2 col-xs-12 form-top-margin">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
                 <select class="form-control">
                     <option>Name</option>
                     @for (int i = 20; i < 36; i++)
@@ -28,7 +28,7 @@ Site Reservation
                     }
                 </select>
             </div>
-            <div class="col-sm-2 col-xs-12 form-top-margin">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
                 <select class="form-control">
                     <option>Type</option>
                     <option>25x40 30 amps lots</option>
@@ -36,14 +36,12 @@ Site Reservation
                     <option>30x45 15 amps lots</option>
                 </select>
             </div>
-            <div class="col-sm-3 col-xs-12 form-top-margin">
-                <label>
-                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
-                    <span class="col-xs-9">Arrival Date</span>
-                </label>
-            </div>
-            <div class="col-sm-3 col-xs-12 form-top-margin">
-                <input type="date" class="form-control">
+            <div class="col-sm-4 col-xs-12 form-top-margin">
+                <select class="form-control">
+                    <option>Available</option>
+                    <option>Paid</option>
+                    <option>UnPaid</option>
+                </select>
             </div>
         </div>
     </div>
@@ -68,10 +66,7 @@ Site Reservation
                 </select>
             </div>
             <div class="col-sm-3 col-xs-12 form-top-margin">
-                <label>
-                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
-                    <span class="col-xs-9">Site Status</span>
-                </label>
+                <label>Arrive On<label>
             </div>
             <div class="col-sm-3 col-xs-12 form-top-margin">
                 <input type="date" class="form-control">
@@ -100,32 +95,39 @@ Site Reservation
                     <td>160221</td>
                     <td>Mary Lenox</td>
                     <td>Paid</td>
-                    <td>
-                        <button class="btn btn-default">
-                            @Html.ActionLink("More", "ReservationSearch", "PrototypeUI")
-                            <span class="glyphicon glyphicon-info-sign"></span>
+                    <td class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            More
+                            <span class="caret"></span>
                         </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp; Select & Return To Reservation Page</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; See Reservation Details</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit Reservation</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel Reservation</a></li>
+                        </ul>
                     </td>
                 </tr>
-            </tbody>
-            <tbody>
                 <tr>
                     <td>A-23</td>
                     <td>160221</td>
                     <td>Mary Jane</td>
                     <td>Unpaid</td>
+                    <td class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            More
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp; Select & Return To Reservation Page</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span>&nbsp; See Reservation Details</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit Reservation</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel Reservation</a></li>
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <!-- Payment-->
-    <div class="row top-margin">
-        <div class="col-xs-12">
-            <button class="btn btn-block btn-default">
-                <span class="col-xs-1 glyphicon glyphicon-usd"></span>
-                @Html.ActionLink("Proceed To Payment", "Payment", "PrototypeUI", null, new { @class = "col-xs-9" })
-            </button>
-        </div>
     </div>
 </div>
 
