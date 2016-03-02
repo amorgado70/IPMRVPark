@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Site Reservation";
+}
+
+@Html.ActionLink("Home", "Home", "PrototypeUI")
+<span class="glyphicon glyphicon-chevron-right"></span>
+Site Reservation
+<span class="glyphicon glyphicon-chevron-right"></span>
+@Html.ActionLink("Search Reservation", "ReservationSearch", "PrototypeUI")
+
+<!-- Search Reservation-->
+<div class="container-fluid">
+    <!-- RV Site Tag-->
+    <div class="row top-margin">
+        <div class="form-group">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-3">Site</span>
+                </label>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <select class="form-control">
+                    <option>Name</option>
+                    @for (int i = 20; i < 36; i++)
+                    {
+                        <option>A - @i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <select class="form-control">
+                    <option>Type</option>
+                    <option>25x40 30 amps lots</option>
+                    <option>25x40 15 amps lots</option>
+                    <option>30x45 15 amps lots</option>
+                </select>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-9">Arrival Date</span>
+                </label>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <input type="date" class="form-control">
+            </div>
+        </div>
+    </div>
+    <!-- Customer -->
+    <div class="row top-margin">
+        <div class="form-group">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-3">Customer</span>
+                </label>
+            </div>
+            <div class="col-sm-4 col-xs-12 form-top-margin">
+                <select class="form-control">
+                    <option>
+                        Select By Name
+                    </option>
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <option>Mary Denver Holtz @i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-9">Site Status</span>
+                </label>
+            </div>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <input type="date" class="form-control">
+            </div>
+        </div>
+    </div>
+    <!-- List of other sites reserved for this same customer -->
+    <div class="row top-margin">
+        <div class="col-xs-12">
+            List Of Sites That Match The Search Criteria
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Arrival</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A-21</td>
+                    <td>160221</td>
+                    <td>Mary Lenox</td>
+                    <td>Paid</td>
+                    <td>
+                        <button class="btn btn-default">
+                            @Html.ActionLink("More", "ReservationSearch", "PrototypeUI")
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td>A-23</td>
+                    <td>160221</td>
+                    <td>Mary Jane</td>
+                    <td>Unpaid</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Payment-->
+    <div class="row top-margin">
+        <div class="col-xs-12">
+            <button class="btn btn-block btn-default">
+                <span class="col-xs-1 glyphicon glyphicon-usd"></span>
+                @Html.ActionLink("Proceed To Payment", "Payment", "PrototypeUI", null, new { @class = "col-xs-9" })
+            </button>
+        </div>
+    </div>
+</div>
+
