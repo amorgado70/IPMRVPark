@@ -14,16 +14,16 @@
         </div>
         <div id="menuIPMEvent" class="col-xs-12 collapse">
             <div class="col-xs-8 col-xs-push-2 col-sm-6 col-sm-push-4">
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
+                <a href="@Url.Action("EventMap", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
                     <span class="glyphicon glyphicon-picture"></span>
-                    @Html.ActionLink("Large Screen Display", "EventMap", "PrototypeUI")
+                    <span>Large Screen Display</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default pagination-centered">
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-pencil"></span>
-                    @Html.ActionLink("Edit IPM Event Info", "Home", "PrototypeUI")
+                    <span>Edit IPM Event Info</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -38,16 +38,16 @@
         </div>
         <div id="menuSiteReservation" class="col-xs-12 collapse">
             <div class="col-xs-8 col-xs-push-2 col-sm-6 col-sm-push-4">
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
+                <a href="@Url.Action("Reservation", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
                     <span class="glyphicon glyphicon-plus-sign"></span>
-                    @Html.ActionLink("New Reservation", "Reservation", "PrototypeUI")
+                    <span>New Reservation</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default pagination-centered">
+                </a>
+                <a href="@Url.Action("ReservationSearch", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-search"></span>
-                    @Html.ActionLink("Search Reservation", "ReservationSearch", "PrototypeUI")
+                    <span>Search Reservation</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -62,16 +62,16 @@
         </div>
         <div id="menuCustomerRegistration" class="col-xs-12 collapse">
             <div class="col-xs-8 col-xs-push-2 col-sm-6 col-sm-push-4">
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
+                <a href="@Url.Action("Customer", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
                     <span class="glyphicon glyphicon-plus-sign"></span>
-                    @Html.ActionLink("New Customer", "Customer", "PrototypeUI")
+                    <span>New Customer</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default pagination-centered">
+                </a>
+                <a href="@Url.Action("CustomerSearch", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-search"></span>
-                    @Html.ActionLink("Search Customer", "CustomerSearch", "PrototypeUI")
+                    <span>Search Customer</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -87,16 +87,16 @@
         </div>
         <div id="menuPaymentRefund" class="col-xs-12 collapse">
             <div class="col-xs-8 col-xs-push-2 col-sm-6 col-sm-push-4">
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
+                <a href="@Url.Action("Payment", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
                     <span class="glyphicon glyphicon-plus-sign"></span>
-                    @Html.ActionLink("New Payment", "Payment", "PrototypeUI")
+                    <span>New Payment</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default pagination-centered">
+                </a>
+                <a href="@Url.Action("PaymentSearch", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-search"></span>
-                    @Html.ActionLink("Search Payment", "PaymentSearch", "PrototypeUI")
+                    <span>Search Payment</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -112,30 +112,30 @@
         </div>
         <div id="menuSystemMaintenance" class="col-xs-12 collapse">
             <div class="col-xs-8 col-xs-push-2 col-sm-6 col-sm-push-4">
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
-                    @Html.ActionLink("Site Size", "Home", "PrototypeUI")
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
+                    <span>Site Size</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
-                    @Html.ActionLink("Site Power Supply", "Home", "PrototypeUI")
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
+                    <span>Site Power Supply</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
-                    @Html.ActionLink("New Staff Member", "Home", "PrototypeUI")
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
+                    <span>New Staff Member</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
-                    @Html.ActionLink("Edit Staff Member", "Home", "PrototypeUI")
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
+                    <span>Edit Staff Member</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default form-top-margin pagination-centered">
-                    @Html.ActionLink("Province", "Home", "PrototypeUI")
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink form-top-margin pagination-centered">
+                    <span>Province</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
-                <button class="btn btn-block btn-default pagination-centered">
-                    @Html.ActionLink("Country", "Home", "PrototypeUI")
+                </a>
+                <a href="@Url.Action("Menu", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                    <span>Country</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
-                </button>
+                </a>
             </div>
         </div>
     </div>
