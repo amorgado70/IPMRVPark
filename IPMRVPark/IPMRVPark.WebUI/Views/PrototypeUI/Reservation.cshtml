@@ -11,12 +11,6 @@ Site Reservation
 
 <!-- New Reservation-->
 <div class="container-fluid">
-    <!-- Not Logged In Message -->
-    <div class="row top-margin">
-        <div class="h4 text-center col-xs-12">
-            Must Be Logged In The System To Reserve a Site
-        </div>
-    </div>
     <!-- RV Site Dates-->
     <div class="row top-margin">
         <div class="form-group">
@@ -40,39 +34,48 @@ Site Reservation
             <div class="col-sm-1 col-xs-12 form-top-margin">
                 <label>Site</label>
             </div>
-            <div class="col-sm-2 col-xs-12 form-top-margin">
+            <div class="col-sm-2 col-xs-6 form-top-margin">
                 <select class="form-control">
-                    <option>Name</option>
-                    @for (int i = 20; i < 36; i++)
+                    <option>Letter</option>
+                    @for (char i = 'A'; i < 'W'; i++)
                     {
-                        <option>A - @i</option>
+                        <option>@i</option>
                     }
                 </select>
             </div>
-            <div class="col-sm-3 col-xs-12 form-top-margin">
+            <div class="col-sm-3 col-xs-6 form-top-margin">
                 <select class="form-control">
-                    <option>All Types</option>
+                    <option>Number</option>
+                    @for (int i = 20; i < 36; i++)
+                    {
+                        <option>@i</option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <select class="form-control">
+                    <option>Type</option>
                     <option>25x40 30 amps lots</option>
                     <option>25x40 15 amps lots</option>
                     <option>30x45 15 amps lots</option>
                 </select>
             </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <button class="btn btn-block btn-default">
-                    <span class="col-xs-2 glyphicon glyphicon-map-marker"></span>
-                    @Html.ActionLink("IPM Event Map Display", "EventMap", "PrototypeUI", null, new { @class = "col-xs-8" })
-                    <span class="col-xs-2 glyphicon glyphicon-chevron-right"></span>
-                </button>
+            <div class="col-sm-4 col-xs-12 form-top-margin">
+                <a href="@Url.Action("EventMap", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    <span>Large Screen Display</span>
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
         </div>
     </div>
     <!-- Total amount for this site reservation -->
     <div class="row top-margin">
         <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
+            <div class="col-sm-8 col-xs-12 form-top-margin">
                 <label>Total Amount For This Site Reservation</label>
             </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
+            <div class="col-sm-4 col-xs-12 form-top-margin">
                 <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 1,345.51" style="text-align:right" disabled>
             </div>
         </div>
@@ -86,7 +89,7 @@ Site Reservation
             <div class="col-sm-4 col-xs-12 form-top-margin">
                 <select class="form-control">
                     <option>
-                        Select By Name
+                        Full Name
                     </option>
                     @for (int i = 0; i < 8; i++)
                     {
