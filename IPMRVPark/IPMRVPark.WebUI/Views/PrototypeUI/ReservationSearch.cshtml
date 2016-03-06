@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Site Reservation";
-    ViewBag.PageTitle = "Reservation Search";
+    ViewBag.PageTitle = "Search Reservation";
 }
 
 @Html.ActionLink("Home", "Menu", "PrototypeUI")
@@ -14,8 +14,11 @@ Site Reservation
     <!-- RV Site Tag-->
     <div class="row top-margin">
         <div class="form-group">
-            <div class="col-sm-1 col-xs-12 form-top-margin">
-                <label>Site</label>
+            <div class="col-sm-3 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-2 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-9">By Site</span>
+                </label>
             </div>
             <div class="col-sm-2 col-xs-6 form-top-margin">
                 <select class="form-control" data-toggle="tooltip" title="Filter, search and select">
@@ -27,7 +30,7 @@ Site Reservation
                     }
                 </select>
             </div>
-            <div class="col-sm-3 col-xs-6 form-top-margin">
+            <div class="col-sm-2 col-xs-6 form-top-margin">
                 <select class="form-control" data-toggle="tooltip" title="Filter, search and select">
                     <option>Number</option>
                     <option>All numbers - No Filter</option>
@@ -46,7 +49,7 @@ Site Reservation
                     <option>30x45 15 amps lots</option>
                 </select>
             </div>
-            <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
+            <div class="col-sm-3 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
                 <select class="form-control">
                     <option>Status</option>
                     <option>All status - No Filter</option>
@@ -60,13 +63,13 @@ Site Reservation
     <!-- Customer -->
     <div class="row top-margin">
         <div class="form-group">
-            <div class="col-sm-2 col-xs-12 form-top-margin">
+            <div class="col-sm-3 col-xs-12 form-top-margin">
                 <label>
-                    <span class="col-xs-3 glyphicon glyphicon-search"></span>
-                    <span class="col-xs-3">Customer</span>
+                    <span class="col-xs-2 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-9">By Customer</span>
                 </label>
             </div>
-            <div class="col-sm-5 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
+            <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
                 <select class="form-control">
                     <option>Full Name</option>
                     <option>All Names - No Filter</option>
@@ -84,7 +87,7 @@ Site Reservation
             </div>
         </div>
     </div>
-    <!-- List of other sites reserved for this same customer -->
+    <!-- List of sites -->
     <div class="row top-margin" data-toggle="tooltip" title="List Of Sites That Match The Search Criteria Above">
         <div class="col-sm-8 col-xs-12 form-top-margin">
             <span class="col-xs-1 glyphicon glyphicon-list"></span>
