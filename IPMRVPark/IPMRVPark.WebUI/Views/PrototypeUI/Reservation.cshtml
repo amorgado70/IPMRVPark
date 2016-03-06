@@ -3,7 +3,7 @@
     ViewBag.PageTitle = "New Reservation";
 }
 
-@Html.ActionLink("Home", "Home", "PrototypeUI")
+@Html.ActionLink("Home", "Menu", "PrototypeUI")
 <span class="glyphicon glyphicon-chevron-right"></span>
 Site Reservation
 <span class="glyphicon glyphicon-chevron-right"></span>
@@ -37,7 +37,7 @@ Site Reservation
             <div class="col-sm-2 col-xs-6 form-top-margin">
                 <select class="form-control" data-toggle="tooltip" title="Filter, search and select">
                     <option>Letter</option>
-                    <option>All letters</option>
+                    <option>All letters - No Filter</option>
                     @for (char i = 'A'; i < 'W'; i++)
                     {
                         <option>@i</option>
@@ -47,7 +47,7 @@ Site Reservation
             <div class="col-sm-3 col-xs-6 form-top-margin">
                 <select class="form-control" data-toggle="tooltip" title="Filter, search and select">
                     <option>Number</option>
-                    <option>All numbers</option>
+                    <option>All numbers - No Filter</option>
                     @for (int i = 20; i < 36; i++)
                     {
                         <option>@i</option>
@@ -57,7 +57,7 @@ Site Reservation
             <div class="col-sm-2 col-xs-12 form-top-margin">
                 <select class="form-control" data-toggle="tooltip" title="Filter, search and select">
                     <option>Type</option>
-                    <option>All types</option>
+                    <option>All types - No Filter</option>
                     <option>25x40 30 amps lots</option>
                     <option>25x40 15 amps lots</option>
                     <option>30x45 15 amps lots</option>
@@ -86,14 +86,12 @@ Site Reservation
     <!-- Customer -->
     <div class="row top-margin">
         <div class="form-group">
-            <div class="col-sm-2 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
                 <label>Customer</label>
             </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
+            <div class="col-sm-6 col-xs-12 form-top-margin" data-toggle="tooltip" title="Filter, search and select">
                 <select class="form-control">
-                    <option>
-                        Full Name
-                    </option>
+                    <option>Full Name</option>
                     @for (int i = 0; i < 8; i++)
                     {
                         <option>Mary Denver Holtz @i</option>
