@@ -85,7 +85,7 @@ Payments & Refunds
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Sel</th>
+                        <th><input type="checkbox" checked></th>
                         <th>Site</th>
                         <th>Arrival</th>
                         <th>Total</th>
@@ -151,59 +151,77 @@ Payments & Refunds
             </table>
         </div>
     </div>
-    <!-- Account Balance for this customer -->
+    <!-- Payment for this reservations -->
     <div class="row top-margin">
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(a) Total For Sel (Selected) Sites</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right;" disabled>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(b) This Payment Amount</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right; border: 2px solid black;">
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(c) Previous Customer's Account Balance</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
-            </div>
+        <div class="col-xs-12 form-top-margin">
+            <b>Payment For Selected Sites</b>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(c)+(b)-(a) Account Balance After Payment</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(a) Total</label>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>Reason For Payment</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <select class="form-control" data-toggle="tooltip" title="Select one">
-                    <option>New Reservation</option>
-                    <option>Confirm Reservation</option>
-                    <option>Check In</option>
-                    <option>Extend Reservation</option>
-                    <option>Other Services - Specify As Comment</option>
-                </select>
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right;" disabled>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>Received by (Staff Logged In)</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" class="form-control" placeholder="Tim Burton" disabled />
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(b) Payment</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right; border: 2px solid black;">
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(c)=(a)-(b) Due</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
         </div>
     </div>
+    <!--Customer's Balance-->
+    <div class="row form-top-margin">
+        <div class="col-xs-12 form-top-margin">
+            <b>Customer's Account Balance</b>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(d) Before Payment</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(c)=(a)-(b) Due</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(e)=(d)+(c) After Payment</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+    </div>
+    <!--Reason for payment-->
+    <div class="row top-margin">
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>Reason For Payment</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <select class="form-control" data-toggle="tooltip" title="Select one">
+                <option>New Reservation</option>
+                <option>Confirm Reservation</option>
+                <option>Check In</option>
+                <option>Pay Amount Due</option>
+                <option>Extend Reservation</option>
+                <option>Other Services - Specify As Comment</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>Received by (Staff Logged In)</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" class="form-control" placeholder="Tim Burton" disabled />
+        </div>
+    </div>
+    <!-- Payment method-->
     <div class="row top-margin">
         <div class="form-group">
             <div class="col-sm-3 col-xs-12 form-top-margin">

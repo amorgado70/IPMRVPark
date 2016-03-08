@@ -85,7 +85,7 @@ Payments & Refunds
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Cancel</th>
+                        <th><input type="checkbox" checked></th>
                         <th>Site</th>
                         <th>Arrival</th>
                         <th>Total</th>
@@ -149,55 +149,71 @@ Payments & Refunds
             </table>
         </div>
     </div>
-    <!-- Account Balance for this customer -->
+    <!-- Refund for this reservations -->
     <div class="row top-margin">
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(a) Total For Cancel (Cancelled) Sites</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right;" disabled>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(b) This Refund Amount</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right; border: 2px solid black;">
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(c) Previous Customer's Account Balance</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
-            </div>
+        <div class="col-xs-12 form-top-margin">
+            <b>Refund For Selected Sites</b>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>(a)-(b)+(c) Account Balance After Payment</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;">
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(a) Total</label>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>Reason For Refund</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <select class="form-control" data-toggle="tooltip" title="Select one">
-                    <option>Cancel Reservation</option>
-                    <option>Shorten Reservation</option>
-                    <option>Cancel Other Services - Specify As Comment</option>
-                </select>
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right;" disabled>
         </div>
-        <div class="form-group">
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <label>Received by (Staff Logged In)</label>
-            </div>
-            <div class="col-sm-6 col-xs-12 form-top-margin">
-                <input type="text" class="form-control" placeholder="Tim Burton" disabled />
-            </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(b) Refund</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 6,090.02" style="text-align:right; border: 2px solid black;">
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(c)=(a)-(b) Due</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+    </div>
+    <!--Customer's Balance-->
+    <div class="row form-top-margin">
+        <div class="col-xs-12 form-top-margin">
+            <b>Customer's Account Balance</b>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(d) Before Refund</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(c)=(a)-(b) Due</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>(e)=(d)+(c) After Refund</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" min="0.00" step="any" class="form-control" placeholder="CAD$ 0.00" style="text-align:right;" disabled>
+        </div>
+    </div>
+    <!--Reason for refund-->
+    <div class="row top-margin">
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>Reason For Refund</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <select class="form-control" data-toggle="tooltip" title="Select one">
+                <option>Cancel Reservation</option>
+                <option>Shorten Reservation</option>
+                <option>Cancel Other Services - Specify As Comment</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <label>Received by (Staff Logged In)</label>
+        </div>
+        <div class="col-sm-6 col-xs-12 form-top-margin">
+            <input type="text" class="form-control" placeholder="Tim Burton" disabled />
         </div>
     </div>
     <div class="row top-margin">

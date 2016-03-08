@@ -32,14 +32,16 @@
     <div class="container-fluid">
         <div class="row top-margin">
             <div class="col-xs-3">
-                <div class="btn btn-default btn-block" style="margin-top:0.5em;" data-toggle="tooltip" title="Go To Top Of This Page">
-                    <a href="#">Back To Top <span class="glyphicon glyphicon-chevron-up"></span></a>
-                </div>
+                <a  href="#" class="btn btn-default btn-block btn-mylink" data-toggle="tooltip" title="Go To Top Of This Page">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <span style="height:2em;">Back To Top</span>
+                </a>
             </div>
             <div class="col-xs-3 col-xs-push-6">
-                <div class="btn btn-default btn-block" style="margin-top:0.5em;">
-                    <a href="@Url.Action("Home", "PrototypeUI")">Log Out &nbsp; &nbsp;<span class="glyphicon glyphicon-log-out"></span></a>
-                </div>
+                <a href="@Url.Action("Home", "PrototypeUI")" class="btn btn-default btn-block btn-mylink">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    <span style="height:2em;">Log Out</span>
+                </a>
             </div>
         </div>
     </div>
