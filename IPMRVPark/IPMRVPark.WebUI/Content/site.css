@@ -5,11 +5,15 @@
      background-size: auto;
      background-repeat:no-repeat; 
  }
+ header{
+     color: #f8f8f8;     
+     background-color: #453425;
+ }
  body {
      background-color:rgba(255,255,255,0.9);
      border-radius: 5px; 
  }
- td, input:disabled, .glyphicon{
+ tr, td, input:disabled, .glyphicon{
      background-color:rgba(255,255,255,0.5);
  }
  
@@ -18,7 +22,9 @@ a, .btn, .btn-mylink, label, b, .glyphicon, th {
  }
 
 .btn:focus,.btn:active,
-.btn-info:focus,.btn-info:active {
+.btn-info:focus,.btn-info:active,
+.open > .dropdown-toggle.btn-info:hover,
+.open > .dropdown-toggle.btn-info:focus {
    outline: none !important;
 }
 
@@ -40,10 +46,21 @@ a, .btn, .btn-mylink, label, b, .glyphicon, th {
 .btn-info:hover,
 .btn-info:active:hover,
 .btn-info:focus,
-.btn-info:active:focus {
+.btn-info:active:focus,
+.btn-ipmrvpark:hover,
+.btn-ipmrvpark:focus {
     color:#AEA093;
     background-color:#453425;
 }
+
+.open > .dropdown-toggle.btn-info:hover,
+.open > .dropdown-toggle.btn-info:focus{
+    color:#AEA093;
+    background-color:#453425;
+}
+
+
+
 /* Limit the width of the page*/
 @media only screen and (min-width: 360px) {
     body {
