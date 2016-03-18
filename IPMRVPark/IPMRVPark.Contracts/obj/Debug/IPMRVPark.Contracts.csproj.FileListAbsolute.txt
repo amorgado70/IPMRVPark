@@ -1,5 +1,8 @@
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.csprojResolveAssemblyReference.cache
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
-G:\_PROG CAPSTONE\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
