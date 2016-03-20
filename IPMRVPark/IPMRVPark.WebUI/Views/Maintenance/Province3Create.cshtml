@@ -52,18 +52,13 @@
             });
         </script>
 
-        <label class="editor-label">
-            Country
-        </label>
-        <div class="editor-field">
-            <textarea style="width: 174px; height:32px; color: gray;" id="countryName">Type and select from the list</textarea>
-            @*<input type="text" id="countryCode" />*@
-        </div>
+        <label>Country</label>
+        <input type="text" id="countryName"/>
 
         <div class="editor-field">
-                @Html.EditorFor(model => model.countryCode)
-                @Html.ValidationMessageFor(model => model.countryCode)
-            </div>
+            @Html.EditorFor(model => model.countryCode)
+            @Html.ValidationMessageFor(model => model.countryCode)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.name)
