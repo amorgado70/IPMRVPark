@@ -6,3 +6,8 @@ H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contrac
 H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
 H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
 H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
+C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.csprojResolveAssemblyReference.cache

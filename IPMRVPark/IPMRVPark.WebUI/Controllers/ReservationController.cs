@@ -2,11 +2,14 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using IPMRVPark.Models;
+using IPMRVPark.Models.View;
 using IPMRVPark.Contracts.Repositories;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace IPMRVPark.Controllers
+
+
+namespace IPMRVPark.WebUI.Controllers
 {
     public class ReservationController : Controller
     {
@@ -21,58 +24,62 @@ namespace IPMRVPark.Controllers
         }//end Constructor
 
         // Search results for autocomplete dropdown list
-        public List<string> SearchCustomerNameOrPhone(string searchString)
+        public ActionResult SearchByNameOrPhoneResult(string query)
+        {
+            return Json(SearchByNameOrPhoneList(query).Select(c => new { label = c.Label, ID = c.ID }));
+        }
+        private List<SelectionOptionID> SearchByNameOrPhoneList(string searchString)
         {
             //Return value
-            List<string> results = new List<string>();
-
-            //Regex for phone number
-            Regex rgx = new Regex("[^0-9]");
-
-            //Read customer data
-            var allCustomers = customers.GetAll();
-
-            //Check if search is by phone number or by customer name
-            if (searchString.Any(char.IsDigit))
+            List<SelectionOptionID> results = new List<SelectionOptionID>();
+            if (searchString != null)
             {
-                searchString = rgx.Replace(searchString, "");
-                //Filter by phone number
-                foreach (customer_view customer in allCustomers)
+                //Regex for phone number
+                Regex rgx = new Regex("[^0-9]");
+
+                //Read customer data
+                var allCustomers = customers.GetAll();
+
+                //Check if search is by phone number or by customer name
+                if (searchString.Any(char.IsDigit))
                 {
-                    string phoneNumber = rgx.Replace(customer.mainPhone, "");
-                    if (phoneNumber.Contains(searchString))
-                    {
-                        results.Add(customer.fullName + " - Phone: " + customer.mainPhone);
-                    }
-                };
-            }
-            else
-            {
-                allCustomers = allCustomers.Where(s => s.fullName.Contains(searchString));
-
-                if (allCustomers != null)
+                    searchString = rgx.Replace(searchString, "");
+                    //Filter by phone number
                     foreach (customer_view customer in allCustomers)
                     {
-                        results.Add(customer.fullName + " - Phone: " + customer.mainPhone);
+                        string phoneNumber = rgx.Replace(customer.mainPhone, "");
+                        if (phoneNumber.Contains(searchString))
+                        {
+                            results.Add(new SelectionOptionID(customer.id, customer.fullName + " - Phone: " + customer.mainPhone));
+                        }
+                        if (results.Count() > 5)
+                        {
+                            results.Add(new SelectionOptionID(-1, "..."));
+                            return results;
+                        }
                     };
+                }
+                else
+                {
+                    //Filter by phone name
+                    allCustomers = allCustomers.Where(s => s.fullName.Contains(searchString));
+                    if (allCustomers != null)
+                        foreach (customer_view customer in allCustomers)
+                        {
+                            {
+                                results.Add(new SelectionOptionID(customer.id, customer.fullName + " - Phone: " + customer.mainPhone));
+                            }
+                            if (results.Count() > 5)
+                            {
+                                results.Add(new SelectionOptionID(-1, "..."));
+                                return results;
+                            }
+                        };
+                }
             }
             return results;
         }
-        public ActionResult SearchCustomerNameResult(string term)
-        {
-            return Json(SearchCustomerNameOrPhone(term), JsonRequestBehavior.AllowGet);
-        }
-        public List<string> SearchCustomerPhone(string searchString)
-        {
-            var allCustomers = customers.GetAll();
-            var searchResult = allCustomers.Where(s => s.mainPhone.Contains(searchString))
-                .Select(o => o.mainPhone).ToList();
-            return searchResult;
-        }
-        public ActionResult SearchCustomerPhoneResult(string term)
-        {
-            return Json(SearchCustomerPhone(term), JsonRequestBehavior.AllowGet);
-        }
+
 
         // New Reservation page
         public ActionResult Reservation()

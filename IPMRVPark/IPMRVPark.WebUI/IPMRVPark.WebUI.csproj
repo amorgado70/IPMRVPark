@@ -229,6 +229,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\CustomerViewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\PrototypeUIController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -404,9 +405,14 @@
     <Content Include="Views\PrototypeUI\DigitizeMap.cshtml" />
     <Content Include="Views\PrototypeUI\DigitizeMap_parse.cshtml" />
     <Content Include="Views\Reservation\Reservation.cshtml" />
+    <Content Include="Views\Maintenance\ProvinceIndex.cshtml" />
+    <Content Include="Views\Maintenance\Province1Create.cshtml" />
+    <Content Include="Views\Maintenance\Province2Create.cshtml" />
+    <Content Include="Views\Maintenance\Province3Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

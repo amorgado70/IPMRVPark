@@ -1,0 +1,14 @@
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.dll
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.pdb
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.csprojResolveAssemblyReference.cache
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
+E:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.csprojResolveAssemblyReference.cache
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.dll
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.pdb
+H:\85 GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.xml
