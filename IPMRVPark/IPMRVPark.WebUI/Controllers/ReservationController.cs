@@ -35,7 +35,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.selecteditems = selecteditems;
             this.totals_per_selecteditem = totals_per_selecteditem;
             this.rvsites_available = rvsites_available;
-            sessionService = new SessionService(this.sessions,this.customers);
+            sessionService = new SessionService(this.sessions);
         }//end Constructor
 
 

@@ -50,7 +50,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.totals_per_reservationitem = totals_per_reservationitem;
             this.totals_per_payment = totals_per_payment;           
             this.paymentsreservationitems = paymentsreservationitems;
-            sessionService = new SessionService(this.sessions,this.customers);
+            sessionService = new SessionService(this.sessions);
         }//end Constructor
 
         // GET: /Create

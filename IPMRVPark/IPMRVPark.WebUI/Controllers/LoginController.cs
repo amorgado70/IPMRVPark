@@ -30,7 +30,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.customers = customers;
             this.selecteditems = selecteditems;
             this.users = users;
-            sessionService = new SessionService(this.sessions,this.customers);
+            sessionService = new SessionService(this.sessions);
         }//end Constructor
 
         public ActionResult Home()
