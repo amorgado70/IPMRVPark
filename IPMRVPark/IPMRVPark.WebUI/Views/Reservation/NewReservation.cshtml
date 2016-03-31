@@ -12,16 +12,19 @@ Site Reservation
 <script type="text/javascript">
     $(document).ready(function () {
         // Load partial view
-        $('#selected-item').load('../Reservation/CRUDSelectedItem'); // load partial view
-
-       // *****
+        $('#selected-item').load('../Reservation/CRUDSelectedItem', function () {
+            $("#btnSelectSite").click(function () {
+                updateSelectedList(); // Update seleted item list
+            });
+        });
+        ; // load partial view
+        // *****
         updateSelectedList(); //execute when page is ready
         function updateSelectedList() {
             $('#selected-list').load('../Reservation/UpdateSelectedList'); // load partial view
             getReservationTotal(); // Update reservation total
             showReservationSummary(); // Update reservation summary
-        }
-
+        }        
         // ***** Customer Search
         $("#customerName").click(function () {
             $("#customerName").val("");
@@ -109,7 +112,13 @@ Site Reservation
 
 <!-- New Reservation-->
 <div class="container-fluid">
-
+    <!-- IPM Event Year -->
+    <div class="row">
+        <div class="col-xs-12">
+            <label class="pull-right">IPM Event <span id="sessionYear"></span></label>
+        </div>
+    </div>
+    <!-- Session User -->
     @if (ViewBag.UserID == null)
             {
         <div class="row">
