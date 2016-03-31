@@ -15,13 +15,15 @@ namespace IPMRVPark.Models
     public partial class coordinate
     {
         public long ID { get; set; }
-        public long idPlacemarkPolygon { get; set; }
-        public string seqCoordinate { get; set; }
-        public Nullable<decimal> longitude { get; set; }
-        public Nullable<decimal> latitude { get; set; }
-        public Nullable<System.DateTime> createDate { get; set; }
-        public Nullable<System.DateTime> lastUpdate { get; set; }
+        public long idIPMEvent { get; set; }
+        public long idPlaceInMap { get; set; }
+        public int seqCoordinate { get; set; }
+        public string longitude { get; set; }
+        public string latitude { get; set; }
+        public System.DateTime createDate { get; set; }
+        public System.DateTime lastUpdate { get; set; }
     
-        public virtual placemarkpolygon placemarkpolygon { get; set; }
+        public virtual ipmevent ipmevent { get; set; }
+        public virtual placeinmap placeinmap { get; set; }
     }
 }

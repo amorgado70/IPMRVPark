@@ -1,0 +1,184 @@
+@{
+    ViewBag.Title = "Site Reservation";
+    ViewBag.PageTitle = "New Reservation";
+}
+
+@Html.ActionLink("Home", "Menu", "PrototypeUI")
+<span class="glyphicon glyphicon-chevron-right"></span>
+Site Reservation
+<span class="glyphicon glyphicon-chevron-right"></span>
+@Html.ActionLink("New Reservation", "Reservation", "PrototypeUI")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Load partial view
+        $('#selected-item').load('../Reservation/CRUDSelectedItem'); // load partial view
+
+       // *****
+        updateSelectedList(); //execute when page is ready
+        function updateSelectedList() {
+            $('#selected-list').load('../Reservation/UpdateSelectedList'); // load partial view
+            getReservationTotal(); // Update reservation total
+            showReservationSummary(); // Update reservation summary
+        }
+
+        // ***** Customer Search
+        $("#customerName").click(function () {
+            $("#customerName").val("");
+            $('#btnSelectCustomer').prop('disabled', true);
+        });
+        $("#customerName").autocomplete({
+            source: function (request, response) {
+                // define a function to call the action (assuming UserController)
+                $.ajax({
+                    url: '../Search/SearchCustomerByNameOrPhoneResult',
+                    type: "POST",
+                    dataType: "json",
+                    // query will be the param used by the action method
+                    data: { query: request.term },
+                    success: response
+                });
+            },
+            minLength: 1, // require at least one character from the user
+            select: function (event, ui) {
+                $('#idCustomer').val(ui.item.ID); // name of form input field: CustomerID, ProductID
+                $('#btnSelectCustomer').prop('disabled', false);
+                $('#btnSelectCustomer').focus();
+                //$('body').scrollTo('#btnSelectCustomer');
+            }
+        });
+        $.ajax({
+            url: '../Login/GetSessionCustomer',
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                var customerID = data.ID;
+                var customerLabel = data.Label;
+                $("#idCustomer").val(customerID);
+                $('#customerName').val(customerLabel);
+                //$('#btnSelectCustomer').prop('disabled', false);
+            },
+            error: function () {
+                alert("3 Some error occured.");
+            }
+        });
+
+        // ***** Customer Selection
+        $('#btnSelectCustomer').prop('disabled', true);
+        //function will be called on button click
+        $("#btnSelectCustomer").click(function () {
+            $("#waitMsg").show();// Show wait message
+            $('#btnPayment').focus();
+            //$('body').scrollTo('#btnPayment');
+            $.ajax(
+            {
+                type: "POST", //HTTP POST Method
+                url: "/Login/SelectCustomer", // Controller/View
+                dataType: "json",
+                data: { //Passing data
+                    idCustomer: $("#idCustomer").val()
+                },
+                success: function (result) {
+                    showReservationSummary();
+                    $('#btnSelectCustomer').prop('disabled', true);
+                    $("#waitMsg").hide();
+                },
+                error: function (result) {
+                    alert("7 Some error occured.");
+                }
+            });
+        });
+        function getReservationTotal() {
+            $.ajax({
+                url: '../Reservation/GetReservationTotal',
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    $("#reservationTotal").text(result);
+                },
+                error: function () {
+                    alert("9 Some error occured.");
+                }
+            });
+        };
+        function showReservationSummary() {
+            $('#reservation-summary').load('../Reservation/ShowReservationSummary'); // load partial view
+        }
+    });
+</script>
+
+<!-- New Reservation-->
+<div class="container-fluid">
+
+    @if (ViewBag.UserID == null)
+            {
+        <div class="row">
+            <div class="col-sm-6 col-sm-push-6 col-xs-12  form-top-margin">
+                <div class="form-control reservationWarning">NO USER LOGGED IN</div>
+            </div>
+        </div>
+    }
+
+    <!-- RV Site Selection -->
+    <div id="selected-item"></div>
+        
+    <!-- ********** Dynamic Table -->
+    <div class="row top-margin" data-toggle="tooltip" title="List of Selected Sites">
+        <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
+            <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#selected-list">
+                <span class="col-xs-1 glyphicon glyphicon-list"></span>
+                <span class="col-xs-9">Selected Sites &nbsp;<span class="caret"></span></span>
+            </button>
+        </div>
+        <div class="col-sm-4 col-xs-12 form-top-margin">
+            <label>Selected Sites Total</label>
+        </div>
+        <div class="col-sm-4 col-xs-12 form-top-margin">
+            <div id="reservationTotal" type="text" class="form-control" style="text-align:right" disabled></div>
+        </div>
+    </div>
+
+    <div id="selected-list" class="collapse">
+    </div>
+    <!-- ********** -->
+    <!-- Customer Selection -->
+    <div class="row top-margin">
+        <div class="form-group">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>Customer</label>
+            </div>
+            <div class="col-sm-6 col-xs-10 form-top-margin" data-toggle="tooltip" title="Search and selecte with autocomplete">
+                <input type="text" class="form-control" id="customerName" placeholder="Type name or phone and then select from the list" />
+                <input class="text-box single-line" id="idCustomer" name="idCustomer" type="hidden" />
+            </div>
+            <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+                <button id="btnSelectCustomer" class="btn btn-block btn-default">
+                    <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                    <span class="col-xs-9">Select Customer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row top-margin">
+        <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+            <a href="@Url.Action("Customer", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                <span class="glyphicon glyphicon-user"></span>
+                <span>New Customer</span>
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+
+    <div id="reservation-summary">
+    </div>
+    <!-- Proceed To Payment -->
+    <div class="row form-top-margin">
+        <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+            <a id="btnPayment" href="@Url.Action("NewReservation", "Payment")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                <span class="glyphicon glyphicon-usd"></span>
+                <span>Payment</span>
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>

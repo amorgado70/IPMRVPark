@@ -23,3 +23,16 @@ C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\De
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.csprojResolveAssemblyReference.cache
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
 C:\Users\amorgado\Documents\GitHub\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.pdb
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Contracts.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\System.Net.Http.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Contracts.pdb
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.pdb
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\System.Net.Http.xml
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.xml
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.csprojResolveAssemblyReference.cache
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
+C:\Users\amorgado\Documents\GitHub\TempCapstone\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb

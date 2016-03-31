@@ -29,6 +29,23 @@ namespace IPMRVPark.WebUI
             container.RegisterType<IRepositoryBase<reservation_view>, ReservationViewRepository>();
             container.RegisterType<IRepositoryBase<provincecode>, ProvinceRepository>();
             container.RegisterType<IRepositoryBase<countrycode>, CountryRepository>();
+            container.RegisterType<IRepositoryBase<ipmevent>, IPMEventRepository>();
+            container.RegisterType<IRepositoryBase<session>, SessionRepository>();
+            container.RegisterType<IRepositoryBase<selecteditem>, SelectedItemRepository>();
+            container.RegisterType<IRepositoryBase<staff>, StaffRepository>();
+            container.RegisterType<IRepositoryBase<rvsite_available_view>, RVSiteAvailableViewRepository>();
+            container.RegisterType<IRepositoryBase<total_per_selecteditem_view>, TotalPerSeletedItemViewRepository>();
+            container.RegisterType<IRepositoryBase<site_description_rate_view>, SiteDescriptionRateViewRepository>();
+
+            container.RegisterType<IRepositoryBase<placeinmap>, PlaceInMapRepository>();
+            container.RegisterType<IRepositoryBase<reasonforpayment>, ReasonForPaymentRepository>();
+            container.RegisterType<IRepositoryBase<paymentmethod>, PaymentMethodRepository>();
+            container.RegisterType<IRepositoryBase<payment>, PaymentRepository>();
+            container.RegisterType<IRepositoryBase<reservationitem>, ReservationItemRepository>();
+            container.RegisterType<IRepositoryBase<total_per_session_view>, TotalPerSessionViewRepository>();
+            container.RegisterType<IRepositoryBase<total_per_payment_view>, TotalPerPaymentViewRepository>();
+            container.RegisterType<IRepositoryBase<total_per_reservationitem_view>, TotalPerReservationItemViewRepository>();
+            container.RegisterType<IRepositoryBase<paymentreservationitem>, PaymentReservationItemRepository>();
 
             return container;
         }

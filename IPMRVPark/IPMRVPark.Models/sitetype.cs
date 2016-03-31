@@ -16,25 +16,23 @@ namespace IPMRVPark.Models
     {
         public sitetype()
         {
-            this.placemarkpolygons = new HashSet<placemarkpolygon>();
+            this.placeinmaps = new HashSet<placeinmap>();
             this.siterates = new HashSet<siterate>();
         }
     
         public long ID { get; set; }
         public long idIPMEvent { get; set; }
-        public string StyleUrl { get; set; }
-        public string backgroundColor { get; set; }
         public long idSiteSize { get; set; }
-        public long idPowerSupply { get; set; }
-        public Nullable<bool> isUnserviced { get; set; }
-        public Nullable<bool> isForHandicapped { get; set; }
+        public long idService { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
+        public Nullable<long> idStyleUrl { get; set; }
     
         public virtual ipmevent ipmevent { get; set; }
-        public virtual ICollection<placemarkpolygon> placemarkpolygons { get; set; }
-        public virtual powersupply powersupply { get; set; }
+        public virtual ICollection<placeinmap> placeinmaps { get; set; }
+        public virtual service service { get; set; }
         public virtual ICollection<siterate> siterates { get; set; }
         public virtual sitesize sitesize { get; set; }
+        public virtual styleurl styleurl { get; set; }
     }
 }

@@ -7,8 +7,10 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
-          <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
-          <ScalarProperty Name="departureDate" ColumnName="departureDate" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -16,7 +18,8 @@
       <EntityTypeMapping TypeName="ipmrvparkModel.coordinate">
         <MappingFragment StoreEntitySet="coordinates">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="idPlacemarkPolygon" ColumnName="idPlacemarkPolygon" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idPlaceInMap" ColumnName="idPlaceInMap" />
           <ScalarProperty Name="seqCoordinate" ColumnName="seqCoordinate" />
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="latitude" ColumnName="latitude" />
@@ -53,6 +56,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="customeraccounts">
+      <EntityTypeMapping TypeName="ipmrvparkModel.customeraccount">
+        <MappingFragment StoreEntitySet="customeraccount">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
+          <ScalarProperty Name="creditAmount" ColumnName="creditAmount" />
+          <ScalarProperty Name="debitAmount" ColumnName="debitAmount" />
+          <ScalarProperty Name="balanceAmount" ColumnName="balanceAmount" />
+          <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="fees">
+      <EntityTypeMapping TypeName="ipmrvparkModel.fee">
+        <MappingFragment StoreEntitySet="fees">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ipmevents">
       <EntityTypeMapping TypeName="ipmrvparkModel.ipmevent">
         <MappingFragment StoreEntitySet="ipmevent">
@@ -61,12 +94,20 @@
           <ScalarProperty Name="local" ColumnName="local" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="mapFileUrl" ColumnName="mapFileUrl" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="lastDateRefund" ColumnName="lastDateRefund" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="outofservices">
-      <EntityTypeMapping TypeName="ipmrvparkModel.outofservice">
-        <MappingFragment StoreEntitySet="outofservice">
+    <EntitySetMapping Name="outofserviceitems">
+      <EntityTypeMapping TypeName="ipmrvparkModel.outofserviceitem">
+        <MappingFragment StoreEntitySet="outofserviceitem">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
           <ScalarProperty Name="startDate" ColumnName="startDate" />
@@ -88,25 +129,51 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="payments">
-      <EntityTypeMapping TypeName="ipmrvparkModel.payment">
-        <MappingFragment StoreEntitySet="payment">
+    <EntitySetMapping Name="paydoctypes">
+      <EntityTypeMapping TypeName="ipmrvparkModel.paydoctype">
+        <MappingFragment StoreEntitySet="paydoctype">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="idPaymentMode" ColumnName="idPaymentMode" />
-          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
-          <ScalarProperty Name="idReservationOrder" ColumnName="idReservationOrder" />
-          <ScalarProperty Name="reasonForPayment" ColumnName="reasonForPayment" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="paymentmodes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.paymentmode">
-        <MappingFragment StoreEntitySet="paymentmode">
+    <EntitySetMapping Name="payments">
+      <EntityTypeMapping TypeName="ipmrvparkModel.payment">
+        <MappingFragment StoreEntitySet="payment">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="idPaymentMethod" ColumnName="idPaymentMethod" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="idReasonForPayment" ColumnName="idReasonForPayment" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="isCredit" ColumnName="isCredit" />
+          <ScalarProperty Name="payDocType" ColumnName="payDocType" />
+          <ScalarProperty Name="docNumber" ColumnName="docNumber" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="paymentmethods">
+      <EntityTypeMapping TypeName="ipmrvparkModel.paymentmethod">
+        <MappingFragment StoreEntitySet="paymentmethod">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="doctype" ColumnName="doctype" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="paymentreservationitems">
+      <EntityTypeMapping TypeName="ipmrvparkModel.paymentreservationitem">
+        <MappingFragment StoreEntitySet="paymentreservationitem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -125,9 +192,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="placemarkpolygons">
-      <EntityTypeMapping TypeName="ipmrvparkModel.placemarkpolygon">
-        <MappingFragment StoreEntitySet="placemarkpolygon">
+    <EntitySetMapping Name="placeinmaps">
+      <EntityTypeMapping TypeName="ipmrvparkModel.placeinmap">
+        <MappingFragment StoreEntitySet="placeinmap">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
           <ScalarProperty Name="tag" ColumnName="tag" />
@@ -136,16 +203,6 @@
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
           <ScalarProperty Name="isRVSite" ColumnName="isRVSite" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="powersupplies">
-      <EntityTypeMapping TypeName="ipmrvparkModel.powersupply">
-        <MappingFragment StoreEntitySet="powersupply">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="createDate" ColumnName="createDate" />
-          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -160,15 +217,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="reasonforpayments">
+      <EntityTypeMapping TypeName="ipmrvparkModel.reasonforpayment">
+        <MappingFragment StoreEntitySet="reasonforpayment">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="reservationitems">
       <EntityTypeMapping TypeName="ipmrvparkModel.reservationitem">
         <MappingFragment StoreEntitySet="reservationitem">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="idReservationOrder" ColumnName="idReservationOrder" />
-          <ScalarProperty Name="seqReservationItem" ColumnName="seqReservationItem" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
-          <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
-          <ScalarProperty Name="departureDate" ColumnName="departureDate" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
           <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
           <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
           <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
@@ -190,15 +257,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="reservationorders">
-      <EntityTypeMapping TypeName="ipmrvparkModel.reservationorder">
-        <MappingFragment StoreEntitySet="reservationorder">
+    <EntitySetMapping Name="selecteditems">
+      <EntityTypeMapping TypeName="ipmrvparkModel.selecteditem">
+        <MappingFragment StoreEntitySet="selecteditem">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
           <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
           <ScalarProperty Name="idStaff" ColumnName="idStaff" />
-          <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
-          <ScalarProperty Name="inShoppingCart" ColumnName="inShoppingCart" />
-          <ScalarProperty Name="paymentReceived" ColumnName="paymentReceived" />
+          <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="services">
+      <EntityTypeMapping TypeName="ipmrvparkModel.service">
+        <MappingFragment StoreEntitySet="service">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sessions">
+      <EntityTypeMapping TypeName="ipmrvparkModel.session">
+        <MappingFragment StoreEntitySet="session">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="sessionGUID" ColumnName="sessionGUID" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="isLoggedIn" ColumnName="isLoggedIn" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -213,6 +309,7 @@
           <ScalarProperty Name="rate" ColumnName="rate" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -231,14 +328,11 @@
         <MappingFragment StoreEntitySet="sitetype">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
-          <ScalarProperty Name="StyleUrl" ColumnName="StyleUrl" />
-          <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
           <ScalarProperty Name="idSiteSize" ColumnName="idSiteSize" />
-          <ScalarProperty Name="idPowerSupply" ColumnName="idPowerSupply" />
-          <ScalarProperty Name="isUnserviced" ColumnName="isUnserviced" />
-          <ScalarProperty Name="isForHandicapped" ColumnName="isForHandicapped" />
+          <ScalarProperty Name="idService" ColumnName="idService" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="idStyleUrl" ColumnName="idStyleUrl" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -247,6 +341,18 @@
         <MappingFragment StoreEntitySet="staff">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="styleurls">
+      <EntityTypeMapping TypeName="ipmrvparkModel.styleurl">
+        <MappingFragment StoreEntitySet="styleurl">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="styleUrl1" ColumnName="styleUrl" />
+          <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -276,17 +382,29 @@
     <EntitySetMapping Name="reservation_view">
       <EntityTypeMapping TypeName="ipmrvparkModel.reservation_view">
         <MappingFragment StoreEntitySet="reservation_view">
-          <ScalarProperty Name="idReservationOrder" ColumnName="idReservationOrder" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
           <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
           <ScalarProperty Name="RVSite" ColumnName="RVSite" />
           <ScalarProperty Name="fullName" ColumnName="fullName" />
-          <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
-          <ScalarProperty Name="departureDate" ColumnName="departureDate" />
+          <ScalarProperty Name="checkInlDate" ColumnName="checkInlDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
           <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
           <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
           <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rvsite_available_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_available_view">
+        <MappingFragment StoreEntitySet="rvsite_available_view">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="site" ColumnName="site" />
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -316,6 +434,129 @@
           <ScalarProperty Name="ReservedUntil" ColumnName="ReservedUntil" />
           <ScalarProperty Name="OutOfServiceFrom" ColumnName="OutOfServiceFrom" />
           <ScalarProperty Name="OutOfServiceUntil" ColumnName="OutOfServiceUntil" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="site_description_rate_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.site_description_rate_view">
+        <MappingFragment StoreEntitySet="site_description_rate_view">
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sitedescription_by_sitetype_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.sitedescription_by_sitetype_view">
+        <MappingFragment StoreEntitySet="sitedescription_by_sitetype_view">
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="siterate_by_sitetype_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.siterate_by_sitetype_view">
+        <MappingFragment StoreEntitySet="siterate_by_sitetype_view">
+          <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="staff_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.staff_view">
+        <MappingFragment StoreEntitySet="staff_view">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="total_per_customer_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_customer_view">
+        <MappingFragment StoreEntitySet="total_per_customer_view">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="total_per_payment_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_payment_view">
+        <MappingFragment StoreEntitySet="total_per_payment_view">
+          <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="reasonForPayment" ColumnName="reasonForPayment" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="paymentAmount" ColumnName="paymentAmount" />
+          <ScalarProperty Name="reservationitem_total" ColumnName="reservationitem_total" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="total_per_reservationitem_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_reservationitem_view">
+        <MappingFragment StoreEntitySet="total_per_reservationitem_view">
+          <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
+          <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="site" ColumnName="site" />
+          <ScalarProperty Name="descriptionRVSite" ColumnName="descriptionRVSite" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="weeks" ColumnName="weeks" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="days" ColumnName="days" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="total_per_selecteditem_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_selecteditem_view">
+        <MappingFragment StoreEntitySet="total_per_selecteditem_view">
+          <ScalarProperty Name="idSelected" ColumnName="idSelected" />
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+          <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="site" ColumnName="site" />
+          <ScalarProperty Name="descriptionRVSite" ColumnName="descriptionRVSite" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="weeks" ColumnName="weeks" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="days" ColumnName="days" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="total_per_session_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_session_view">
+        <MappingFragment StoreEntitySet="total_per_session_view">
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="total_amount" ColumnName="total_amount" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

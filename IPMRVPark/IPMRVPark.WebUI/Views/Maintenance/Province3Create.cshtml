@@ -26,12 +26,9 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#countryName").click(function () {
-                    $("#countryName").text('');
-                });
                 $("#countryName").autocomplete({
                     source: function (request, response) {
-                        // define a function to call your Action (assuming UserController)
+                        // define a function to call the action (assuming UserController)
                         $.ajax({
                             // URL of controller and action method
                             url: '/Maintenance/SearchByNameResult',
@@ -52,12 +49,15 @@
             });
         </script>
 
-        <label>Country</label>
-        <input type="text" id="countryName"/>
-
+        <div class="editor-label">
+            <label for="countryCode">Country</label>
+        </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.countryCode)
-            @Html.ValidationMessageFor(model => model.countryCode)
+            <!-- input to transfer values to autocomplete function -->
+            <input class="text-box single-line" type="text" id="countryName" />
+            <!-- actual form field input, receive value from autocomplete function -->
+            <input class="text-box single-line" id="countryCode" name="countryCode" type="hidden" value="" />
+            <span class="field-validation-valid" data-valmsg-for="countryCode" data-valmsg-replace="true"></span>
         </div>
 
         <div class="editor-label">

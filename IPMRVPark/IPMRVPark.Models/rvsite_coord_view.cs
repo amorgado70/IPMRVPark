@@ -15,10 +15,10 @@ namespace IPMRVPark.Models
     public partial class rvsite_coord_view
     {
         public long id { get; set; }
-        public string seq { get; set; }
+        public int seq { get; set; }
         public long Year { get; set; }
         public string RVSite { get; set; }
-        public Nullable<decimal> longitude { get; set; }
-        public Nullable<decimal> latitude { get; set; }
+        public string longitude { get; set; }
+        public string latitude { get; set; }
     }
 }

@@ -14,17 +14,31 @@ namespace IPMRVPark.Models
     
     public partial class payment
     {
+        public payment()
+        {
+            this.customeraccounts = new HashSet<customeraccount>();
+            this.paymentreservationitems = new HashSet<paymentreservationitem>();
+        }
+    
         public long ID { get; set; }
-        public long idPaymentMode { get; set; }
+        public long idPaymentMethod { get; set; }
         public long idCustomer { get; set; }
-        public Nullable<long> idReservationOrder { get; set; }
-        public string reasonForPayment { get; set; }
+        public Nullable<long> idReasonForPayment { get; set; }
         public decimal amount { get; set; }
+        public Nullable<bool> isCredit { get; set; }
+        public Nullable<long> payDocType { get; set; }
+        public string docNumber { get; set; }
+        public string comments { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
+        public Nullable<long> idSession { get; set; }
     
         public virtual customer customer { get; set; }
-        public virtual paymentmode paymentmode { get; set; }
-        public virtual reservationorder reservationorder { get; set; }
+        public virtual ICollection<customeraccount> customeraccounts { get; set; }
+        public virtual paydoctype paydoctype1 { get; set; }
+        public virtual paymentmethod paymentmethod { get; set; }
+        public virtual reasonforpayment reasonforpayment { get; set; }
+        public virtual session session { get; set; }
+        public virtual ICollection<paymentreservationitem> paymentreservationitems { get; set; }
     }
 }
