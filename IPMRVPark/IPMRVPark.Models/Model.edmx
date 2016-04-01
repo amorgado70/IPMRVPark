@@ -53,6 +53,7 @@
           <Property Name="postalCode" Type="char" MaxLength="10" />
           <Property Name="countryCode" Type="char" MaxLength="3" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
+          <Property Name="isEmailReceipt" Type="bit" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
@@ -256,6 +257,7 @@
           <Property Name="isSiteChecked" Type="bit" Nullable="false" />
           <Property Name="checkInDate" Type="date" Nullable="false" />
           <Property Name="checkOutDate" Type="date" Nullable="false" />
+          <Property Name="idReservationItem" Type="bigint" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
@@ -365,6 +367,7 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
           <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isEmailReceipt" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -970,6 +973,18 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="SelectedItem_ReservationItem">
+          <End Role="reservationitem" Type="Self.reservationitem" Multiplicity="0..1" />
+          <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reservationitem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="selecteditem">
+              <PropertyRef Name="idReservationItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="SelectedItem_RVSite_FK">
           <End Role="placeinmap" Type="Self.placeinmap" Multiplicity="0..1" />
           <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
@@ -1172,7 +1187,8 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
 `customer_view`.`countryCode`, 
 `customer_view`.`countryName`, 
 `customer_view`.`provinceCode`, 
-`customer_view`.`provinceName`
+`customer_view`.`provinceName`, 
+`customer_view`.`isEmailReceipt`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1455,6 +1471,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
             <End Role="ipmevent" EntitySet="ipmevent" />
             <End Role="selecteditem" EntitySet="selecteditem" />
           </AssociationSet>
+          <AssociationSet Name="SelectedItem_ReservationItem" Association="Self.SelectedItem_ReservationItem">
+            <End Role="reservationitem" EntitySet="reservationitem" />
+            <End Role="selecteditem" EntitySet="selecteditem" />
+          </AssociationSet>
           <AssociationSet Name="SelectedItem_RVSite_FK" Association="Self.SelectedItem_RVSite_FK">
             <End Role="placeinmap" EntitySet="placeinmap" />
             <End Role="selecteditem" EntitySet="selecteditem" />
@@ -1567,6 +1587,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <Property Name="postalCode" Type="String" />
           <Property Name="countryCode" Type="String" />
           <Property Name="comments" Type="String" />
+          <Property Name="isEmailReceipt" Type="Boolean" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
           <NavigationProperty Name="countrycode1" Relationship="Self.Customer_countryCode_FK" FromRole="customer" ToRole="countrycode" />
@@ -1799,6 +1820,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <NavigationProperty Name="placeinmap" Relationship="Self.ReservationItem_PlaceInMap_FK" FromRole="reservationitem" ToRole="placeinmap" />
           <NavigationProperty Name="staff" Relationship="Self.idStaff_Staff_FK" FromRole="reservationitem" ToRole="staff" />
           <NavigationProperty Name="reservationitem_partymember" Relationship="Self.Party2_ReservationItem_FK" FromRole="reservationitem" ToRole="reservationitem_partymember" />
+          <NavigationProperty Name="selecteditems" Relationship="Self.SelectedItem_ReservationItem" FromRole="reservationitem" ToRole="selecteditem" />
         </EntityType>
         <EntityType Name="reservationitem_partymember">
           <Key>
@@ -1826,11 +1848,13 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
           <Property Name="checkInDate" Type="DateTime" Nullable="false" />
           <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+          <Property Name="idReservationItem" Type="Int64" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
           <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
           <NavigationProperty Name="ipmevent" Relationship="Self.SelectedItem_IPMEvent_FK" FromRole="selecteditem" ToRole="ipmevent" />
           <NavigationProperty Name="placeinmap" Relationship="Self.SelectedItem_RVSite_FK" FromRole="selecteditem" ToRole="placeinmap" />
+          <NavigationProperty Name="reservationitem" Relationship="Self.SelectedItem_ReservationItem" FromRole="selecteditem" ToRole="reservationitem" />
           <NavigationProperty Name="session" Relationship="Self.SelectedItem_Session_FK" FromRole="selecteditem" ToRole="session" />
           <NavigationProperty Name="staff" Relationship="Self.SelectedItem_Staff" FromRole="selecteditem" ToRole="staff" />
         </EntityType>
@@ -1959,6 +1983,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <Property Name="countryName" Type="String" Nullable="false" />
           <Property Name="provinceCode" Type="String" Nullable="false" />
           <Property Name="provinceName" Type="String" Nullable="false" />
+          <Property Name="isEmailReceipt" Type="Boolean" />
         </EntityType>
         <EntityType Name="reservation_view">
           <Key>
@@ -2610,6 +2635,18 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="SelectedItem_ReservationItem">
+          <End Role="reservationitem" Type="Self.reservationitem" Multiplicity="0..1" />
+          <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reservationitem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="selecteditem">
+              <PropertyRef Name="idReservationItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="SelectedItem_Session_FK">
           <End Role="session" Type="Self.session" Multiplicity="1" />
           <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
@@ -2884,6 +2921,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
             <End Role="reservationitem" EntitySet="reservationitems" />
             <End Role="reservationitem_partymember" EntitySet="reservationitem_partymember" />
           </AssociationSet>
+          <AssociationSet Name="SelectedItem_ReservationItem" Association="Self.SelectedItem_ReservationItem">
+            <End Role="reservationitem" EntitySet="reservationitems" />
+            <End Role="selecteditem" EntitySet="selecteditems" />
+          </AssociationSet>
           <AssociationSet Name="SelectedItem_Session_FK" Association="Self.SelectedItem_Session_FK">
             <End Role="session" EntitySet="sessions" />
             <End Role="selecteditem" EntitySet="selecteditems" />
@@ -2969,6 +3010,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
                 <ScalarProperty Name="postalCode" ColumnName="postalCode" />
                 <ScalarProperty Name="countryCode" ColumnName="countryCode" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
               </MappingFragment>
@@ -3188,6 +3230,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
                 <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
                 <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
                 <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+                <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
               </MappingFragment>
@@ -3297,6 +3340,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
                 <ScalarProperty Name="countryName" ColumnName="countryName" />
                 <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
                 <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+                <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

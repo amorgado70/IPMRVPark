@@ -383,7 +383,7 @@
     <Content Include="Views\Maintenance\Province1Create.cshtml" />
     <Content Include="Views\Maintenance\Province2Create.cshtml" />
     <Content Include="Views\Maintenance\Province3Create.cshtml" />
-    <Content Include="Views\Reservation\Selected.cshtml" />
+    <Content Include="Views\Reservation\SelectedList.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Payment\NewReservation.cshtml" />
     <Content Include="Views\Reservation\SelectionSummary.cshtml" />
@@ -395,7 +395,9 @@
     <Content Include="Views\Login\EmptyPartial.cshtml" />
     <Content Include="Views\Reservation\CRUDSelectedItem.cshtml" />
     <Content Include="Views\Reservation\Selected ORIG.cshtml" />
-    <Content Include="Views\Reservation\EditReservation.cshtml" />
+    <Content Include="Views\Reservation\EditSelected.cshtml" />
+    <Content Include="Views\Reservation\SearchReservation.cshtml" />
+    <Content Include="Views\Reservation\ReservedList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

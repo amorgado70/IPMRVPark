@@ -33,6 +33,7 @@ namespace IPMRVPark.Models
         public string postalCode { get; set; }
         public string countryCode { get; set; }
         public string comments { get; set; }
+        public Nullable<bool> isEmailReceipt { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
     

@@ -48,6 +48,7 @@
     <Property Name="postalCode" Type="char" MaxLength="10" />
     <Property Name="countryCode" Type="char" MaxLength="3" />
     <Property Name="comments" Type="varchar" MaxLength="120" />
+    <Property Name="isEmailReceipt" Type="bit" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
@@ -251,6 +252,7 @@
     <Property Name="isSiteChecked" Type="bit" Nullable="false" />
     <Property Name="checkInDate" Type="date" Nullable="false" />
     <Property Name="checkOutDate" Type="date" Nullable="false" />
+    <Property Name="idReservationItem" Type="bigint" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
@@ -360,6 +362,7 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
     <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="isEmailReceipt" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -965,6 +968,18 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="SelectedItem_ReservationItem">
+    <End Role="reservationitem" Type="Self.reservationitem" Multiplicity="0..1" />
+    <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reservationitem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="selecteditem">
+        <PropertyRef Name="idReservationItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="SelectedItem_RVSite_FK">
     <End Role="placeinmap" Type="Self.placeinmap" Multiplicity="0..1" />
     <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
@@ -1167,7 +1182,8 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
 `customer_view`.`countryCode`, 
 `customer_view`.`countryName`, 
 `customer_view`.`provinceCode`, 
-`customer_view`.`provinceName`
+`customer_view`.`provinceName`, 
+`customer_view`.`isEmailReceipt`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1448,6 +1464,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
     </AssociationSet>
     <AssociationSet Name="SelectedItem_IPMEvent_FK" Association="Self.SelectedItem_IPMEvent_FK">
       <End Role="ipmevent" EntitySet="ipmevent" />
+      <End Role="selecteditem" EntitySet="selecteditem" />
+    </AssociationSet>
+    <AssociationSet Name="SelectedItem_ReservationItem" Association="Self.SelectedItem_ReservationItem">
+      <End Role="reservationitem" EntitySet="reservationitem" />
       <End Role="selecteditem" EntitySet="selecteditem" />
     </AssociationSet>
     <AssociationSet Name="SelectedItem_RVSite_FK" Association="Self.SelectedItem_RVSite_FK">

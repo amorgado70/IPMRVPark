@@ -1,0 +1,97 @@
+@{
+    ViewBag.Title = "Site Reservation";
+    ViewBag.PageTitle = "Search Reservation";
+}
+
+@Html.ActionLink("Home", "Menu", "PrototypeUI")
+<span class="glyphicon glyphicon-chevron-right"></span>
+Site Reservation
+<span class="glyphicon glyphicon-chevron-right"></span>
+@Html.ActionLink("Search Reservation", "Reservation", "PrototypeUI")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // *****
+        function updateReservedList() {
+            var idCustomer = $('#idCustomer').val();
+            var siteID = 0;
+            $('#reserved-list').load('../Reservation/UpdateReservedList?idCustomer='+idCustomer); // load partial view
+        }
+        // ***** Customer Search
+        $("#customerName").click(function () {
+            $("#customerName").val("");
+            $('#btnSearchCustomer').prop('disabled', true);
+        });
+        $("#customerName").autocomplete({
+            source: function (request, response) {
+                // define a function to call the action (assuming UserController)
+                $.ajax({
+                    url: '../Search/SearchCustomerByNameOrPhoneResult',
+                    type: "POST",
+                    dataType: "json",
+                    // query will be the param used by the action method
+                    data: { query: request.term },
+                    success: response
+                });
+            },
+            minLength: 1, // require at least one character from the user
+            select: function (event, ui) {
+                $('#idCustomer').val(ui.item.ID); // name of form input field: CustomerID, ProductID
+                $('#btnSearchCustomer').prop('disabled', false);
+                $('#btnSearchCustomer').focus();
+            }
+        });
+        // ***** Customer Selection
+        $('#btnSearchCustomer').prop('disabled', true);
+        //function will be called on button click
+        $("#btnSearchCustomer").click(function () {
+            updateReservedList();
+            $("#waitMsg").show();// Show wait message
+        });
+    });
+</script>
+
+<!-- New Reservation-->
+<div class="container-fluid">
+
+    @if (ViewBag.UserID == null)
+            {
+        <div class="row">
+            <div class="col-sm-6 col-sm-push-6 col-xs-12  form-top-margin">
+                <div class="form-control reservationWarning">NO USER LOGGED IN</div>
+            </div>
+        </div>
+    }
+
+    <!-- Customer Selection -->
+    <div class="row top-margin">
+        <div class="form-group">
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>Customer</label>
+            </div>
+            <div class="col-sm-6 col-xs-10 form-top-margin" data-toggle="tooltip" title="Search and selecte with autocomplete">
+                <input type="text" class="form-control" id="customerName" placeholder="Type name or phone and then select from the list" />
+                <input class="text-box single-line" id="idCustomer" name="idCustomer" type="hidden" value="-1"/>
+            </div>
+            <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+                <button id="btnSearchCustomer" class="btn btn-block btn-default">
+                    <span class="col-xs-1 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-9">Search By Customer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ********** Dynamic Table -->
+    <div class="row top-margin" data-toggle="tooltip" title="List of Reserved Sites">
+        <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
+            <span class="col-xs-1 glyphicon glyphicon-list"></span>
+            <span class="col-xs-9">Reserved Sites</span>
+        </div>
+    </div>
+
+    <div id="reserved-list">
+    </div>
+    <!-- ********** -->
+
+</div>

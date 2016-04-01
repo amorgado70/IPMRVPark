@@ -1,7 +1,8 @@
-﻿@model IEnumerable<IPMRVPark.Models.total_per_selecteditem_view>
+﻿@model IEnumerable<IPMRVPark.Models.total_per_reservationitem_view>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#waitMsg").hide();// Hide wait message
         $("#removeAllSelected").click(function () {
             $("#waitMsg").show();// Show wait message
         });
@@ -13,8 +14,8 @@
     <table class="table">
         <thead>
             <tr>
-                @*<th style="text-align:right;">Selected</th>*@
                 <th>Site</th>
+                <th>Type</th>
                 <th>Check In</th>
                 <th>Check Out</th>
                 <th style="text-align:right;">Total</th>
@@ -25,7 +26,17 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu pull-right">
-                            <li><a id="removeAllSelected" href="@Url.Action("RemoveAllSelected","Reservation")"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel All</a></li>
+                            <li>
+                                <a id="editAllSelected" href="@Url.Action("EditAllSelected","Reservation")">
+                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit All
+                                </a>
+                            </li>
+
+                            <li>
+                                <a id="removeAllSelected" href="@Url.Action("RemoveAllSelected","Reservation")">
+                                    <span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel All
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </th>
@@ -36,11 +47,11 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @*<td style="text-align:right;">@Html.DisplayFor(modelItem => item.isSiteChecked)<input type="checkbox" checked></td>*@
                     <td>@Html.DisplayFor(modelItem => item.site)</td>
+                    <td>@Html.DisplayFor(modelItem => item.descriptionRVSite)</td>
                     <td>@item.checkInDate.ToString("ddd"), @item.checkInDate.ToString("dd") @item.checkInDate.ToString("MMM")</td>
                     <td>@item.checkOutDate.ToString("ddd"), @item.checkOutDate.ToString("dd") @item.checkOutDate.ToString("MMM")</td>
-                    <td style="text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
+                    <td style="text-align:right;">@Html.DisplayFor(modelItem => item.amount)</td>
                     <td style="border-top:none">
                         <div class="dropdown pull-right">
                             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
@@ -49,18 +60,30 @@
                             </button>
                             <ul class="dropdown-menu pull-right">
                                 <li>
-                                    <a href="@Url.Action("EditReservation", "Reservation", new { selectedID = item.idSelected })">
-                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
+                                    <a href="@Url.Action("EditSelected", "Reservation", new { selectedID = 2 })">
+                                        <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
                                     </a>
                                 </li>
-                                <li><a href="@Url.Action("RemoveSelected","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
+                                <li>
+                                    <a href="@Url.Action("RemoveSelected","Reservation", new { id= 2 })">
+                                        <span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td style="border-top:none;"></td>
+                    <td style="border-top:none;">Customer:</td>
+                    <td colspan="2" style="border-top:none;">@Html.DisplayFor(modelItem => item.fullName)</td>
+                    <td style="border-top:none;">@Html.DisplayFor(modelItem => item.mainPhone)</td>
+                    <td style="border-top:none;"></td>
+                </tr>
     }
             <tr>
                 <td>Total</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td style="text-align:right;">@ViewBag.totalAmount</td>
@@ -69,10 +92,3 @@
         </tbody>
     </table>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        @foreach (var item in Model)
-                    {}
-
-    });
-</script>

@@ -31,5 +31,6 @@ namespace IPMRVPark.Models
         public string countryName { get; set; }
         public string provinceCode { get; set; }
         public string provinceName { get; set; }
+        public Nullable<bool> isEmailReceipt { get; set; }
     }
 }

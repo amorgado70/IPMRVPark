@@ -54,6 +54,7 @@
     <Property Name="postalCode" Type="String" />
     <Property Name="countryCode" Type="String" />
     <Property Name="comments" Type="String" />
+    <Property Name="isEmailReceipt" Type="Boolean" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
     <NavigationProperty Name="countrycode1" Relationship="Self.Customer_countryCode_FK" FromRole="customer" ToRole="countrycode" />
@@ -286,6 +287,7 @@
     <NavigationProperty Name="placeinmap" Relationship="Self.ReservationItem_PlaceInMap_FK" FromRole="reservationitem" ToRole="placeinmap" />
     <NavigationProperty Name="staff" Relationship="Self.idStaff_Staff_FK" FromRole="reservationitem" ToRole="staff" />
     <NavigationProperty Name="reservationitem_partymember" Relationship="Self.Party2_ReservationItem_FK" FromRole="reservationitem" ToRole="reservationitem_partymember" />
+    <NavigationProperty Name="selecteditems" Relationship="Self.SelectedItem_ReservationItem" FromRole="reservationitem" ToRole="selecteditem" />
   </EntityType>
   <EntityType Name="reservationitem_partymember">
     <Key>
@@ -313,11 +315,13 @@
     <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="idReservationItem" Type="Int64" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
     <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
     <NavigationProperty Name="ipmevent" Relationship="Self.SelectedItem_IPMEvent_FK" FromRole="selecteditem" ToRole="ipmevent" />
     <NavigationProperty Name="placeinmap" Relationship="Self.SelectedItem_RVSite_FK" FromRole="selecteditem" ToRole="placeinmap" />
+    <NavigationProperty Name="reservationitem" Relationship="Self.SelectedItem_ReservationItem" FromRole="selecteditem" ToRole="reservationitem" />
     <NavigationProperty Name="session" Relationship="Self.SelectedItem_Session_FK" FromRole="selecteditem" ToRole="session" />
     <NavigationProperty Name="staff" Relationship="Self.SelectedItem_Staff" FromRole="selecteditem" ToRole="staff" />
   </EntityType>
@@ -446,6 +450,7 @@
     <Property Name="countryName" Type="String" Nullable="false" />
     <Property Name="provinceCode" Type="String" Nullable="false" />
     <Property Name="provinceName" Type="String" Nullable="false" />
+    <Property Name="isEmailReceipt" Type="Boolean" />
   </EntityType>
   <EntityType Name="reservation_view">
     <Key>
@@ -1097,6 +1102,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="SelectedItem_ReservationItem">
+    <End Role="reservationitem" Type="Self.reservationitem" Multiplicity="0..1" />
+    <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="reservationitem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="selecteditem">
+        <PropertyRef Name="idReservationItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="SelectedItem_Session_FK">
     <End Role="session" Type="Self.session" Multiplicity="1" />
     <End Role="selecteditem" Type="Self.selecteditem" Multiplicity="*" />
@@ -1370,6 +1387,10 @@
     <AssociationSet Name="Party2_ReservationItem_FK" Association="Self.Party2_ReservationItem_FK">
       <End Role="reservationitem" EntitySet="reservationitems" />
       <End Role="reservationitem_partymember" EntitySet="reservationitem_partymember" />
+    </AssociationSet>
+    <AssociationSet Name="SelectedItem_ReservationItem" Association="Self.SelectedItem_ReservationItem">
+      <End Role="reservationitem" EntitySet="reservationitems" />
+      <End Role="selecteditem" EntitySet="selecteditems" />
     </AssociationSet>
     <AssociationSet Name="SelectedItem_Session_FK" Association="Self.SelectedItem_Session_FK">
       <End Role="session" EntitySet="sessions" />

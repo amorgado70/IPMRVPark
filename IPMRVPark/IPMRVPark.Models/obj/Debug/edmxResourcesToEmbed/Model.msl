@@ -51,6 +51,7 @@
           <ScalarProperty Name="postalCode" ColumnName="postalCode" />
           <ScalarProperty Name="countryCode" ColumnName="countryCode" />
           <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -270,6 +271,7 @@
           <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
           <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
           <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -379,6 +381,7 @@
           <ScalarProperty Name="countryName" ColumnName="countryName" />
           <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
           <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+          <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

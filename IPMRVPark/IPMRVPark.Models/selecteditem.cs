@@ -23,12 +23,14 @@ namespace IPMRVPark.Models
         public bool isSiteChecked { get; set; }
         public System.DateTime checkInDate { get; set; }
         public System.DateTime checkOutDate { get; set; }
+        public Nullable<long> idReservationItem { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
     
         public virtual customer customer { get; set; }
         public virtual ipmevent ipmevent { get; set; }
         public virtual placeinmap placeinmap { get; set; }
+        public virtual reservationitem reservationitem { get; set; }
         public virtual session session { get; set; }
         public virtual staff staff { get; set; }
     }

@@ -17,6 +17,7 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<rvsite_available_view> rvsites_available;
         IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
+        IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
         SessionService sessionService;
 
         public ReservationController(
@@ -26,6 +27,7 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<rvsite_available_view> rvsites_available,
             IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
+            IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
             IRepositoryBase<session> sessions)
         {
             this.customers = customers;
@@ -34,6 +36,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.placesinmap = placesinmap;
             this.selecteditems = selecteditems;
             this.totals_per_selecteditem = totals_per_selecteditem;
+            this.totals_per_reservationitem = totals_per_reservationitem;
             this.rvsites_available = rvsites_available;
             sessionService = new SessionService(this.sessions);
         }//end Constructor
@@ -42,7 +45,6 @@ namespace IPMRVPark.WebUI.Controllers
         #region New Reservation
 
         const long newReservationMode = -1;
-
 
         public ActionResult CRUDSelectedItem(long selectedID = newReservationMode)
         {
@@ -110,9 +112,6 @@ namespace IPMRVPark.WebUI.Controllers
 
             return PartialView();
         }
-
-
-
 
         // Main reservation page
         public ActionResult NewReservation(long selectedID = newReservationMode)
@@ -183,7 +182,7 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         // Edit reservation page
-        public ActionResult EditReservation(long selectedID = newReservationMode)
+        public ActionResult EditSelected(long selectedID = newReservationMode)
         {
             session _session = sessionService.GetSession(this.HttpContext);
             ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
@@ -249,6 +248,17 @@ namespace IPMRVPark.WebUI.Controllers
 
             return View();
         }
+
+        // Search reservation page
+        public ActionResult SearchReservation()
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+
+            ViewBag.UserID = _session.idStaff;
+
+            return View();
+        }
+
 
 
         // Update session's check-in and check-out dates
@@ -356,7 +366,33 @@ namespace IPMRVPark.WebUI.Controllers
                 ViewBag.totalAmount = sum.ToString("C");
             }
 
-            return PartialView("Selected", _selecteditem);
+            return PartialView("SelectedList", _selecteditem);
+        }
+
+        // For Partial View : Reserved Site List
+        public ActionResult UpdateReservedList(long idCustomer=-1)
+        {
+            var _reserveditem = totals_per_reservationitem.GetAll();
+            if (idCustomer != -1)
+            {
+                _reserveditem = _reserveditem.Where(q => q.idCustomer == idCustomer ).OrderByDescending(o => o.idRVSite);
+            }
+
+            int count = 0;
+            decimal sum = 0;
+            foreach (var i in _reserveditem)
+            {
+                count = count + 1;
+                sum = sum + i.amount.Value;
+            }
+
+            if (count > 0)
+            {
+                ViewBag.totalAmount = sum.ToString("C");
+            }
+
+            //return PartialView("../Login/EmptyPartial");
+            return PartialView("../Reservation/ReservedList", _reserveditem);
         }
 
         // For Partial View : Show Reservation Summary
