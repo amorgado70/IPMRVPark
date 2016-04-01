@@ -20,6 +20,12 @@ Payments & Refunds
         $("#btnPrint").click(function () {
             window.print();
         });
+        var reservationTotal = parseFloat(@ViewBag.ReservationTotal);
+        var provinceTax = parseFloat(@ViewBag.ProvinceTax);
+        var i = (reservationTotal * 100 / (100 + provinceTax)).toFixed(2);
+        var ii = reservationTotal - i;
+        $('#i').text(i);
+        $('#ii').text(ii.toFixed(2));
     });
 </script>
 
@@ -76,6 +82,14 @@ Payments & Refunds
                             <td style="text-align:right;">@Html.DisplayFor(modelItem => item.amount)</td>
                         </tr>
                     }
+                    <tr>
+                        <td colspan="3" style="text-align:right;">Total Without Tax</td>
+                        <td id="i" style="text-align:right;"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align:right;">Tax HST/QST/PST (@ViewBag.ProvinceTax%)</td>
+                        <td id="ii" style="text-align:right;"></td>
+                    </tr>
                     <tr>
                         <td>Total</td>
                         <td></td>

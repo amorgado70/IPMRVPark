@@ -182,6 +182,75 @@ namespace IPMRVPark.WebUI.Controllers
             return View();
         }
 
+        // Edit reservation page
+        public ActionResult EditReservation(long selectedID = newReservationMode)
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+            ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
+
+            // Read and convert the dates to a value than can be used by jQuery Datepicker
+            DateTime start = _IPMEvent.startDate.Value;
+            DateTime end = _IPMEvent.endDate.Value;
+            DateTime now = DateTime.Now;
+            DateTime checkInDate = DateTime.MinValue;
+            DateTime checkOutDate = DateTime.MinValue;
+
+            // Parameters for Edit Reservation, NOT used for New Reservation
+            if (selectedID != newReservationMode)
+            {
+                selecteditem _selecteditem = selecteditems.GetById(selectedID);
+                ViewBag.SelectedID = selectedID;
+                ViewBag.SiteID = _selecteditem.idRVSite;
+                placeinmap _placeinmap = placesinmap.GetById(_selecteditem.idRVSite);
+                ViewBag.SiteName = _placeinmap.site;
+                checkInDate = _selecteditem.checkInDate;
+                checkOutDate = _selecteditem.checkOutDate;
+            }
+            else
+            {
+                ViewBag.SiteID = newReservationMode;
+            }
+
+            if (checkInDate == DateTime.MinValue)
+            {
+                if (_session.checkInDate != null)
+                {
+                    checkInDate = _session.checkInDate.Value;
+                };
+            };
+            if (checkOutDate == DateTime.MinValue)
+            {
+                if (_session.checkOutDate != null)
+                {
+                    checkOutDate = _session.checkOutDate.Value;
+                };
+            };
+
+            if (!(checkInDate >= start && checkInDate <= end))
+            {
+                checkInDate = start;
+            };
+            if (!(checkOutDate >= checkInDate && checkOutDate <= end))
+            {
+                checkOutDate = end;
+            };
+
+            TimeSpan min = start - now;
+            TimeSpan max = end - now;
+            TimeSpan checkIn = checkInDate - now;
+            TimeSpan checkOut = checkOutDate - now;
+
+            ViewBag.checkInDate = (int)checkIn.TotalDays + 1;
+            ViewBag.checkOutDate = (int)checkOut.TotalDays + 1;
+            ViewBag.minDate = (int)min.TotalDays - 7;
+            ViewBag.maxDate = (int)max.TotalDays + 1;
+
+            ViewBag.UserID = _session.idStaff;
+
+            return View();
+        }
+
+
         // Update session's check-in and check-out dates
         [HttpPost]
         public ActionResult SelectCheckInOutDates(DateTime checkInDate, DateTime checkOutDate)

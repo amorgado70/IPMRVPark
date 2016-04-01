@@ -395,6 +395,7 @@
     <Content Include="Views\Login\EmptyPartial.cshtml" />
     <Content Include="Views\Reservation\CRUDSelectedItem.cshtml" />
     <Content Include="Views\Reservation\Selected ORIG.cshtml" />
+    <Content Include="Views\Reservation\EditReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

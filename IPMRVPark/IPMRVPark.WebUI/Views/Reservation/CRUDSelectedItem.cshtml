@@ -16,6 +16,7 @@
             $("#btnSelectSite").hide();
             $("#btnLargeDisplay").hide();
             $("#btnUpdateSite").show();
+            $("#btnCancelSite").show();
             $("#btnRemoveSite").show();
             $("#idRVSite").val(@ViewBag.SiteID);
             $("#siteName").prop('disabled', true);
@@ -26,6 +27,9 @@
         else{
         }
         $("#btnUpdateSite").click(function(event){
+            $("#waitMsg").show();// Show wait message
+        });
+        $("#btnCancelSite").click(function(event){
             $("#waitMsg").show();// Show wait message
         });
         // ***** Dates Selection
@@ -163,7 +167,7 @@
                     checkOutDate: $("#checkOutDate").val(),
                     idRVSite: $("#idRVSite").val()
                 },
-                success: function (result) {                    
+                success: function (result) {
                     $('#btnSelectSite').prop('disabled', true); // Disable select button
                     $("#siteName").val(""); // Reset site name
                     $("#siteTotal").text(""); // Reset site total
@@ -207,7 +211,7 @@
         <div class="col-sm-2 col-xs-12 form-top-margin">
             <div id="siteTotal" type="text" class="form-control" style="text-align:right" disabled>$ 0.00</div>
         </div>
-        <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Select / Add Site">
+        <div class="col-sm-4 col-xs-12 form-top-margin">
             <button id="btnSelectSite" class="btn btn-block btn-default">
                 <span class="col-xs-1 glyphicon glyphicon-ok"></span>
                 <span class="col-xs-9">Select Site</span>
@@ -237,6 +241,11 @@
         </div>
         <div class="col-sm-2 col-xs-12 form-top-margin">
             <div id="siteWeeklyRate" type="text" class="form-control" style="text-align:right" disabled></div>
+        </div>
+    </div>
+    <div id="btnCancelSite" class="row form-top-margin" style="display: none;">
+        <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin">
+            <a class="btn btn-block btn-default btn-mylink pagination-centered" href="@Url.Action("RemoveSelected","Reservation", new { id=@ViewBag.SelectedID })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a>
         </div>
     </div>
 </div>

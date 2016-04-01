@@ -263,6 +263,9 @@ namespace IPMRVPark.WebUI.Controllers
 
             ViewBag.CustomerBalance = CustomerAccountFinalBalance(_payment.idCustomer);
 
+            // Tax Percentage
+            ViewBag.ProvinceTax = 13.00;
+
             return View(_reservationitems);
         }
     }
