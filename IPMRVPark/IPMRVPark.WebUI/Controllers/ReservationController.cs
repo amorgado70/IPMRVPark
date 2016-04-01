@@ -505,7 +505,17 @@ namespace IPMRVPark.WebUI.Controllers
             return RedirectToAction("EditReservation");
         }
 
-        // Delete on selected site
+        // Reinsert reserved site
+        public ActionResult ReinsertReserved(int id)
+        {
+            var _selecteditem = selecteditems.GetById(id);
+            _selecteditem.isSiteChecked = true;
+            selecteditems.Update(selecteditems.GetById(id));
+            selecteditems.Commit();
+            return RedirectToAction("EditReservation");
+        }
+
+        // Remove reserved site
         public ActionResult RemoveReserved(int id)
         {
             var _selecteditem = selecteditems.GetById(id);
@@ -515,7 +525,7 @@ namespace IPMRVPark.WebUI.Controllers
             return RedirectToAction("EditReservation");
         }
 
-        // Delete all selected sites
+        // Remove all reserved sites
         public ActionResult RemoveAllReserved()
         {
             var _session = sessionService.GetSession(this.HttpContext);
@@ -524,10 +534,11 @@ namespace IPMRVPark.WebUI.Controllers
 
             if (allSelected.Count() > 0)
             {
-                foreach (var _selecteditem in allSelected)
+                foreach (var i in allSelected)
                 {
+                    var _selecteditem = selecteditems.GetById(i.idSelected);
                     _selecteditem.isSiteChecked = false;
-                    selecteditems.Update(selecteditems.GetById(_selecteditem.idSelected));
+                    selecteditems.Update(_selecteditem);
                 }
                 selecteditems.Commit();
             }
@@ -857,10 +868,33 @@ namespace IPMRVPark.WebUI.Controllers
                 sum = sum + item.total.Value;
                 reservationsum = reservationsum + item.reservationAmount.Value;
             }
+
+            decimal dueAmount = Math.Max((sum - reservationsum), 0);
+            decimal refundAmount = Math.Max((reservationsum - sum), 0);
+            // Check if there is a cancellation fee
+            decimal cancelationFee = 50;
+            if (sum < reservationsum)
+            {
+                if ((reservationsum - sum) < cancelationFee)
+                {
+                    refundAmount = 0;
+                    dueAmount = cancelationFee - (reservationsum - sum);
+                }
+                else
+                {
+                    refundAmount = refundAmount - cancelationFee;
+                }
+            }
+            else
+            {
+                cancelationFee = 0;
+            }
+
             ViewBag.totalAmount = sum.ToString("C");
             ViewBag.reservationAmount = reservationsum.ToString("C");
-            ViewBag.dueAmount = Math.Max((sum- reservationsum),0).ToString("C");
-            ViewBag.refundAmount = Math.Max((reservationsum - sum),0).ToString("C");
+            ViewBag.dueAmount = dueAmount.ToString("C");
+            ViewBag.refundAmount = refundAmount.ToString("C");
+            ViewBag.cancelationFee = cancelationFee.ToString("C");
 
             return View(_edititems);
         }
