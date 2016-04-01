@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="334dee7441cb4f3ea7ce1c4148ca8a30" Name="Diagram1">
+      <Diagram DiagramId="af7437dca7e64cf38c7a596b4d7a057c" Name="Diagram1" ZoomLevel="80">
         <EntityTypeShape EntityType="ipmrvparkModel.checkinout" Width="1.5" PointX="8.25" PointY="24.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.coordinate" Width="1.5" PointX="3" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.countrycode" Width="1.5" PointX="1.5" PointY="11.75" IsExpanded="true" />
@@ -42,9 +42,10 @@
         <EntityTypeShape EntityType="ipmrvparkModel.siterate_by_sitetype_view" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.staff_view" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.total_per_customer_view" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ipmrvparkModel.total_per_payment_view" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ipmrvparkModel.total_per_reservationitem_view" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ipmrvparkModel.total_per_selecteditem_view" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ipmrvparkModel.total_per_edititem_view" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ipmrvparkModel.total_per_payment_view" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ipmrvparkModel.total_per_reservationitem_view" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ipmrvparkModel.total_per_selecteditem_view" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.total_per_session_view" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="ipmrvparkModel.CheckInOut_PlaceInMap_FK" ManuallyRouted="false" />
         <AssociationConnector Association="ipmrvparkModel.CheckInOut_ReservationItem_FK" ManuallyRouted="false" />

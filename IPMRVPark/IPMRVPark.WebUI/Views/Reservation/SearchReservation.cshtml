@@ -47,7 +47,12 @@ Site Reservation
         $("#btnSearchCustomer").click(function () {
             updateReservedList();
             $("#waitMsg").show();// Show wait message
+            $('.hiddenElement').toggleClass('hiddenElement');
         });
+        $("#btnEditReservation").click(function () {
+            $("#waitMsg").show();// Show wait message
+        });
+        
     });
 </script>
 
@@ -93,5 +98,18 @@ Site Reservation
     <div id="reserved-list">
     </div>
     <!-- ********** -->
+
+    <!-- Proceed To Edit Reservation -->
+    <div class="hiddenElement">
+        <div class="row form-top-margin">
+            <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+                <a id="btnEditReservation" href="@Url.Action("EditReservedList", "Reservation")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span>Edit Reservation</span>
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
 
 </div>

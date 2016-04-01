@@ -572,6 +572,52 @@
     <Property Name="mainPhone" Type="String" />
     <Property Name="balance" Type="Decimal" />
   </EntityType>
+  <EntityType Name="total_per_edititem_view">
+    <Key>
+      <PropertyRef Name="idSelected" />
+      <PropertyRef Name="idSession" />
+      <PropertyRef Name="idSiteType" />
+      <PropertyRef Name="site" />
+      <PropertyRef Name="checkInDate" />
+      <PropertyRef Name="checkOutDate" />
+      <PropertyRef Name="duration" />
+      <PropertyRef Name="isSiteChecked" />
+      <PropertyRef Name="idReservationItem" />
+      <PropertyRef Name="reservationCheckInDate" />
+      <PropertyRef Name="reservationCheckOutDate" />
+      <PropertyRef Name="reservationDuration" />
+    </Key>
+    <Property Name="idSelected" Type="Int64" Nullable="false" />
+    <Property Name="idSession" Type="Int64" Nullable="false" />
+    <Property Name="idRVSite" Type="Int64" />
+    <Property Name="idSiteType" Type="Int64" Nullable="false" />
+    <Property Name="site" Type="String" Nullable="false" />
+    <Property Name="siteType" Type="String" />
+    <Property Name="idCustomer" Type="Int64" />
+    <Property Name="fullName" Type="String" />
+    <Property Name="mainPhone" Type="String" />
+    <Property Name="idStaff" Type="Int64" />
+    <Property Name="checkInDate" Type="DateTime" Nullable="false" />
+    <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="duration" Type="Int64" Nullable="false" />
+    <Property Name="weeks" Type="Int64" />
+    <Property Name="weeklyRate" Type="Decimal" />
+    <Property Name="days" Type="Int64" />
+    <Property Name="dailyRate" Type="Decimal" />
+    <Property Name="amount" Type="Decimal" />
+    <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
+    <Property Name="total" Type="Decimal" />
+    <Property Name="idReservationItem" Type="Int64" Nullable="false" />
+    <Property Name="idPayment" Type="Int64" />
+    <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
+    <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="reservationDuration" Type="Int64" Nullable="false" />
+    <Property Name="reservationWeeks" Type="Int64" />
+    <Property Name="reservationWeeklyRate" Type="Decimal" />
+    <Property Name="reservationDays" Type="Int64" />
+    <Property Name="reservationDailyRate" Type="Decimal" />
+    <Property Name="reservationAmount" Type="Decimal" />
+  </EntityType>
   <EntityType Name="total_per_payment_view">
     <Key>
       <PropertyRef Name="idPayment" />
@@ -619,7 +665,6 @@
   </EntityType>
   <EntityType Name="total_per_selecteditem_view">
     <Key>
-      <PropertyRef Name="id" />
       <PropertyRef Name="idSelected" />
       <PropertyRef Name="idSession" />
       <PropertyRef Name="idSiteType" />
@@ -629,13 +674,12 @@
       <PropertyRef Name="duration" />
       <PropertyRef Name="isSiteChecked" />
     </Key>
-    <Property Name="id" Type="Int64" Nullable="false" />
     <Property Name="idSelected" Type="Int64" Nullable="false" />
     <Property Name="idSession" Type="Int64" Nullable="false" />
     <Property Name="idRVSite" Type="Int64" />
     <Property Name="idSiteType" Type="Int64" Nullable="false" />
     <Property Name="site" Type="String" Nullable="false" />
-    <Property Name="descriptionRVSite" Type="String" />
+    <Property Name="siteType" Type="String" />
     <Property Name="idCustomer" Type="Int64" />
     <Property Name="idStaff" Type="Int64" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
@@ -648,6 +692,7 @@
     <Property Name="amount" Type="Decimal" />
     <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
     <Property Name="total" Type="Decimal" />
+    <Property Name="idReservationItem" Type="Int64" />
   </EntityType>
   <EntityType Name="total_per_session_view">
     <Key>
@@ -1236,6 +1281,7 @@
     <EntitySet Name="siterate_by_sitetype_view" EntityType="Self.siterate_by_sitetype_view" />
     <EntitySet Name="staff_view" EntityType="Self.staff_view" />
     <EntitySet Name="total_per_customer_view" EntityType="Self.total_per_customer_view" />
+    <EntitySet Name="total_per_edititem_view" EntityType="Self.total_per_edititem_view" />
     <EntitySet Name="total_per_payment_view" EntityType="Self.total_per_payment_view" />
     <EntitySet Name="total_per_reservationitem_view" EntityType="Self.total_per_reservationitem_view" />
     <EntitySet Name="total_per_selecteditem_view" EntityType="Self.total_per_selecteditem_view" />

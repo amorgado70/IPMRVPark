@@ -101,6 +101,10 @@ a, .btn, .btn-mylink, label, b, .glyphicon, th {
     visibility: hidden;
 }
 
+.hiddenElement{
+    visibility: hidden;
+}
+
 .waitMsg {
     display: none;
     position: fixed;

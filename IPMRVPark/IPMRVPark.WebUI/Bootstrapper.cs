@@ -45,6 +45,7 @@ namespace IPMRVPark.WebUI
             container.RegisterType<IRepositoryBase<total_per_session_view>, TotalPerSessionViewRepository>();
             container.RegisterType<IRepositoryBase<total_per_payment_view>, TotalPerPaymentViewRepository>();
             container.RegisterType<IRepositoryBase<total_per_reservationitem_view>, TotalPerReservationItemViewRepository>();
+            container.RegisterType<IRepositoryBase<total_per_edititem_view>, TotalPerEditItemViewRepository>();
             container.RegisterType<IRepositoryBase<paymentreservationitem>, PaymentReservationItemRepository>();
 
             return container;

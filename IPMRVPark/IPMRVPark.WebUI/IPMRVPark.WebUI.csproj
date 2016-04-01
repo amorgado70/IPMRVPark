@@ -398,6 +398,7 @@
     <Content Include="Views\Reservation\EditSelected.cshtml" />
     <Content Include="Views\Reservation\SearchReservation.cshtml" />
     <Content Include="Views\Reservation\ReservedList.cshtml" />
+    <Content Include="Views\Reservation\EditReservedList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

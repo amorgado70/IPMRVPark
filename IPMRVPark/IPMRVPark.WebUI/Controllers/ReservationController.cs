@@ -18,6 +18,7 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<rvsite_available_view> rvsites_available;
         IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
         IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
+        IRepositoryBase<total_per_edititem_view> totals_per_edititem;
         SessionService sessionService;
 
         public ReservationController(
@@ -28,6 +29,7 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
             IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
+            IRepositoryBase<total_per_edititem_view> totals_per_edititem,
             IRepositoryBase<session> sessions)
         {
             this.customers = customers;
@@ -37,12 +39,13 @@ namespace IPMRVPark.WebUI.Controllers
             this.selecteditems = selecteditems;
             this.totals_per_selecteditem = totals_per_selecteditem;
             this.totals_per_reservationitem = totals_per_reservationitem;
+            this.totals_per_edititem = totals_per_edititem;
             this.rvsites_available = rvsites_available;
             sessionService = new SessionService(this.sessions);
         }//end Constructor
 
 
-        #region New Reservation
+        #region New Reservation - Site Selection
 
         const long newReservationMode = -1;
 
@@ -249,18 +252,6 @@ namespace IPMRVPark.WebUI.Controllers
             return View();
         }
 
-        // Search reservation page
-        public ActionResult SearchReservation()
-        {
-            session _session = sessionService.GetSession(this.HttpContext);
-
-            ViewBag.UserID = _session.idStaff;
-
-            return View();
-        }
-
-
-
         // Update session's check-in and check-out dates
         [HttpPost]
         public ActionResult SelectCheckInOutDates(DateTime checkInDate, DateTime checkOutDate)
@@ -369,32 +360,6 @@ namespace IPMRVPark.WebUI.Controllers
             return PartialView("SelectedList", _selecteditem);
         }
 
-        // For Partial View : Reserved Site List
-        public ActionResult UpdateReservedList(long idCustomer=-1)
-        {
-            var _reserveditem = totals_per_reservationitem.GetAll();
-            if (idCustomer != -1)
-            {
-                _reserveditem = _reserveditem.Where(q => q.idCustomer == idCustomer ).OrderByDescending(o => o.idRVSite);
-            }
-
-            int count = 0;
-            decimal sum = 0;
-            foreach (var i in _reserveditem)
-            {
-                count = count + 1;
-                sum = sum + i.amount.Value;
-            }
-
-            if (count > 0)
-            {
-                ViewBag.totalAmount = sum.ToString("C");
-            }
-
-            //return PartialView("../Login/EmptyPartial");
-            return PartialView("../Reservation/ReservedList", _reserveditem);
-        }
-
         // For Partial View : Show Reservation Summary
         public ActionResult ShowSelectionSummary()
         {
@@ -466,13 +431,13 @@ namespace IPMRVPark.WebUI.Controllers
             int count;
             decimal sum;
             CalculateSelectionTotal(out count, out sum);
-    
+
             string totalAmount = "";
             if (count > 0)
             {
                 totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
             }
-            
+
             return Json(totalAmount);
         }
 
@@ -520,5 +485,117 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         #endregion
+
+        // Search reservation page
+        public ActionResult SearchReservation()
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+
+            ViewBag.UserID = _session.idStaff;
+
+            return View();
+        }
+
+        // For Partial View : Reserved Site List
+        public ActionResult UpdateReservedList(long idCustomer = -1)
+        {
+            var _reserveditems = totals_per_reservationitem.GetAll();
+            if (idCustomer != -1)
+            {
+                _reserveditems = _reserveditems.Where(q => q.idCustomer == idCustomer).OrderByDescending(o => o.idRVSite);
+            }
+
+            int count = 0;
+            decimal sum = 0;
+            foreach (var i in _reserveditems)
+            {
+                count = count + 1;
+                sum = sum + i.amount.Value;
+            }
+
+            if (count > 0)
+            {
+                ViewBag.totalAmount = sum.ToString("C");
+            }
+
+            Session["ReservedList"] = _reserveditems;
+
+            //return PartialView("../Login/EmptyPartial");
+            return PartialView("../Reservation/ReservedList", _reserveditems);
+        }
+
+        public ActionResult EditReservedList()
+        {
+            var _session = sessionService.GetSession(this.HttpContext);
+
+            IQueryable<total_per_reservationitem_view> _reserveditems =
+                Session["ReservedList"] as IQueryable<total_per_reservationitem_view>;
+
+            _session.idCustomer = _reserveditems.FirstOrDefault().idCustomer;
+            sessions.Update(sessions.GetById(_session.ID));
+            sessions.Commit();          
+
+            foreach (var item in _reserveditems)
+            {
+                // Clean old items from selected list               
+                // Check if item was in selected list               
+                bool tryResult = false;
+                try
+                {
+                    var _oldselecteditem = selecteditems.GetAll().Where(c => c.idReservationItem == item.idReservationItem).FirstOrDefault();
+                    tryResult = !(_oldselecteditem.Equals(default(session)));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An error occurred: '{0}'", e);
+                }
+                if (tryResult)// Selected item found in database, remove it
+                {
+                    var _olditems_to_be_removed = selecteditems.GetAll().Where(c => c.idRVSite == item.idRVSite);
+                    foreach(var _olditem in _olditems_to_be_removed)
+                    {
+                        selecteditems.Delete(_olditem.ID);
+                    }
+                    selecteditems.Commit();
+                }
+
+                selecteditem _selecteditem = new selecteditem();
+
+                // Add reserved item as selected item                
+                _selecteditem.checkInDate = item.checkInDate;
+                _selecteditem.checkOutDate = item.checkOutDate;
+                _selecteditem.idRVSite = item.idRVSite;
+                _selecteditem.idSession = _session.ID;
+                _selecteditem.idIPMEvent = _session.idIPMEvent;
+                _selecteditem.idStaff = _session.idStaff;
+                _selecteditem.idCustomer = item.idCustomer;
+                _selecteditem.isSiteChecked = true;
+                _selecteditem.createDate = DateTime.Now;
+                _selecteditem.lastUpdate = DateTime.Now;
+                _selecteditem.idReservationItem = item.idReservationItem;
+                selecteditems.Insert(_selecteditem);                
+            }
+            selecteditems.Commit();
+
+            // Data to be presented on the view
+            var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID);
+            int count = 0;
+            decimal sum = 0;
+            decimal reservationsum = 0;
+            foreach(var item in _edititems)
+            {
+                count = count + 1;
+                sum = sum + item.amount.Value;
+                reservationsum = reservationsum + item.reservationAmount.Value;
+            }
+            ViewBag.totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
+            ViewBag.reservationAmount = sum.ToString("C");                     
+
+            return View(_edititems);
+        }
+
+
+
+
     }
 }

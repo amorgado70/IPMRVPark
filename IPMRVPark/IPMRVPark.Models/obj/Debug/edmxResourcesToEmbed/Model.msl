@@ -494,6 +494,42 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="total_per_edititem_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.total_per_edititem_view">
+        <MappingFragment StoreEntitySet="total_per_edititem_view">
+          <ScalarProperty Name="idSelected" ColumnName="idSelected" />
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+          <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
+          <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
+          <ScalarProperty Name="site" ColumnName="site" />
+          <ScalarProperty Name="siteType" ColumnName="siteType" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+          <ScalarProperty Name="idStaff" ColumnName="idStaff" />
+          <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
+          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="weeks" ColumnName="weeks" />
+          <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
+          <ScalarProperty Name="days" ColumnName="days" />
+          <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
+          <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+          <ScalarProperty Name="reservationCheckInDate" ColumnName="reservationCheckInDate" />
+          <ScalarProperty Name="reservationCheckOutDate" ColumnName="reservationCheckOutDate" />
+          <ScalarProperty Name="reservationDuration" ColumnName="reservationDuration" />
+          <ScalarProperty Name="reservationWeeks" ColumnName="reservationWeeks" />
+          <ScalarProperty Name="reservationWeeklyRate" ColumnName="reservationWeeklyRate" />
+          <ScalarProperty Name="reservationDays" ColumnName="reservationDays" />
+          <ScalarProperty Name="reservationDailyRate" ColumnName="reservationDailyRate" />
+          <ScalarProperty Name="reservationAmount" ColumnName="reservationAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="total_per_payment_view">
       <EntityTypeMapping TypeName="ipmrvparkModel.total_per_payment_view">
         <MappingFragment StoreEntitySet="total_per_payment_view">
@@ -535,13 +571,12 @@
     <EntitySetMapping Name="total_per_selecteditem_view">
       <EntityTypeMapping TypeName="ipmrvparkModel.total_per_selecteditem_view">
         <MappingFragment StoreEntitySet="total_per_selecteditem_view">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="idSelected" ColumnName="idSelected" />
           <ScalarProperty Name="idSession" ColumnName="idSession" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
           <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
           <ScalarProperty Name="site" ColumnName="site" />
-          <ScalarProperty Name="descriptionRVSite" ColumnName="descriptionRVSite" />
+          <ScalarProperty Name="siteType" ColumnName="siteType" />
           <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
           <ScalarProperty Name="idStaff" ColumnName="idStaff" />
           <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
@@ -554,6 +589,7 @@
           <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
           <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

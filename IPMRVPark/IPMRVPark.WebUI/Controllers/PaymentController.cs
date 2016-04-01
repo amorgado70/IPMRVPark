@@ -45,10 +45,10 @@ namespace IPMRVPark.WebUI.Controllers
             this.reasonforpayments = reasonforpayments;
             this.paymentmethods = paymentmethods;
             this.selecteditems = selecteditems;
-            this.reservationitems = reservationitems;            
+            this.reservationitems = reservationitems;
             this.totals_per_selecteditem = totals_per_selecteditem;
             this.totals_per_reservationitem = totals_per_reservationitem;
-            this.totals_per_payment = totals_per_payment;           
+            this.totals_per_payment = totals_per_payment;
             this.paymentsreservationitems = paymentsreservationitems;
             sessionService = new SessionService(this.sessions);
         }//end Constructor
@@ -197,7 +197,7 @@ namespace IPMRVPark.WebUI.Controllers
         // For Partial View : Show Payments Per Customer
         public ActionResult ShowPaymentPerCustomer(long id = -1)
         {
-         
+
 
             customer_view _customer = new customer_view();
             bool tryResult = false;
@@ -219,7 +219,7 @@ namespace IPMRVPark.WebUI.Controllers
                 var _payments = CustomerAccountBalance(_customer.id);
 
                 ViewBag.CustomerBalance = CustomerAccountFinalBalance(_customer.id);
-                
+
                 return PartialView("PaymentPerCustomer", _payments);
             };
 
@@ -244,7 +244,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             var _payments = CustomerAccountBalance(idCustomer).ToList();
             var _last = _payments.LastOrDefault();
-            decimal result = (_last != null)? _last.balance : 0;
+            decimal result = (_last != null) ? _last.balance : 0;
             return result;
         }
 
@@ -258,7 +258,10 @@ namespace IPMRVPark.WebUI.Controllers
 
             ViewBag.PaymentID = _payment.ID;
             ViewBag.PaymentAmount = _payment.amount;
-            ViewBag.PaymentDate = _payment.createDate.Value.ToString("R").Substring(0,16);
+            if (_payment.createDate != null)
+            {
+                ViewBag.PaymentDate = _payment.createDate.Value.ToString("R").Substring(0, 16);
+            }
             ViewBag.PaymentMethod = paymentmethods.GetById(_payment.idPaymentMethod).description;
 
             ViewBag.CustomerBalance = CustomerAccountFinalBalance(_payment.idCustomer);

@@ -12,7 +12,7 @@ namespace IPMRVPark.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class total_per_selecteditem_view
+    public partial class total_per_edititem_view
     {
         public long idSelected { get; set; }
         public long idSession { get; set; }
@@ -21,6 +21,8 @@ namespace IPMRVPark.Models
         public string site { get; set; }
         public string siteType { get; set; }
         public Nullable<long> idCustomer { get; set; }
+        public string fullName { get; set; }
+        public string mainPhone { get; set; }
         public Nullable<long> idStaff { get; set; }
         public System.DateTime checkInDate { get; set; }
         public System.DateTime checkOutDate { get; set; }
@@ -32,6 +34,15 @@ namespace IPMRVPark.Models
         public Nullable<decimal> amount { get; set; }
         public bool isSiteChecked { get; set; }
         public Nullable<decimal> total { get; set; }
-        public Nullable<long> idReservationItem { get; set; }
+        public long idReservationItem { get; set; }
+        public Nullable<long> idPayment { get; set; }
+        public System.DateTime reservationCheckInDate { get; set; }
+        public System.DateTime reservationCheckOutDate { get; set; }
+        public long reservationDuration { get; set; }
+        public Nullable<long> reservationWeeks { get; set; }
+        public Nullable<decimal> reservationWeeklyRate { get; set; }
+        public Nullable<long> reservationDays { get; set; }
+        public Nullable<decimal> reservationDailyRate { get; set; }
+        public Nullable<decimal> reservationAmount { get; set; }
     }
 }

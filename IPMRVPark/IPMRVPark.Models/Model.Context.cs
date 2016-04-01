@@ -62,6 +62,7 @@ namespace IPMRVPark.Models
         public DbSet<siterate_by_sitetype_view> siterate_by_sitetype_view { get; set; }
         public DbSet<staff_view> staff_view { get; set; }
         public DbSet<total_per_customer_view> total_per_customer_view { get; set; }
+        public DbSet<total_per_edititem_view> total_per_edititem_view { get; set; }
         public DbSet<total_per_payment_view> total_per_payment_view { get; set; }
         public DbSet<total_per_reservationitem_view> total_per_reservationitem_view { get; set; }
         public DbSet<total_per_selecteditem_view> total_per_selecteditem_view { get; set; }
