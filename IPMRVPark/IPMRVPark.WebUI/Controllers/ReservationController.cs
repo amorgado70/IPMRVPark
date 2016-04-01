@@ -119,6 +119,8 @@ namespace IPMRVPark.WebUI.Controllers
         // Main reservation page
         public ActionResult NewReservation(long selectedID = newReservationMode)
         {
+            cleanSelectedItemList();
+
             session _session = sessionService.GetSession(this.HttpContext);
             ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
 
@@ -486,6 +488,218 @@ namespace IPMRVPark.WebUI.Controllers
 
         #endregion
 
+
+        // Update on selected site
+        public ActionResult UpdateReserved(int id)
+        {
+            var _session = sessionService.GetSession(this.HttpContext);
+            var _selecteditem = selecteditems.GetById(id);
+
+            _selecteditem.checkInDate = _session.checkInDate.Value;
+            _selecteditem.checkOutDate = _session.checkOutDate.Value;
+            _selecteditem.lastUpdate = DateTime.Now;
+
+            selecteditems.Update(_selecteditem);
+            selecteditems.Commit();
+
+            return RedirectToAction("EditReservation");
+        }
+
+        // Delete on selected site
+        public ActionResult RemoveReserved(int id)
+        {
+            var _selecteditem = selecteditems.GetById(id);
+            _selecteditem.isSiteChecked = false;
+            selecteditems.Update(selecteditems.GetById(id));
+            selecteditems.Commit();
+            return RedirectToAction("EditReservation");
+        }
+
+        // Delete all selected sites
+        public ActionResult RemoveAllReserved()
+        {
+            var _session = sessionService.GetSession(this.HttpContext);
+            var allSelected = totals_per_selecteditem.GetAll();
+            allSelected = allSelected.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
+
+            if (allSelected.Count() > 0)
+            {
+                foreach (var _selecteditem in allSelected)
+                {
+                    _selecteditem.isSiteChecked = false;
+                    selecteditems.Update(selecteditems.GetById(_selecteditem.idSelected));
+                }
+                selecteditems.Commit();
+            }
+
+            return RedirectToAction("EditReservation");
+        }
+
+
+        // Edit reservation page
+        public ActionResult EditReserved(long selectedID = newReservationMode)
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+            ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
+
+            // Read and convert the dates to a value than can be used by jQuery Datepicker
+            DateTime start = _IPMEvent.startDate.Value;
+            DateTime end = _IPMEvent.endDate.Value;
+            DateTime now = DateTime.Now;
+            DateTime checkInDate = DateTime.MinValue;
+            DateTime checkOutDate = DateTime.MinValue;
+
+            // Parameters for Edit Reservation, NOT used for New Reservation
+            if (selectedID != newReservationMode)
+            {
+                selecteditem _selecteditem = selecteditems.GetById(selectedID);
+                ViewBag.SelectedID = selectedID;
+                ViewBag.SiteID = _selecteditem.idRVSite;
+                placeinmap _placeinmap = placesinmap.GetById(_selecteditem.idRVSite);
+                ViewBag.SiteName = _placeinmap.site;
+                checkInDate = _selecteditem.checkInDate;
+                checkOutDate = _selecteditem.checkOutDate;
+            }
+            else
+            {
+                ViewBag.SiteID = newReservationMode;
+            }
+
+            if (checkInDate == DateTime.MinValue)
+            {
+                if (_session.checkInDate != null)
+                {
+                    checkInDate = _session.checkInDate.Value;
+                };
+            };
+            if (checkOutDate == DateTime.MinValue)
+            {
+                if (_session.checkOutDate != null)
+                {
+                    checkOutDate = _session.checkOutDate.Value;
+                };
+            };
+
+            if (!(checkInDate >= start && checkInDate <= end))
+            {
+                checkInDate = start;
+            };
+            if (!(checkOutDate >= checkInDate && checkOutDate <= end))
+            {
+                checkOutDate = end;
+            };
+
+            TimeSpan min = start - now;
+            TimeSpan max = end - now;
+            TimeSpan checkIn = checkInDate - now;
+            TimeSpan checkOut = checkOutDate - now;
+
+            ViewBag.checkInDate = (int)checkIn.TotalDays + 1;
+            ViewBag.checkOutDate = (int)checkOut.TotalDays + 1;
+            ViewBag.minDate = (int)min.TotalDays - 7;
+            ViewBag.maxDate = (int)max.TotalDays + 1;
+
+            ViewBag.UserID = _session.idStaff;
+
+            return View();
+        }
+
+        public ActionResult CRUDReservedItem(long selectedID = newReservationMode)
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+            ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
+
+            // Read and convert the dates to a value than can be used by jQuery Datepicker
+            DateTime start = _IPMEvent.startDate.Value;
+            DateTime end = _IPMEvent.endDate.Value;
+            DateTime now = DateTime.Now;
+            DateTime checkInDate = DateTime.MinValue;
+            DateTime checkOutDate = DateTime.MinValue;
+
+            // Parameters for Edit Reservation, NOT used for New Reservation
+            if (selectedID != newReservationMode)
+            {
+                selecteditem _selecteditem = selecteditems.GetById(selectedID);
+                ViewBag.SelectedID = selectedID;
+                ViewBag.SiteID = _selecteditem.idRVSite;
+                placeinmap _placeinmap = placesinmap.GetById(_selecteditem.idRVSite);
+                ViewBag.SiteName = _placeinmap.site;
+                checkInDate = _selecteditem.checkInDate;
+                checkOutDate = _selecteditem.checkOutDate;
+            }
+            else
+            {
+                ViewBag.SiteID = newReservationMode;
+            }
+
+            if (checkInDate == DateTime.MinValue)
+            {
+                if (_session.checkInDate != null)
+                {
+                    checkInDate = _session.checkInDate.Value;
+                };
+            };
+            if (checkOutDate == DateTime.MinValue)
+            {
+                if (_session.checkOutDate != null)
+                {
+                    checkOutDate = _session.checkOutDate.Value;
+                };
+            };
+
+            if (!(checkInDate >= start && checkInDate <= end))
+            {
+                checkInDate = start;
+            };
+            if (!(checkOutDate >= checkInDate && checkOutDate <= end))
+            {
+                checkOutDate = end;
+            };
+
+            TimeSpan min = start - now;
+            TimeSpan max = end - now;
+            TimeSpan checkIn = checkInDate - now;
+            TimeSpan checkOut = checkOutDate - now;
+
+            ViewBag.checkInDate = (int)checkIn.TotalDays + 1;
+            ViewBag.checkOutDate = (int)checkOut.TotalDays + 1;
+            ViewBag.minDate = (int)min.TotalDays - 7;
+            ViewBag.maxDate = (int)max.TotalDays + 1;
+
+            ViewBag.UserID = _session.idStaff;
+
+            return PartialView();
+        }
+
+        // Clean selected items
+        private void cleanSelectedItemList()
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+
+            // Clean edit items that are in selected table
+            var _olditems_to_be_removed = selecteditems.GetAll().
+                Where(c => c.idSession == _session.ID && c.idReservationItem > 0);
+            bool tryResult = false;
+            try
+            {
+                var _oldselecteditem = _olditems_to_be_removed.FirstOrDefault();
+                tryResult = !(_oldselecteditem.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+            if (tryResult)// Items found in database, remove them
+            {
+                foreach (var _olditem in _olditems_to_be_removed)
+                {
+                    selecteditems.Delete(_olditem.ID);
+                }
+                selecteditems.Commit();
+            }
+        }
+
+
         // Clean edit items
         private void cleanEditItemList()
         {
@@ -572,13 +786,13 @@ namespace IPMRVPark.WebUI.Controllers
             return PartialView("../Reservation/ReservedList", _reserveditems);
         }
 
-        public ActionResult GoToEditReservedList()
+        public ActionResult GoToEditReservation()
         {
             cleanEditItemList();
-            return RedirectToAction("EditReservedList");
+            return RedirectToAction("EditReservation");
         }
 
-        public ActionResult EditReservedList()
+        public ActionResult EditReservation()
         {
             var _session = sessionService.GetSession(this.HttpContext);
             long idCustomer = -1;
@@ -640,11 +854,13 @@ namespace IPMRVPark.WebUI.Controllers
             foreach (var item in _edititems)
             {
                 count = count + 1;
-                sum = sum + item.amount.Value;
+                sum = sum + item.total.Value;
                 reservationsum = reservationsum + item.reservationAmount.Value;
             }
-            ViewBag.totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
-            ViewBag.reservationAmount = sum.ToString("C");
+            ViewBag.totalAmount = sum.ToString("C");
+            ViewBag.reservationAmount = reservationsum.ToString("C");
+            ViewBag.dueAmount = Math.Max((sum- reservationsum),0).ToString("C");
+            ViewBag.refundAmount = Math.Max((reservationsum - sum),0).ToString("C");
 
             return View(_edititems);
         }
