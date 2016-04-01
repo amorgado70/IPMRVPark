@@ -278,6 +278,7 @@
     <Property Name="comments" Type="String" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
+    <Property Name="timeStamp" Type="String" />
     <NavigationProperty Name="checkinouts" Relationship="Self.CheckInOut_ReservationItem_FK" FromRole="reservationitem" ToRole="checkinout" />
     <NavigationProperty Name="customer" Relationship="Self.idCustomer_Customer_FK" FromRole="reservationitem" ToRole="customer" />
     <NavigationProperty Name="customeraccounts" Relationship="Self.idReservationItem_ReservationItem_FK" FromRole="reservationitem" ToRole="customeraccount" />
@@ -423,8 +424,10 @@
       <PropertyRef Name="id" />
       <PropertyRef Name="firstName" />
       <PropertyRef Name="lastName" />
-      <PropertyRef Name="Province" />
-      <PropertyRef Name="Country" />
+      <PropertyRef Name="countryCode" />
+      <PropertyRef Name="countryName" />
+      <PropertyRef Name="provinceCode" />
+      <PropertyRef Name="provinceName" />
     </Key>
     <Property Name="id" Type="Int64" Nullable="false" />
     <Property Name="firstName" Type="String" Nullable="false" />
@@ -439,8 +442,10 @@
     <Property Name="street" Type="String" />
     <Property Name="city" Type="String" />
     <Property Name="postalCode" Type="String" />
-    <Property Name="Province" Type="String" Nullable="false" />
-    <Property Name="Country" Type="String" Nullable="false" />
+    <Property Name="countryCode" Type="String" Nullable="false" />
+    <Property Name="countryName" Type="String" Nullable="false" />
+    <Property Name="provinceCode" Type="String" Nullable="false" />
+    <Property Name="provinceName" Type="String" Nullable="false" />
   </EntityType>
   <EntityType Name="reservation_view">
     <Key>
@@ -609,6 +614,7 @@
   </EntityType>
   <EntityType Name="total_per_selecteditem_view">
     <Key>
+      <PropertyRef Name="id" />
       <PropertyRef Name="idSelected" />
       <PropertyRef Name="idSession" />
       <PropertyRef Name="idSiteType" />
@@ -618,6 +624,7 @@
       <PropertyRef Name="duration" />
       <PropertyRef Name="isSiteChecked" />
     </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
     <Property Name="idSelected" Type="Int64" Nullable="false" />
     <Property Name="idSession" Type="Int64" Nullable="false" />
     <Property Name="idRVSite" Type="Int64" />

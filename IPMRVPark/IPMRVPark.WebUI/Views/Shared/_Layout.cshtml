@@ -11,14 +11,23 @@
     @Scripts.Render("~/bundles/jquery-ui")
     <meta name="description" content="International Plow Match RV Park Reservation System" />
 </head>
-<body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).ajaxStop(function () {
+            $('.waitAjax').toggleClass('waitAjax');
+        });
+    });
+</script>
+
+<body class="waitAjax">
     <header>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-6 col-sm-3" style="display:block; margin-top:0.5em;margin-bottom:0.5em;" pagination-centered" data-toggle="tooltip" title="Go Back To Main Menu">
                     <a href="@Url.Action("Menu", "Login")" class="btn btn-default btn-block btn-mylink col-xs-10">
                         <span class="glyphicon glyphicon-home"></span>
-                        <span style="height:2em;">Home</span>                        
+                        <span style="height:2em;">Home</span>
                     </a>
                 </div>
                 <div class="col-xs-1"></div>
@@ -63,7 +72,7 @@
                                         alert("Some error occured.");}
                                 });
                             });
-        </script>
+</script>
         <span id="sessionGUID"></span>
     </p>
     <h1>

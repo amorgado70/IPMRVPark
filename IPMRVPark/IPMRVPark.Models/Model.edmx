@@ -230,6 +230,7 @@
           <Property Name="comments" Type="varchar" MaxLength="120" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
+          <Property Name="timeStamp" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="reservationitem_partymember">
           <Key>
@@ -342,8 +343,10 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
             <PropertyRef Name="id" />
             <PropertyRef Name="firstName" />
             <PropertyRef Name="lastName" />
-            <PropertyRef Name="Province" />
-            <PropertyRef Name="Country" />
+            <PropertyRef Name="countryCode" />
+            <PropertyRef Name="countryName" />
+            <PropertyRef Name="provinceCode" />
+            <PropertyRef Name="provinceName" />
           </Key>
           <Property Name="id" Type="bigint" Nullable="false" />
           <Property Name="firstName" Type="varchar" MaxLength="50" Nullable="false" />
@@ -358,8 +361,10 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
           <Property Name="street" Type="varchar" MaxLength="80" />
           <Property Name="city" Type="varchar" MaxLength="50" />
           <Property Name="postalCode" Type="char" MaxLength="10" />
-          <Property Name="Province" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="countryCode" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -497,7 +502,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_customer_view' does not ha
           <Property Name="id" Type="bigint" Nullable="false" />
           <Property Name="fullName" Type="varchar" MaxLength="101" />
           <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-          <Property Name="balance" Type="decimal" Precision="61" Scale="6" />
+          <Property Name="balance" Type="decimal" Precision="65" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.total_per_payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -512,7 +517,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_payment_view' does not hav
           <Property Name="idCustomer" Type="bigint" />
           <Property Name="idStaff" Type="bigint" />
           <Property Name="paymentAmount" Type="decimal" Precision="38" Scale="6" />
-          <Property Name="reservationitem_total" Type="decimal" Precision="22" Scale="2" />
+          <Property Name="reservationitem_total" Type="decimal" Precision="44" Scale="2" />
           <Property Name="balance" Type="decimal" Precision="3" Scale="2" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -552,6 +557,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_reservationitem_view' does
 warning 6002: The table/view 'def.ipmrvpark.total_per_selecteditem_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="total_per_selecteditem_view">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="idSelected" />
             <PropertyRef Name="idSession" />
             <PropertyRef Name="idSiteType" />
@@ -561,6 +567,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_selecteditem_view' does no
             <PropertyRef Name="duration" />
             <PropertyRef Name="isSiteChecked" />
           </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
           <Property Name="idSelected" Type="bigint" Nullable="false" />
           <Property Name="idSession" Type="bigint" Nullable="false" />
           <Property Name="idRVSite" Type="bigint" />
@@ -1162,8 +1169,10 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
 `customer_view`.`street`, 
 `customer_view`.`city`, 
 `customer_view`.`postalCode`, 
-`customer_view`.`Province`, 
-`customer_view`.`Country`
+`customer_view`.`countryCode`, 
+`customer_view`.`countryName`, 
+`customer_view`.`provinceCode`, 
+`customer_view`.`provinceName`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1293,6 +1302,7 @@ FROM `total_per_reservationitem_view` AS `total_per_reservationitem_view`</Defin
           </EntitySet>
           <EntitySet Name="total_per_selecteditem_view" EntityType="Self.total_per_selecteditem_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
+`total_per_selecteditem_view`.`id`, 
 `total_per_selecteditem_view`.`idSelected`, 
 `total_per_selecteditem_view`.`idSession`, 
 `total_per_selecteditem_view`.`idRVSite`, 
@@ -1781,6 +1791,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <Property Name="comments" Type="String" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
+          <Property Name="timeStamp" Type="String" />
           <NavigationProperty Name="checkinouts" Relationship="Self.CheckInOut_ReservationItem_FK" FromRole="reservationitem" ToRole="checkinout" />
           <NavigationProperty Name="customer" Relationship="Self.idCustomer_Customer_FK" FromRole="reservationitem" ToRole="customer" />
           <NavigationProperty Name="customeraccounts" Relationship="Self.idReservationItem_ReservationItem_FK" FromRole="reservationitem" ToRole="customeraccount" />
@@ -1926,8 +1937,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
             <PropertyRef Name="id" />
             <PropertyRef Name="firstName" />
             <PropertyRef Name="lastName" />
-            <PropertyRef Name="Province" />
-            <PropertyRef Name="Country" />
+            <PropertyRef Name="countryCode" />
+            <PropertyRef Name="countryName" />
+            <PropertyRef Name="provinceCode" />
+            <PropertyRef Name="provinceName" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" />
           <Property Name="firstName" Type="String" Nullable="false" />
@@ -1942,8 +1955,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <Property Name="street" Type="String" />
           <Property Name="city" Type="String" />
           <Property Name="postalCode" Type="String" />
-          <Property Name="Province" Type="String" Nullable="false" />
-          <Property Name="Country" Type="String" Nullable="false" />
+          <Property Name="countryCode" Type="String" Nullable="false" />
+          <Property Name="countryName" Type="String" Nullable="false" />
+          <Property Name="provinceCode" Type="String" Nullable="false" />
+          <Property Name="provinceName" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="reservation_view">
           <Key>
@@ -2112,6 +2127,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
         </EntityType>
         <EntityType Name="total_per_selecteditem_view">
           <Key>
+            <PropertyRef Name="id" />
             <PropertyRef Name="idSelected" />
             <PropertyRef Name="idSession" />
             <PropertyRef Name="idSiteType" />
@@ -2121,6 +2137,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
             <PropertyRef Name="duration" />
             <PropertyRef Name="isSiteChecked" />
           </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
           <Property Name="idSelected" Type="Int64" Nullable="false" />
           <Property Name="idSession" Type="Int64" Nullable="false" />
           <Property Name="idRVSite" Type="Int64" />
@@ -3143,6 +3160,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
                 <ScalarProperty Name="comments" ColumnName="comments" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3275,8 +3293,10 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
                 <ScalarProperty Name="street" ColumnName="street" />
                 <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="postalCode" ColumnName="postalCode" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="countryCode" ColumnName="countryCode" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
+                <ScalarProperty Name="provinceName" ColumnName="provinceName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3430,6 +3450,7 @@ FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
           <EntitySetMapping Name="total_per_selecteditem_view">
             <EntityTypeMapping TypeName="ipmrvparkModel.total_per_selecteditem_view">
               <MappingFragment StoreEntitySet="total_per_selecteditem_view">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idSelected" ColumnName="idSelected" />
                 <ScalarProperty Name="idSession" ColumnName="idSession" />
                 <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />

@@ -97,6 +97,10 @@ a, .btn, .btn-mylink, label, b, .glyphicon, th {
     width: auto;
 }
 
+.waitAjax{
+    visibility: hidden;
+}
+
 .waitMsg {
     display: none;
     position: fixed;

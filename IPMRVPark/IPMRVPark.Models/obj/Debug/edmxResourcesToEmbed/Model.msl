@@ -242,6 +242,7 @@
           <ScalarProperty Name="comments" ColumnName="comments" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -374,8 +375,10 @@
           <ScalarProperty Name="street" ColumnName="street" />
           <ScalarProperty Name="city" ColumnName="city" />
           <ScalarProperty Name="postalCode" ColumnName="postalCode" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="countryCode" ColumnName="countryCode" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
+          <ScalarProperty Name="provinceName" ColumnName="provinceName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -529,6 +532,7 @@
     <EntitySetMapping Name="total_per_selecteditem_view">
       <EntityTypeMapping TypeName="ipmrvparkModel.total_per_selecteditem_view">
         <MappingFragment StoreEntitySet="total_per_selecteditem_view">
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="idSelected" ColumnName="idSelected" />
           <ScalarProperty Name="idSession" ColumnName="idSession" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />

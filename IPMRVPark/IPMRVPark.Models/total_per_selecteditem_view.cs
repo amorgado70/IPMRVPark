@@ -14,6 +14,7 @@ namespace IPMRVPark.Models
     
     public partial class total_per_selecteditem_view
     {
+        public long id { get; set; }
         public long idSelected { get; set; }
         public long idSession { get; set; }
         public Nullable<long> idRVSite { get; set; }

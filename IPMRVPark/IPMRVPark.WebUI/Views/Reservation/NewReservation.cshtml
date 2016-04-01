@@ -11,15 +11,19 @@ Site Reservation
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // Load partial view
-        $('#selected-item').load('../Reservation/CRUDSelectedItem'); // load partial view
-
+        // Load partial view - Select Site
+        $('#selected-item').load('../Reservation/CRUDSelectedItem', function () {
+            // When post is successfully concluded, focus change to customerName
+            $('#customerName').focus(function () {
+                updateSelectedList(); // Update seleted item list
+            });
+        });
        // *****
         updateSelectedList(); //execute when page is ready
         function updateSelectedList() {
             $('#selected-list').load('../Reservation/UpdateSelectedList'); // load partial view
-            getReservationTotal(); // Update reservation total
-            showReservationSummary(); // Update reservation summary
+            getSelectionTotal(); // Update reservation total
+            showSelectionSummary(); // Update selection summary
         }
 
         // ***** Customer Search
@@ -79,7 +83,7 @@ Site Reservation
                     idCustomer: $("#idCustomer").val()
                 },
                 success: function (result) {
-                    showReservationSummary();
+                    showSelectionSummary();
                     $('#btnSelectCustomer').prop('disabled', true);
                     $("#waitMsg").hide();
                 },
@@ -88,24 +92,29 @@ Site Reservation
                 }
             });
         });
-        function getReservationTotal() {
+        function getSelectionTotal() {
             $.ajax({
-                url: '../Reservation/GetReservationTotal',
+                url: '../Reservation/GetSelectionTotal',
                 type: "POST",
                 dataType: "json",
                 success: function (result) {
-                    $("#reservationTotal").text(result);
+                    $("#selectionTotal").text(result);
                 },
                 error: function () {
                     alert("9 Some error occured.");
                 }
             });
         };
-        function showReservationSummary() {
-            $('#reservation-summary').load('../Reservation/ShowReservationSummary'); // load partial view
+        function showSelectionSummary() {
+            $('#selection-summary').load('../Reservation/ShowSelectionSummary'); // load partial view
         }
     });
 </script>
+
+
+@Html.Action("CRUDSelectedItem", "Reservation", new { selectedID = 224 })
+
+@*@Html.Partial("CRUDSelectedItem", new { selectedID = 224 });*@
 
 <!-- New Reservation-->
 <div class="container-fluid">
@@ -134,7 +143,7 @@ Site Reservation
             <label>Selected Sites Total</label>
         </div>
         <div class="col-sm-4 col-xs-12 form-top-margin">
-            <div id="reservationTotal" type="text" class="form-control" style="text-align:right" disabled></div>
+            <div id="selectionTotal" type="text" class="form-control" style="text-align:right" disabled></div>
         </div>
     </div>
 
@@ -169,7 +178,7 @@ Site Reservation
         </div>
     </div>
 
-    <div id="reservation-summary">
+    <div id="selection-summary">
     </div>
     <!-- Proceed To Payment -->
     <div class="row form-top-margin">

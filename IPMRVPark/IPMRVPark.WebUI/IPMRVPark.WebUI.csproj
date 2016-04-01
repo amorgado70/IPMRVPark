@@ -386,7 +386,7 @@
     <Content Include="Views\Reservation\Selected.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Payment\NewReservation.cshtml" />
-    <Content Include="Views\Reservation\Summary.cshtml" />
+    <Content Include="Views\Reservation\SelectionSummary.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Login\Menu.cshtml" />
     <Content Include="Views\Payment\PrintPayment.cshtml" />
@@ -394,6 +394,7 @@
     <Content Include="Views\Payment\PaymentPerCustomer.cshtml" />
     <Content Include="Views\Login\EmptyPartial.cshtml" />
     <Content Include="Views\Reservation\CRUDSelectedItem.cshtml" />
+    <Content Include="Views\Reservation\Selected ORIG.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

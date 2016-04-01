@@ -243,7 +243,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             double amount = 0;
             double weeklyRate = 0;
-            double dailyRate =0;
+            double dailyRate = 0;
 
             var site = rvsites_available.GetAll().Where(s => s.id == idRVSite).First();
             if (site != null)
@@ -258,8 +258,13 @@ namespace IPMRVPark.WebUI.Controllers
             }
             string result = amount.ToString("C");
 
-            return Json(new { amount = amount.ToString("C"), type = site.description,
-                weeklyRate = weeklyRate.ToString("C"), dailyRate = dailyRate.ToString("C") });
+            return Json(new
+            {
+                amount = amount.ToString("C"),
+                type = site.description,
+                weeklyRate = weeklyRate.ToString("C"),
+                dailyRate = dailyRate.ToString("C")
+            });
         }
 
         // For Partial View : Selected Site List
@@ -269,23 +274,40 @@ namespace IPMRVPark.WebUI.Controllers
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
 
-            if (_selecteditem.Count() > 0)
+            int count = 0;
+            decimal sum = 0;
+            foreach (var i in _selecteditem)
             {
-                ViewBag.totalAmount = _selecteditem.Sum(s => s.amount).Value.ToString("C");
+                count = count + 1;
+                sum = sum + i.amount.Value;
             }
+
+            if (count > 0)
+            {
+                ViewBag.totalAmount = sum.ToString("C");
+            }
+
             return PartialView("Selected", _selecteditem);
         }
 
         // For Partial View : Show Reservation Summary
-        public ActionResult ShowReservationSummary()
+        public ActionResult ShowSelectionSummary()
         {
             session _session = sessionService.GetSession(this.HttpContext);
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
 
-            if (_selecteditem.Count() > 0)
+            int count = 0;
+            decimal sum = 0;
+            foreach (var i in _selecteditem)
             {
-                ViewBag.totalAmount = _selecteditem.Sum(s => s.amount).Value.ToString("C");
+                count = count + 1;
+                sum = sum + i.amount.Value;
+            }
+
+            if (count > 0)
+            {
+                ViewBag.totalAmount = sum.ToString("C");
             }
 
             // Read customer from session
@@ -308,7 +330,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             if (_selecteditem.Count() > 0)
             {
-                return PartialView("Summary", _selecteditem);
+                return PartialView("SelectionSummary", _selecteditem);
             }
             else
             {
@@ -318,22 +340,35 @@ namespace IPMRVPark.WebUI.Controllers
 
         }
 
-        // Selected sites total
-        public ActionResult GetReservationTotal()
+
+        public void CalculateSelectionTotal(out int count, out decimal sum)
         {
-            string total = string.Empty;
             var _session = sessionService.GetSession(this.HttpContext);
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
-
-            if (_selecteditem.Count() > 0)
+            count = 0;
+            sum = 0;
+            foreach (var i in _selecteditem)
             {
-                total = "( " + _selecteditem.Count() + " ) ";
-                string totalAmount = _selecteditem.Sum(s => s.amount).Value.ToString("C");
-                total = total + "CAD" + totalAmount;
-            };
+                count = count + 1;
+                sum = sum + i.amount.Value;
+            }
+        }
 
-            return Json(total);
+        // Selected sites total
+        public ActionResult GetSelectionTotal()
+        {
+            int count;
+            decimal sum;
+            CalculateSelectionTotal(out count, out sum);
+    
+            string totalAmount = "";
+            if (count > 0)
+            {
+                totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
+            }
+            
+            return Json(totalAmount);
         }
 
         // Update on selected site

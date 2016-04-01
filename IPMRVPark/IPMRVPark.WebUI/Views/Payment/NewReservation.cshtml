@@ -25,7 +25,7 @@ Payments & Refunds
         // ***** Load partial view Payments For Customer
         $('#account-details').load('../Payment/ShowPaymentPerCustomer/@ViewBag.CustomerID');
         // ***** Load partial view Reservations For Customer
-        $('#reservation-summary').load('/Reservation/ShowReservationSummary');
+        $('#reservation-summary').load('/Reservation/ShowSelectionSummary');
         $('#ReasonForPayment').change(function () {
             updateReasonForPayment()
         });

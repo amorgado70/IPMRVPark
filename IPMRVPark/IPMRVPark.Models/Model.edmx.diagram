@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cf61866e24894dff9bf94515171e1c6f" Name="Diagram1">
+      <Diagram DiagramId="2f99847831894bc2b3425d26b6dfffac" Name="Diagram1">
         <EntityTypeShape EntityType="ipmrvparkModel.checkinout" Width="1.5" PointX="8.25" PointY="24.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.coordinate" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.countrycode" Width="1.5" PointX="1.5" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.customer" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ipmrvparkModel.customeraccount" Width="1.5" PointX="13.5" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ipmrvparkModel.customeraccount" Width="1.5" PointX="13.5" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.fee" Width="1.5" PointX="3" PointY="26.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.ipmevent" Width="1.5" PointX="0.75" PointY="23.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ipmrvparkModel.outofserviceitem" Width="1.5" PointX="8.25" PointY="28" IsExpanded="true" />

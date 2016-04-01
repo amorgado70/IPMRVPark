@@ -180,22 +180,6 @@
 </script>
 
 <div class="container-fluid">
-    <!-- IPM Event Year -->
-    <div class="row">
-        <div class="col-xs-12">
-            <label class="pull-right">IPM Event <span id="sessionYear"></span></label>
-        </div>
-    </div>
-
-    @if (ViewBag.UserID == null)
-            {
-        <div class="row">
-            <div class="col-sm-6 col-sm-push-6 col-xs-12  form-top-margin">
-                <div class="form-control reservationWarning">NO USER LOGGED IN</div>
-            </div>
-        </div>
-    }
-
     <!-- RV Site Dates-->
     <div class="row">
         <div class="col-sm-3 col-xs-12 form-top-margin">
@@ -212,7 +196,7 @@
         </div>
     </div>
     <!-- RV Site Selection -->
-    <div class="row top-margin">
+    <div class="row form-top-margin">
         <div class="col-sm-2 col-xs-12 form-top-margin">
             <label>RV Site</label>
         </div>
@@ -235,7 +219,7 @@
             </a>
         </div>
     </div>
-    <div class="row top-margin">
+    <div class="row form-top-margin">
         <div class="col-sm-1 col-xs-12 form-top-margin">
             <label>Type</label>
         </div>
