@@ -181,11 +181,29 @@ namespace IPMRVPark.WebUI.Controllers
                 _paymentreservationitem.lastUpdate = DateTime.Now;
                 paymentsreservationitems.Insert(_paymentreservationitem);
                 paymentsreservationitems.Commit();
-                // Remove items from selected table
-                selecteditems.Delete(selecteditems.GetById(item.idSelected));
-                selecteditems.Commit();
             }
 
+            // Clean items that are in selected table
+            var _olditems_to_be_removed = selecteditems.GetAll().Where(c => c.idSession == _session.ID);
+            bool tryResult = false;
+            try
+            {
+                var _oldselecteditem = _olditems_to_be_removed.FirstOrDefault();
+                tryResult = !(_oldselecteditem.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+            if (tryResult)// Items found in database, remove them
+            {
+                foreach (var _olditem in _olditems_to_be_removed)
+                {
+                    selecteditems.Delete(_olditem.ID);
+                }
+                selecteditems.Commit();
+            }
+            
             // Reset customer
             _session.idCustomer = null;
             sessions.Update(_session);

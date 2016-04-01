@@ -11,16 +11,35 @@ Site Reservation
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // *****
+        // ***** Load Reserved List
+        updateReservedList();
         function updateReservedList() {
             var idCustomer = $('#idCustomer').val();
             var siteID = 0;
-            $('#reserved-list').load('../Reservation/UpdateReservedList?idCustomer='+idCustomer); // load partial view
-        }
+            $('#reserved-list').load('../Reservation/UpdateReservedList'); // load partial view
+        };
+        $('#reserved-list').ready(function () {
+            $('.hiddenElement').toggleClass('hiddenElement');
+            $("#waitMsg").hide();
+        });
         // ***** Customer Search
         $("#customerName").click(function () {
             $("#customerName").val("");
             $('#btnSearchCustomer').prop('disabled', true);
+        });
+        $.ajax({
+            url: '../Login/GetSessionCustomer',
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                var customerID = data.ID;
+                var customerLabel = data.Label;
+                $("#idCustomer").val(customerID);
+                $('#customerName').val(customerLabel);
+            },
+            error: function () {
+                alert("3 Some error occured.");
+            }
         });
         $("#customerName").autocomplete({
             source: function (request, response) {
@@ -37,22 +56,33 @@ Site Reservation
             minLength: 1, // require at least one character from the user
             select: function (event, ui) {
                 $('#idCustomer').val(ui.item.ID); // name of form input field: CustomerID, ProductID
-                $('#btnSearchCustomer').prop('disabled', false);
-                $('#btnSearchCustomer').focus();
+                selectCustomer();
             }
         });
         // ***** Customer Selection
-        $('#btnSearchCustomer').prop('disabled', true);
-        //function will be called on button click
-        $("#btnSearchCustomer").click(function () {
-            updateReservedList();
-            $("#waitMsg").show();// Show wait message
-            $('.hiddenElement').toggleClass('hiddenElement');
-        });
+        function selectCustomer() {
+            $("#waitMsg").show();// Show wait message            
+            $.ajax(
+            {
+                type: "POST", //HTTP POST Method
+                url: "/Login/SelectCustomer", // Controller/View
+                dataType: "json",
+                data: { //Passing data
+                    idCustomer: $("#idCustomer").val()
+                },
+                success: function (result) {
+                    updateReservedList();
+                    $('#btnEditReservation').focus();
+                },
+                error: function (result) {
+                    alert("7 Some error occured.");
+                }
+            });
+        };
+        // ***** Edit Reservation
         $("#btnEditReservation").click(function () {
             $("#waitMsg").show();// Show wait message
         });
-        
     });
 </script>
 
@@ -71,18 +101,15 @@ Site Reservation
     <!-- Customer Selection -->
     <div class="row top-margin">
         <div class="form-group">
-            <div class="col-sm-2 col-xs-12 form-top-margin">
-                <label>Customer</label>
+            <div class="col-sm-4 col-xs-12 form-top-margin">
+                <label>
+                    <span class="col-xs-2 glyphicon glyphicon-search"></span>
+                    <span class="col-xs-10">Search By Customer</span>
+                </label>
             </div>
-            <div class="col-sm-6 col-xs-10 form-top-margin" data-toggle="tooltip" title="Search and selecte with autocomplete">
+            <div class="col-sm-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Search and selecte with autocomplete">
                 <input type="text" class="form-control" id="customerName" placeholder="Type name or phone and then select from the list" />
-                <input class="text-box single-line" id="idCustomer" name="idCustomer" type="hidden" value="-1"/>
-            </div>
-            <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                <button id="btnSearchCustomer" class="btn btn-block btn-default">
-                    <span class="col-xs-1 glyphicon glyphicon-search"></span>
-                    <span class="col-xs-9">Search By Customer</span>
-                </button>
+                <input class="text-box single-line" id="idCustomer" name="idCustomer" type="hidden" value="-1" />
             </div>
         </div>
     </div>
@@ -98,12 +125,11 @@ Site Reservation
     <div id="reserved-list">
     </div>
     <!-- ********** -->
-
     <!-- Proceed To Edit Reservation -->
     <div class="hiddenElement">
         <div class="row form-top-margin">
             <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                <a id="btnEditReservation" href="@Url.Action("EditReservedList", "Reservation")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                <a id="btnEditReservation" href="@Url.Action("GoToEditReservedList", "Reservation")" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-pencil"></span>
                     <span>Edit Reservation</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>

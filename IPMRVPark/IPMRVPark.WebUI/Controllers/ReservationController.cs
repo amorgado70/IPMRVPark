@@ -486,6 +486,34 @@ namespace IPMRVPark.WebUI.Controllers
 
         #endregion
 
+        // Clean edit items
+        private void cleanEditItemList()
+        {
+            session _session = sessionService.GetSession(this.HttpContext);
+
+            // Clean edit items that are in selected table
+            var _olditems_to_be_removed = selecteditems.GetAll().
+                Where(c => c.idSession == _session.ID || c.idCustomer == _session.idCustomer);
+            bool tryResult = false;
+            try
+            {
+                var _oldselecteditem = _olditems_to_be_removed.FirstOrDefault();
+                tryResult = !(_oldselecteditem.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+            if (tryResult)// Items found in database, remove them
+            {
+                foreach (var _olditem in _olditems_to_be_removed)
+                {
+                    selecteditems.Delete(_olditem.ID);
+                }
+                selecteditems.Commit();
+            }
+        }
+
         // Search reservation page
         public ActionResult SearchReservation()
         {
@@ -493,12 +521,35 @@ namespace IPMRVPark.WebUI.Controllers
 
             ViewBag.UserID = _session.idStaff;
 
+            cleanEditItemList();
+
             return View();
         }
 
         // For Partial View : Reserved Site List
-        public ActionResult UpdateReservedList(long idCustomer = -1)
+        public ActionResult UpdateReservedList()
         {
+            var _session = sessionService.GetSession(this.HttpContext);
+            long idCustomer = -1;
+
+            // Read customer from session
+            customer_view _customer = new customer_view();
+            bool tryResult = false;
+            try //checks if customer is in database
+            {
+                _customer = customers.GetAll().Where(c => c.id == _session.idCustomer).FirstOrDefault();
+                tryResult = !(_customer.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+
+            if (tryResult)//customer found in database
+            {
+                idCustomer = _session.idCustomer.Value;
+            }
+
             var _reserveditems = totals_per_reservationitem.GetAll();
             if (idCustomer != -1)
             {
@@ -518,84 +569,85 @@ namespace IPMRVPark.WebUI.Controllers
                 ViewBag.totalAmount = sum.ToString("C");
             }
 
-            Session["ReservedList"] = _reserveditems;
-
-            //return PartialView("../Login/EmptyPartial");
             return PartialView("../Reservation/ReservedList", _reserveditems);
+        }
+
+        public ActionResult GoToEditReservedList()
+        {
+            cleanEditItemList();
+            return RedirectToAction("EditReservedList");
         }
 
         public ActionResult EditReservedList()
         {
             var _session = sessionService.GetSession(this.HttpContext);
+            long idCustomer = -1;
 
-            IQueryable<total_per_reservationitem_view> _reserveditems =
-                Session["ReservedList"] as IQueryable<total_per_reservationitem_view>;
+            // Read customer from session
+            customer_view _customer = new customer_view();
+            bool tryResult = false;
+            try //checks if customer is in database
+            {
+                _customer = customers.GetAll().Where(c => c.id == _session.idCustomer).FirstOrDefault();
+                tryResult = !(_customer.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
 
-            _session.idCustomer = _reserveditems.FirstOrDefault().idCustomer;
-            sessions.Update(sessions.GetById(_session.ID));
-            sessions.Commit();          
+            if (tryResult)//customer found in database
+            {
+                idCustomer = _session.idCustomer.Value;
+                ViewBag.Customer = _customer.fullName + ", " + _customer.mainPhone;
+            }
+
+            var _reserveditems = totals_per_reservationitem.GetAll();
+            if (idCustomer != -1)
+            {
+                _reserveditems = _reserveditems.Where(q => q.idCustomer == idCustomer).OrderByDescending(o => o.idRVSite);
+            }
 
             foreach (var item in _reserveditems)
             {
-                // Clean old items from selected list               
-                // Check if item was in selected list               
-                bool tryResult = false;
-                try
+                // If reserved item is not in the selected item table
+                var _checkitem = totals_per_selecteditem.GetAll().Where(s => s.idRVSite == item.idRVSite).FirstOrDefault();
+                if (_checkitem == null)
                 {
-                    var _oldselecteditem = selecteditems.GetAll().Where(c => c.idReservationItem == item.idReservationItem).FirstOrDefault();
-                    tryResult = !(_oldselecteditem.Equals(default(session)));
+                    // Add reserved item as selected item                
+                    selecteditem _selecteditem = new selecteditem();
+                    _selecteditem.checkInDate = item.checkInDate;
+                    _selecteditem.checkOutDate = item.checkOutDate;
+                    _selecteditem.idRVSite = item.idRVSite;
+                    _selecteditem.idSession = _session.ID;
+                    _selecteditem.idIPMEvent = _session.idIPMEvent;
+                    _selecteditem.idStaff = _session.idStaff;
+                    _selecteditem.idCustomer = item.idCustomer;
+                    _selecteditem.isSiteChecked = true;
+                    _selecteditem.createDate = DateTime.Now;
+                    _selecteditem.lastUpdate = DateTime.Now;
+                    _selecteditem.idReservationItem = item.idReservationItem;
+                    selecteditems.Insert(_selecteditem);
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("An error occurred: '{0}'", e);
-                }
-                if (tryResult)// Selected item found in database, remove it
-                {
-                    var _olditems_to_be_removed = selecteditems.GetAll().Where(c => c.idRVSite == item.idRVSite);
-                    foreach(var _olditem in _olditems_to_be_removed)
-                    {
-                        selecteditems.Delete(_olditem.ID);
-                    }
-                    selecteditems.Commit();
-                }
-
-                selecteditem _selecteditem = new selecteditem();
-
-                // Add reserved item as selected item                
-                _selecteditem.checkInDate = item.checkInDate;
-                _selecteditem.checkOutDate = item.checkOutDate;
-                _selecteditem.idRVSite = item.idRVSite;
-                _selecteditem.idSession = _session.ID;
-                _selecteditem.idIPMEvent = _session.idIPMEvent;
-                _selecteditem.idStaff = _session.idStaff;
-                _selecteditem.idCustomer = item.idCustomer;
-                _selecteditem.isSiteChecked = true;
-                _selecteditem.createDate = DateTime.Now;
-                _selecteditem.lastUpdate = DateTime.Now;
-                _selecteditem.idReservationItem = item.idReservationItem;
-                selecteditems.Insert(_selecteditem);                
             }
             selecteditems.Commit();
 
             // Data to be presented on the view
-            var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID);
+            var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID && s.idCustomer == _session.idCustomer);
             int count = 0;
             decimal sum = 0;
             decimal reservationsum = 0;
-            foreach(var item in _edititems)
+            foreach (var item in _edititems)
             {
                 count = count + 1;
                 sum = sum + item.amount.Value;
                 reservationsum = reservationsum + item.reservationAmount.Value;
             }
             ViewBag.totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
-            ViewBag.reservationAmount = sum.ToString("C");                     
+            ViewBag.reservationAmount = sum.ToString("C");
 
             return View(_edititems);
         }
-
-
-
 
     }
 }

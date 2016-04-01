@@ -48,7 +48,6 @@ Site Reservation
                 $('#idCustomer').val(ui.item.ID); // name of form input field: CustomerID, ProductID
                 $('#btnSelectCustomer').prop('disabled', false);
                 $('#btnSelectCustomer').focus();
-                //$('body').scrollTo('#btnSelectCustomer');
             }
         });
         $.ajax({
@@ -73,7 +72,6 @@ Site Reservation
         $("#btnSelectCustomer").click(function () {
             $("#waitMsg").show();// Show wait message
             $('#btnPayment').focus();
-            //$('body').scrollTo('#btnPayment');
             $.ajax(
             {
                 type: "POST", //HTTP POST Method
