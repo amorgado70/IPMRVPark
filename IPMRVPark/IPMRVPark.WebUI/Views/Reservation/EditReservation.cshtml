@@ -180,7 +180,8 @@ Site Reservation
             </div>
         </div>
     }
-    else {
+    @if (ViewBag.refundAmount != "$0.00")
+    {
     <!-- Proceed To Refund -->
         <div class="showWaitMsg">
             <div class="row form-top-margin">
