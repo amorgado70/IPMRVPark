@@ -12,12 +12,16 @@ namespace IPMRVPark.Services
     public class SessionService
     {
         IRepositoryBase<session> sessions;
+        IRepositoryBase<customer_view> customers;
 
         public const string SessionName = "IPMRVPark";
 
-        public SessionService(IRepositoryBase<session> sessions)
+        public SessionService(
+            IRepositoryBase<session> sessions,
+            IRepositoryBase<customer_view> customers)
         {
             this.sessions = sessions;
+            this.customers = customers;
         }
 
         private session createNewSession(HttpContextBase httpContext)
@@ -89,6 +93,65 @@ namespace IPMRVPark.Services
             result = createNewSession(httpContext);
 
             return result;
+        }
+
+        const long IDnotFound = -1;
+
+        public long GetSessionUserID(HttpContextBase httpContext)
+        {
+            session _session = GetSession(httpContext);
+            if (_session.idStaff != null)
+            {
+                return _session.idStaff.Value;
+            }
+            else
+            {
+                return IDnotFound;
+            }
+        }
+
+        private bool GetSessionCustomer(ref customer_view customer, HttpContextBase httpContext)
+        {
+            // Read customer from session
+            session _session = GetSession(httpContext);
+            bool customerFound = false;
+            try //checks if customer is in database
+            {
+                customer = customers.GetAll().Where(c => c.id == _session.idCustomer).FirstOrDefault();
+                customerFound = !(customer.Equals(default(session)));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
+            // Customer found in database
+            return customerFound;
+        }
+
+        public long GetCustomerID(HttpContextBase httpContext)
+        {
+            customer_view _customer = new customer_view();
+            if (GetSessionCustomer(ref _customer, httpContext))
+            {
+                return (_customer.id);
+            }
+            else
+            {
+                return IDnotFound;
+            }
+        }
+
+        public string GetCustomerNamePhone(HttpContextBase httpContext)
+        {
+            customer_view _customer = new customer_view();
+            if (GetSessionCustomer(ref _customer, httpContext))
+            {
+                return (_customer.fullName + ", " + _customer.mainPhone);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }

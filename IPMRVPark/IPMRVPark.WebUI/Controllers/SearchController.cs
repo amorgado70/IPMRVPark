@@ -31,7 +31,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.selecteditems = selecteditems;
             this.sessions = sessions;
             this.rvsites_available = rvsites_available;
-            sessionService = new SessionService(this.sessions);
+            sessionService = new SessionService(this.sessions, this.customers);
         }//end Constructor
 
         // Search results for customer autocomplete dropdown list

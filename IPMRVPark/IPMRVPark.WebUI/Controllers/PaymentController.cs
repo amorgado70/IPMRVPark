@@ -50,37 +50,29 @@ namespace IPMRVPark.WebUI.Controllers
             this.totals_per_reservationitem = totals_per_reservationitem;
             this.totals_per_payment = totals_per_payment;
             this.paymentsreservationitems = paymentsreservationitems;
-            sessionService = new SessionService(this.sessions);
+            sessionService = new SessionService(this.sessions, this.customers);
         }//end Constructor
 
-        // GET: /Create
-        public ActionResult NewReservation()
+        const long IDnotFound = -1;
+
+        // Payment for New Reservation
+        public ActionResult NewPayment(string reason="New Reservation", bool isCredit = true)
         {
+            ViewBag.PageTitle = "Payment For " + reason;
             session _session = sessionService.GetSession(this.HttpContext);
+            long idCustomer = sessionService.GetCustomerID(this.HttpContext);
 
-            // Read customer from session
-            customer_view _customer = new customer_view();
-            bool tryResult = false;
-            try //checks if customer is in database
-            {
-                _customer = customers.GetAll().Where(c => c.id == _session.idCustomer).FirstOrDefault();
-                tryResult = !(_customer.Equals(default(customer_view)));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("An error occurred: '{0}'", e);
-            }
+            ViewBag.CustomerID = idCustomer;
+            ViewBag.CustomerName = sessionService.GetCustomerNamePhone(this.HttpContext);
 
-            if (tryResult)//customer found in database
+            if (idCustomer != IDnotFound)
             {
-                ViewBag.CustomerID = _customer.id;
-                ViewBag.CustomerName = _customer.fullName + ", " + _customer.mainPhone;
-                ViewBag.CustomerBalance = CustomerAccountFinalBalance(_customer.id);
+                ViewBag.CustomerBalance = CustomerAccountFinalBalance(idCustomer);
             };
 
             // Read total for session
             total_per_session_view _total_per_session = new total_per_session_view();
-            tryResult = false;
+            bool tryResult = false;
             try //checks if total is in database
             {
                 _total_per_session = totals_per_session.GetAll().Where(c => c.idSession == _session.ID).FirstOrDefault();
@@ -107,7 +99,7 @@ namespace IPMRVPark.WebUI.Controllers
                 SelectListItem selectListItem = new SelectListItem();
                 selectListItem.Value = item.ID.ToString();
                 selectListItem.Text = item.description;
-                string selectedText = "New Reservation";
+                string selectedText = reason;
                 selectListItem.Selected =
                  (selectListItem.Text == selectedText);
                 selectReasonForPayment.Add(selectListItem);
@@ -136,6 +128,8 @@ namespace IPMRVPark.WebUI.Controllers
             ViewBag.PayDocType = selectPayDocType;
 
             var payment = new payment();
+            payment.isCredit = isCredit;
+
             return View(payment);
         }
 
@@ -148,8 +142,7 @@ namespace IPMRVPark.WebUI.Controllers
             long sessionID = _session.ID;
 
             // Create and insert payment
-            _payment.idSession = sessionID;
-            _payment.isCredit = true;
+            _payment.idSession = sessionID;            
             _payment.idReasonForPayment = 2; // New Reservation
             _payment.createDate = DateTime.Now;
             _payment.lastUpdate = DateTime.Now;
@@ -203,7 +196,7 @@ namespace IPMRVPark.WebUI.Controllers
                 }
                 selecteditems.Commit();
             }
-            
+
             // Reset customer
             _session.idCustomer = null;
             sessions.Update(_session);
@@ -213,10 +206,8 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         // For Partial View : Show Payments Per Customer
-        public ActionResult ShowPaymentPerCustomer(long id = -1)
+        public ActionResult ShowPaymentPerCustomer(long id = IDnotFound)
         {
-
-
             customer_view _customer = new customer_view();
             bool tryResult = false;
             try //checks if customer is in database

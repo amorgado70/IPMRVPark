@@ -18,7 +18,7 @@ Site Reservation
                 updateSelectedList(); // Update seleted item list
             });
         });
-       // *****
+       // ***** Partial View Selected List
         updateSelectedList(); //execute when page is ready
         function updateSelectedList() {
             $('#selected-list').load('../Reservation/UpdateSelectedList'); // load partial view
@@ -59,7 +59,6 @@ Site Reservation
                 var customerLabel = data.Label;
                 $("#idCustomer").val(customerID);
                 $('#customerName').val(customerLabel);
-                //$('#btnSelectCustomer').prop('disabled', false);
             },
             error: function () {
                 alert("3 Some error occured.");
@@ -176,7 +175,7 @@ Site Reservation
     <!-- Proceed To Payment -->
     <div class="row form-top-margin">
         <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-            <a id="btnPayment" href="@Url.Action("NewReservation", "Payment")" class="btn btn-block btn-default btn-mylink pagination-centered">
+            <a id="btnPayment" href="@Url.Action("NewPayment", "Payment", new { reason = "New Reservation", isCredit = true })" class="btn btn-block btn-default btn-mylink pagination-centered">
                 <span class="glyphicon glyphicon-usd"></span>
                 <span>Payment</span>
                 <span class="glyphicon glyphicon-chevron-right"></span>

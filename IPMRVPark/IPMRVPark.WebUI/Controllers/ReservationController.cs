@@ -41,70 +41,13 @@ namespace IPMRVPark.WebUI.Controllers
             this.totals_per_reservationitem = totals_per_reservationitem;
             this.totals_per_edititem = totals_per_edititem;
             this.rvsites_available = rvsites_available;
-            sessionService = new SessionService(this.sessions);
+            sessionService = new SessionService(this.sessions, this.customers);
         }//end Constructor
 
         #region common
 
         const long newReservationMode = -1;
         const long IDnotFound = -1;
-
-        private long GetSessionUserID()
-        {
-            session _session = sessionService.GetSession(this.HttpContext);
-            if (_session.idStaff != null)
-            {
-                return _session.idStaff.Value;
-            }
-            else
-            {
-                return IDnotFound;
-            }            
-        }
-
-        private bool GetSessionCustomer(ref customer_view customer)
-        {
-            // Read customer from session
-            session _session = sessionService.GetSession(this.HttpContext);
-            bool customerFound = false;
-            try //checks if customer is in database
-            {
-                customer = customers.GetAll().Where(c => c.id == _session.idCustomer).FirstOrDefault();
-                customerFound = !(customer.Equals(default(session)));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("An error occurred: '{0}'", e);
-            }
-            // Customer found in database
-            return customerFound;
-        }
-
-        public long GetCustomerID()
-        {
-            customer_view _customer = new customer_view();
-            if (GetSessionCustomer(ref _customer))
-            {
-                return (_customer.id);
-            }
-            else
-            {
-                return IDnotFound;
-            }
-        }
-
-        public string GetCustomerNamePhone()
-        {
-            customer_view _customer = new customer_view();
-            if (GetSessionCustomer(ref _customer))
-            {
-                return (_customer.fullName + ", " + _customer.mainPhone);
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
 
         // Convert dates in number of days counting from today
         private void GetTimeRange(
@@ -194,7 +137,7 @@ namespace IPMRVPark.WebUI.Controllers
                 ViewBag.SiteID = newReservationMode;
             }
 
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return PartialView();
         }
@@ -203,7 +146,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult NewReservation()
         {
             cleanSelectedItemList();
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return View();
         }
@@ -212,7 +155,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult EditSelected(long selectedID = newReservationMode)
         {
             ViewBag.SelectedID = selectedID;
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return View();
         }
@@ -332,7 +275,7 @@ namespace IPMRVPark.WebUI.Controllers
             CalcSelectItem(out count, out sum);
 
             ViewBag.totalAmount = sum.ToString("C");
-            ViewBag.Customer = GetCustomerNamePhone();
+            ViewBag.Customer = sessionService.GetCustomerNamePhone(this.HttpContext);
 
             if (_selecteditem.Count() > 0)
             {
@@ -510,7 +453,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult EditReserved(long selectedID = newReservationMode)
         {
             ViewBag.SelectedID = selectedID;
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return View();
         }
@@ -546,7 +489,7 @@ namespace IPMRVPark.WebUI.Controllers
                 ViewBag.SiteID = newReservationMode;
             }
 
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return PartialView();
         }
@@ -582,7 +525,7 @@ namespace IPMRVPark.WebUI.Controllers
         // Search reservation page
         public ActionResult SearchReservation()
         {
-            ViewBag.UserID = GetSessionUserID();
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
             cleanEditItemList();
 
             return View();
@@ -593,7 +536,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             var _session = sessionService.GetSession(this.HttpContext);
 
-            long idCustomer = GetCustomerID();      
+            long idCustomer = sessionService.GetCustomerID(this.HttpContext);      
             var _reserveditems = totals_per_reservationitem.GetAll();
             if (idCustomer != -1)
             {
@@ -625,8 +568,8 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult EditReservation()
         {
             var _session = sessionService.GetSession(this.HttpContext);
-            long idCustomer = GetCustomerID();
-            ViewBag.Customer = GetCustomerNamePhone();
+            long idCustomer = sessionService.GetCustomerID(this.HttpContext);
+            ViewBag.Customer = sessionService.GetCustomerNamePhone(this.HttpContext);
 
             var _reserveditems = totals_per_reservationitem.GetAll();
             if (idCustomer != IDnotFound)

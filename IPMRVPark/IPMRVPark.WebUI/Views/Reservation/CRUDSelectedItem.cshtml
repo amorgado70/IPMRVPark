@@ -1,16 +1,5 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        // ***** IPM Event Year
-        $.ajax({
-            url: '../Login/GetSessionYear',
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                $("#sessionYear").text(data);},
-            error: function () {
-                alert("21 Some error occured.");}
-        });
-
         // ****** Preparation For Edit Reservation
         if(@ViewBag.SiteID != -1){
             $("#btnSelectSite").hide();

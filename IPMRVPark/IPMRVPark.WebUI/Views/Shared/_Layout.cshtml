@@ -14,6 +14,18 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // ***** IPM Event Year
+        $.ajax({
+            url: '/Login/GetSessionYear',
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                $("#sessionYear").text(data);
+            },
+            error: function () {
+                alert("21 Some error occured.");
+            }
+        });
         $(document).ajaxStop(function () {
             $('.waitAjax').toggleClass('waitAjax');
         });
@@ -32,7 +44,7 @@
                 </div>
                 <div class="col-xs-1"></div>
                 <div class="col-xs-7 col-sm-8" style="margin-top:0.8em; margin-bottom:0.5em; margin-left:0; font-size:1.2em; font-weight: bold;">
-                    @ViewBag.PageTitle
+                    @ViewBag.PageTitle - Event <span id="sessionYear"></span>
                 </div>
             </div>
         </div>
