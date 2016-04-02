@@ -11,6 +11,14 @@ Site Reservation
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Resolve root path
+        var origin = window.location.origin;
+        if (origin == 'http://www.alvm.com.br') {
+            var root = 'http://www.alvm.com.br/ipmrvpark/';
+        }
+        else {
+            var root = '../';
+        }
         // ***** Load Reserved List
         updateReservedList();
         function updateReservedList() {
@@ -20,34 +28,36 @@ Site Reservation
         };
         $('#reserved-list').ready(function () {
             $('.hiddenElement').toggleClass('hiddenElement');
-            $("#waitMsg").hide();
+            $('#waitMsg').hide();
         });
         // ***** Customer Search
-        $("#customerName").click(function () {
-            $("#customerName").val("");
+        $('#customerName').click(function () {
+            $('#customerName').val('');
             $('#btnSearchCustomer').prop('disabled', true);
         });
+        var postpath = root + 'Login/GetSessionCustomer';
         $.ajax({
-            url: '../Login/GetSessionCustomer',
-            type: "POST",
-            dataType: "json",
+            url: postpath,
+            type: 'POST',
+            dataType: 'json',
             success: function (data) {
                 var customerID = data.ID;
                 var customerLabel = data.Label;
-                $("#idCustomer").val(customerID);
+                $('#idCustomer').val(customerID);
                 $('#customerName').val(customerLabel);
             },
             error: function () {
-                alert("3 Some error occured.");
+                alert('3 Some error occured.');
             }
         });
-        $("#customerName").autocomplete({
+        $('#customerName').autocomplete({
             source: function (request, response) {
                 // define a function to call the action (assuming UserController)
+                var postpath = root + 'Search/SearchCustomerByNameOrPhoneResult';
                 $.ajax({
-                    url: '../Search/SearchCustomerByNameOrPhoneResult',
-                    type: "POST",
-                    dataType: "json",
+                    url: postpath,
+                    type: 'POST',
+                    dataType: 'json',
                     // query will be the param used by the action method
                     data: { query: request.term },
                     success: response
@@ -61,27 +71,28 @@ Site Reservation
         });
         // ***** Customer Selection
         function selectCustomer() {
-            $("#waitMsg").show();// Show wait message            
+            $('#waitMsg').show();// Show wait message
+            var postpath = root + 'Login/SelectCustomer';
             $.ajax(
-            {
-                type: "POST", //HTTP POST Method
-                url: "/Login/SelectCustomer", // Controller/View
-                dataType: "json",
+            {                
+                url: postpath, // Controller/View
+                type: 'POST', //HTTP POST Method
+                dataType: 'json',
                 data: { //Passing data
-                    idCustomer: $("#idCustomer").val()
+                    idCustomer: $('#idCustomer').val()
                 },
                 success: function (result) {
                     updateReservedList();
                     $('#btnEditReservation').focus();
                 },
                 error: function (result) {
-                    alert("7 Some error occured.");
+                    alert('7 Some error occured.');
                 }
             });
         };
         // ***** Edit Reservation
-        $("#btnEditReservation").click(function () {
-            $("#waitMsg").show();// Show wait message
+        $('#btnEditReservation').click(function () {
+            $('#waitMsg').show();// Show wait message
         });
     });
 </script>

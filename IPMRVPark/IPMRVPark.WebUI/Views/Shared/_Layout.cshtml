@@ -14,18 +14,40 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Resolve root path
+        var origin = window.location.origin;
+        if (origin == 'http://www.alvm.com.br') {
+            var root = 'http://www.alvm.com.br/ipmrvpark/';
+        }
+        else {
+            var root = '../';
+        }
         // ***** IPM Event Year
+        var postpath = root + 'Login/GetSessionYear';
         $.ajax({
-            url: '/Login/GetSessionYear',
-            type: "POST",
-            dataType: "json",
+            url: postpath,
+            type: 'POST',
+            dataType: 'json',
             success: function (data) {
-                $("#sessionYear").text(data);
+                $('#sessionYear').text(data);
             },
             error: function () {
-                alert("21 Some error occured.");
+                alert('21 Some error occured.');
             }
         });
+        var postpath = root + 'Login/GetSessionGUID';
+        $.ajax({
+            url: postpath,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                $('#sessionGUID').text(data);
+            },
+            error: function () {
+                alert('32 Some error occured.');
+            }
+        });
+
         $(document).ajaxStop(function () {
             $('.waitAjax').toggleClass('waitAjax');
         });
@@ -72,19 +94,6 @@
         </div>
     </div>
     <p>
-        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $.ajax({
-                                    url: '/Login/GetSessionGUID',
-                                    type: "POST",
-                                    dataType: "json",
-                                    success: function (data) {
-                                        $("#sessionGUID").text(data);},
-                                    error: function () {
-                                        alert("Some error occured.");}
-                                });
-                            });
-</script>
         <span id="sessionGUID"></span>
     </p>
     <h1>

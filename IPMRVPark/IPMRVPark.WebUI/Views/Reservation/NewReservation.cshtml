@@ -11,6 +11,14 @@ Site Reservation
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Resolve root path
+        var origin = window.location.origin;
+        if (origin == 'http://www.alvm.com.br') {
+            var root = 'http://www.alvm.com.br/ipmrvpark/';
+        }
+        else {
+            var root = '../';
+        }
         // Load partial view - Select Site
         $('#selected-item').load('../Reservation/CRUDSelectedItem', function () {
             // When post is successfully concluded, focus change to customerName
@@ -25,19 +33,19 @@ Site Reservation
             getSelectionTotal(); // Update reservation total
             showSelectionSummary(); // Update selection summary
         }
-
         // ***** Customer Search
-        $("#customerName").click(function () {
-            $("#customerName").val("");
+        $('#customerName').click(function () {
+            $('#customerName').val('');
             $('#btnSelectCustomer').prop('disabled', true);
         });
-        $("#customerName").autocomplete({
+        $('#customerName').autocomplete({
             source: function (request, response) {
                 // define a function to call the action (assuming UserController)
+                var postpath = root + 'Search/SearchCustomerByNameOrPhoneResult';
                 $.ajax({
-                    url: '../Search/SearchCustomerByNameOrPhoneResult',
-                    type: "POST",
-                    dataType: "json",
+                    url: postpath,
+                    type: 'POST',
+                    dataType: 'json',
                     // query will be the param used by the action method
                     data: { query: request.term },
                     success: response
@@ -50,55 +58,56 @@ Site Reservation
                 $('#btnSelectCustomer').focus();
             }
         });
+        var postpath = root + 'Login/GetSessionCustomer';
         $.ajax({
-            url: '../Login/GetSessionCustomer',
-            type: "POST",
-            dataType: "json",
+            url: postpath,
+            type: 'POST',
+            dataType: 'json',
             success: function (data) {
                 var customerID = data.ID;
                 var customerLabel = data.Label;
-                $("#idCustomer").val(customerID);
+                $('#idCustomer').val(customerID);
                 $('#customerName').val(customerLabel);
             },
             error: function () {
-                alert("3 Some error occured.");
+                alert('3 Some error occured.');
             }
         });
-
         // ***** Customer Selection
         $('#btnSelectCustomer').prop('disabled', true);
         //function will be called on button click
-        $("#btnSelectCustomer").click(function () {
-            $("#waitMsg").show();// Show wait message
+        $('#btnSelectCustomer').click(function () {
+            $('#waitMsg').show();// Show wait message
             $('#btnPayment').focus();
-            $.ajax(
-            {
-                type: "POST", //HTTP POST Method
-                url: "/Login/SelectCustomer", // Controller/View
-                dataType: "json",
+            var postpath = root + 'Login/SelectCustomer';
+            $.ajax({                
+                url: postpath, // Controller/View
+                type: 'POST', //HTTP POST Method
+                dataType: 'json',
                 data: { //Passing data
-                    idCustomer: $("#idCustomer").val()
+                    idCustomer: $('#idCustomer').val()
                 },
                 success: function (result) {
                     showSelectionSummary();
                     $('#btnSelectCustomer').prop('disabled', true);
-                    $("#waitMsg").hide();
+                    $('#waitMsg').hide();
                 },
                 error: function (result) {
-                    alert("7 Some error occured.");
+                    alert('7 Some error occured.');
                 }
             });
         });
         function getSelectionTotal() {
+            var postpath = root + 'Reservation/GetSelectionTotal';
             $.ajax({
-                url: '../Reservation/GetSelectionTotal',
-                type: "POST",
-                dataType: "json",
+                url: postpath,
+                type: 'POST',
+                dataType: 'json',
                 success: function (result) {
-                    $("#selectionTotal").text(result);
+                    $('#selectionTotal').text(result);
                 },
                 error: function () {
-                    alert("9 Some error occured.");
+                    alert('9 Some error occured.');
                 }
             });
         };
