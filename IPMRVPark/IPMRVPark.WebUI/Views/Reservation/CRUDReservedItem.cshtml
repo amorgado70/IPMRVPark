@@ -214,7 +214,7 @@
                 <span class="col-xs-9">Select Site</span>
             </button>
             <!-- Update Selected Site Dates -->
-            <a id="btnUpdateSite" style="display: none;" href="/Reservation/UpdateReserved/@ViewBag.SelectedID" class="btn btn-block btn-default btn-mylink pagination-centered">
+            <a id="btnUpdateSite" style="display: none;" href="@Url.Action("UpdateReserved","Reservation", new { id=@ViewBag.SelectedID })" class="btn btn-block btn-default btn-mylink pagination-centered">
                 <span class="glyphicon glyphicon-pencil"></span>
                 <span>Update Dates</span>
             </a>

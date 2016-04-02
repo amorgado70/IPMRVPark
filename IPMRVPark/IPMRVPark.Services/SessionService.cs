@@ -100,13 +100,18 @@ namespace IPMRVPark.Services
         public long GetSessionUserID(HttpContextBase httpContext)
         {
             session _session = GetSession(httpContext);
-            if (_session.idStaff != null)
+            if (_session.idStaff == null)
             {
-                return _session.idStaff.Value;
+                //return IDnotFound;
+                var _Url = httpContext.Request.Url;
+                string pathToLogin = _Url.Scheme + "://" + _Url.Authority +
+                    "/Login/Login";
+                httpContext.Response.Redirect(pathToLogin, false);
+                return IDnotFound;
             }
             else
             {
-                return IDnotFound;
+                return _session.idStaff.Value;
             }
         }
 

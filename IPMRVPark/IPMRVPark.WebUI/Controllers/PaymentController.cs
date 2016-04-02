@@ -58,6 +58,8 @@ namespace IPMRVPark.WebUI.Controllers
         // Payment for New Reservation
         public ActionResult NewPayment(string reason="New Reservation", bool isCredit = true)
         {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             ViewBag.PageTitle = "Payment For " + reason;
             session _session = sessionService.GetSession(this.HttpContext);
             long idCustomer = sessionService.GetCustomerID(this.HttpContext);
@@ -259,6 +261,8 @@ namespace IPMRVPark.WebUI.Controllers
 
         public ActionResult PrintPayment(long id)
         {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             var _payment = payments.GetById(id);
             var _reservationitems = totals_per_reservationitem.GetAll().
                 Where(q => q.idPayment == _payment.ID);

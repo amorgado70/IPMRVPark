@@ -109,6 +109,8 @@ namespace IPMRVPark.WebUI.Controllers
         // Partial View for CRUD of Selected Item 
         public ActionResult CRUDSelectedItem(long selectedID = newReservationMode)
         {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             int min;
             int max;
             int checkIn;
@@ -135,9 +137,7 @@ namespace IPMRVPark.WebUI.Controllers
             else
             {
                 ViewBag.SiteID = newReservationMode;
-            }
-
-            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+            }           
 
             return PartialView();
         }
@@ -217,14 +217,14 @@ namespace IPMRVPark.WebUI.Controllers
                 amount = weeklyRate * weeks +
                     dailyRate * days;
             }
-            string result = amount.ToString("C");
+            string result = amount.ToString("N2");
 
             return Json(new
             {
-                amount = amount.ToString("C"),
+                amount = amount.ToString("N2"),
                 type = site.description,
-                weeklyRate = weeklyRate.ToString("C"),
-                dailyRate = dailyRate.ToString("C")
+                weeklyRate = weeklyRate.ToString("N2"),
+                dailyRate = dailyRate.ToString("N2")
             });
         }
 
@@ -257,7 +257,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             if (count > 0)
             {
-                ViewBag.totalAmount = sum.ToString("C");
+                ViewBag.totalAmount = sum.ToString("N2");
             }
 
             return PartialView("SelectedList", _selecteditem);
@@ -274,7 +274,7 @@ namespace IPMRVPark.WebUI.Controllers
             decimal sum = 0;
             CalcSelectItem(out count, out sum);
 
-            ViewBag.totalAmount = sum.ToString("C");
+            ViewBag.totalAmount = sum.ToString("N2");
             ViewBag.Customer = sessionService.GetCustomerNamePhone(this.HttpContext);
 
             if (_selecteditem.Count() > 0)
@@ -311,7 +311,7 @@ namespace IPMRVPark.WebUI.Controllers
             string totalAmount = "";
             if (count > 0)
             {
-                totalAmount = "( " + count + " ) CAD" + sum.ToString("C");
+                totalAmount = "( " + count + " )  $" + sum.ToString("N2");
             }
 
             return Json(totalAmount);
@@ -461,6 +461,8 @@ namespace IPMRVPark.WebUI.Controllers
         // Partial View for CRUD of Reserved Site
         public ActionResult CRUDReservedItem(long selectedID = newReservationMode)
         {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             int min;
             int max;
             int checkIn;
@@ -488,8 +490,6 @@ namespace IPMRVPark.WebUI.Controllers
             {
                 ViewBag.SiteID = newReservationMode;
             }
-
-            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             return PartialView();
         }
@@ -553,7 +553,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             if (count > 0)
             {
-                ViewBag.totalAmount = sum.ToString("C");
+                ViewBag.totalAmount = sum.ToString("N2");
             }
 
             return PartialView("../Reservation/ReservedList", _reserveditems);
@@ -567,6 +567,8 @@ namespace IPMRVPark.WebUI.Controllers
 
         public ActionResult EditReservation()
         {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             var _session = sessionService.GetSession(this.HttpContext);
             long idCustomer = sessionService.GetCustomerID(this.HttpContext);
             ViewBag.Customer = sessionService.GetCustomerNamePhone(this.HttpContext);
@@ -634,11 +636,11 @@ namespace IPMRVPark.WebUI.Controllers
                 cancelationFee = 0;
             }
 
-            ViewBag.totalAmount = sum.ToString("C");
-            ViewBag.reservationAmount = reservationsum.ToString("C");
-            ViewBag.dueAmount = dueAmount.ToString("C");
-            ViewBag.refundAmount = refundAmount.ToString("C");
-            ViewBag.cancelationFee = cancelationFee.ToString("C");
+            ViewBag.totalAmount = sum.ToString("N2");
+            ViewBag.reservationAmount = reservationsum.ToString("N2");
+            ViewBag.dueAmount = dueAmount.ToString("N2");
+            ViewBag.refundAmount = refundAmount.ToString("N2");
+            ViewBag.cancelationFee = cancelationFee.ToString("N2");
 
             return View(_edititems);
         }

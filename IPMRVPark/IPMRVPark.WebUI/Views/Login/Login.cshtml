@@ -31,10 +31,12 @@
                 $('#userEmail').val(userLabel);
                 //check user ID
                 if (userID == -1) {
-                    $('#unauthorizedUser').show();
+                    $('#userEmail').focus();
+                    //$('#unauthorizedUser').show();
                 }
                 else {
-                    $('#unauthorizedUser').hide();
+                    $('#btnSelectUser').focus();
+                    //$('#unauthorizedUser').hide();
                 }
             },
             error: function () {
@@ -50,15 +52,16 @@
             $('#waitMsg').show();
             var postpath = root + 'Login/SelectUser';
             $.ajax(
-            {                
-                url: postpath, // Controller/View
-                type: 'POST', //HTTP POST Method
+            {
+                url: postpath,
+                type: 'POST',
                 dataType: 'json',
                 data: { //Passing data
                     userEmail: $('#userEmail').val()
                 },
-                success: function (result) {
-                    var userID = result;
+                success: function (data) {
+                    var userID = data.ID;
+                    var userLabel = data.Label;
                     $('#idUser').val(userID);
                     //check user ID
                     if (userID == -1) {
@@ -66,11 +69,17 @@
                     }
                     else {
                         $('#unauthorizedUser').hide();
+                        var postpath = root + 'Login/Menu';
+                        window.location.href = postpath;
                     }
                     $('#waitMsg').hide();
                 },
-                error: function (result) {
-                    alert('7 Some error occured.');
+                error: function(xhr, status, error) {
+                    var acc = []
+                    $.each(xhr, function(index, value) {
+                        acc.push(index + ': ' + value);
+                    });
+                    alert(JSON.stringify(acc));
                 }
             });
         });
@@ -79,7 +88,7 @@
             $('#waitMsg').show();
             var postpath = root + 'Login/ChangeYear';
             $.ajax(
-            {                
+            {
                 url: postpath, // Controller/View
                 type: 'POST', //HTTP POST Method
                 dataType: 'json',
@@ -131,12 +140,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-sm-push-3 col-xs-12 form-top-margin">
-            <div class="col-sm-9 col-sm-push-3 col-xs-12 form-top-margin">
-                <button id="btnSelectUser" class="btn btn-block btn-default">
-                    <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                    <span class="col-xs-9">Confirm User</span>
-                </button>
-            </div>
+            <div id="btnSelectUser" class="btn btn-block btn-default btn-mylink pagination-centered" ><span class="glyphicon glyphicon-log-in"></span>&nbsp; Confirm Log In</div>            
         </div>
     </div>
 </div>

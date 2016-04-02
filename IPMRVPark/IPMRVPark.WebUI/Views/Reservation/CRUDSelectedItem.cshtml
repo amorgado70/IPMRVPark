@@ -23,6 +23,7 @@
         }
         else{
         }
+        $('#siteName').focus();
         $('#btnUpdateSite').click(function(event){
             $('#waitMsg').show();// Show wait message
         });
@@ -207,7 +208,7 @@
             <input class="text-box single-line" id="idRVSite" name="idRVSite" type="hidden" />
         </div>
         <div class="col-sm-2 col-xs-12 form-top-margin">
-            <div id="siteTotal" type="text" class="form-control" style="text-align:right" disabled>$ 0.00</div>
+            <div id="siteTotal" type="text" class="form-control" style="text-align:right" disabled> 0.00</div>
         </div>
         <div class="col-sm-4 col-xs-12 form-top-margin">
             <button id="btnSelectSite" class="btn btn-block btn-default">
@@ -215,7 +216,7 @@
                 <span class="col-xs-9">Select Site</span>
             </button>
             <!-- Update Selected Site Dates -->
-            <a id="btnUpdateSite" style="display: none;" href="/Reservation/UpdateSelected/@ViewBag.SelectedID" class="btn btn-block btn-default btn-mylink pagination-centered">
+            <a id="btnUpdateSite" style="display: none;" href="@Url.Action("UpdateSelected","Reservation", new { id=@ViewBag.SelectedID })" class="btn btn-block btn-default btn-mylink pagination-centered">
                 <span class="glyphicon glyphicon-pencil"></span>
                 <span>Update Dates</span>
             </a>

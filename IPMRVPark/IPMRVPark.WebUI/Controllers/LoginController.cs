@@ -34,12 +34,21 @@ namespace IPMRVPark.WebUI.Controllers
                 this.customers);
         }//end Constructor
 
+        const long IDnotFound = -1;
+
         public ActionResult Home()
         {
-            return View();
+            return RedirectToAction("Login");
         }
 
         public ActionResult Menu()
+        {
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
+            return View();
+        }
+
+        public ActionResult Logout()
         {
             return View();
         }
@@ -67,7 +76,7 @@ namespace IPMRVPark.WebUI.Controllers
         [HttpPost]
         public ActionResult GetSessionEmail()
         {
-            SelectionOptionID user = new SelectionOptionID(-1, "");
+            SelectionOptionID user = new SelectionOptionID(IDnotFound, "");
             var _session = sessionService.GetSession(this.HttpContext);
             if (_session.idStaff != null)
             {
@@ -91,20 +100,25 @@ namespace IPMRVPark.WebUI.Controllers
         [HttpPost]
         public ActionResult SelectUser(string userEmail)
         {
-            long idUser = -1;
+            SelectionOptionID user = new SelectionOptionID(IDnotFound, "");
             if (userEmail != null)
             {
+                var _session = sessionService.GetSession(this.HttpContext);
                 var _users = users.GetAll().Where(q => q.person.email == userEmail);
                 if (_users.Count() > 0)
                 {
-                    idUser = users.GetAll().Where(q => q.person.email == userEmail).First().ID;
-                    var _session = sessionService.GetSession(this.HttpContext);
-                    _session.idStaff = idUser;
-                    sessions.Update(sessions.GetById(_session.ID));
-                    sessions.Commit();
+                    user.ID = users.GetAll().Where(q => q.person.email == userEmail).First().ID;
+                    user.Label = userEmail;
+                    _session.idStaff = user.ID;
                 }
+                else
+                {
+                    _session.idStaff = null;
+                }
+                sessions.Update(sessions.GetById(_session.ID));
+                sessions.Commit();
             }
-            return Json(idUser);
+            return Json(user);
         }
 
         [HttpPost]
