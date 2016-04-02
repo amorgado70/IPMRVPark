@@ -390,7 +390,6 @@
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Login\Menu.cshtml" />
     <Content Include="Views\Payment\PrintPayment.cshtml" />
-    <Content Include="Views\Payment\LixoSummary.cshtml" />
     <Content Include="Views\Payment\PaymentPerCustomer.cshtml" />
     <Content Include="Views\Login\EmptyPartial.cshtml" />
     <Content Include="Views\Reservation\CRUDSelectedItem.cshtml" />

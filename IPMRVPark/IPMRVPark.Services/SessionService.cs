@@ -158,5 +158,14 @@ namespace IPMRVPark.Services
                 return string.Empty;
             }
         }
+
+        public decimal GetProvinceTax(HttpContextBase httpContext)
+        {
+            return 13; // HST value for Ontario
+        }
+        public decimal GetCancelationFee(HttpContextBase httpContext)
+        {
+            return 50; // Value for 2016
+        }
     }
 }

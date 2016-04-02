@@ -50,10 +50,7 @@ namespace IPMRVPark.WebUI.Controllers
         const long IDnotFound = -1;
 
         // Convert dates in number of days counting from today
-        private void GetTimeRange(
-            out int min, out int max,
-            out int checkIn, out int checkOut,
-            long selectedID = newReservationMode)
+        private void CreateViewBagsForDates(long selectedID = newReservationMode)
         {
             session _session = sessionService.GetSession(this.HttpContext);
             ipmevent _IPMEvent = ipmevents.GetById(_session.idIPMEvent);
@@ -97,10 +94,15 @@ namespace IPMRVPark.WebUI.Controllers
                 checkOutDate = end;
             };
 
-            min = (int)(start - now).TotalDays + 1;
-            max = (int)(end - now).TotalDays + 1;
-            checkIn = (int)(checkInDate - now).TotalDays - 7;
-            checkOut = (int)(checkOutDate - now).TotalDays + 1;
+            int min = (int)(start - now).TotalDays + 1;
+            int max = (int)(end - now).TotalDays + 1;
+            int checkIn = (int)(checkInDate - now).TotalDays - 7;
+            int checkOut = (int)(checkOutDate - now).TotalDays + 1;
+
+            ViewBag.minDate = min;
+            ViewBag.maxDate = max;
+            ViewBag.checkInDate = checkIn;
+            ViewBag.checkOutDate = checkOut;
         }
         #endregion
 
@@ -110,20 +112,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult CRUDSelectedItem(long selectedID = newReservationMode)
         {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
-
-            int min;
-            int max;
-            int checkIn;
-            int checkOut;
-            GetTimeRange(
-                out min, out max,
-                out checkIn, out checkOut,
-                selectedID);
-
-            ViewBag.minDate = min;
-            ViewBag.maxDate = max;
-            ViewBag.checkInDate = checkIn;
-            ViewBag.checkOutDate = checkOut;
+            CreateViewBagsForDates(selectedID);
 
             // Parameters for Edit Reservation, NOT used for New Reservation
             if (selectedID != newReservationMode)
@@ -229,18 +218,23 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         // Sum and Count for Selected Items
-        private void CalcSelectItem(out int count, out decimal sum)
+        private void CreateViewBagForSelectedTotal()
         {
             var _session = sessionService.GetSession(this.HttpContext);
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
 
-            count = 0;
-            sum = 0;
+            int count = 0;
+            decimal sum = 0;
             foreach (var i in _selecteditem)
             {
                 count = count + 1;
                 sum = sum + i.amount.Value;
+            }
+
+            if (count > 0)
+            {
+                ViewBag.totalAmount = sum.ToString("N2");
             }
         }
 
@@ -251,14 +245,7 @@ namespace IPMRVPark.WebUI.Controllers
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
 
-            int count = 0;
-            decimal sum = 0;
-            CalcSelectItem(out count, out sum);
-
-            if (count > 0)
-            {
-                ViewBag.totalAmount = sum.ToString("N2");
-            }
+            CreateViewBagForSelectedTotal();
 
             return PartialView("SelectedList", _selecteditem);
         }
@@ -270,11 +257,8 @@ namespace IPMRVPark.WebUI.Controllers
             var _selecteditem = totals_per_selecteditem.GetAll();
             _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
 
-            int count = 0;
-            decimal sum = 0;
-            CalcSelectItem(out count, out sum);
+            CreateViewBagForSelectedTotal();
 
-            ViewBag.totalAmount = sum.ToString("N2");
             ViewBag.Customer = sessionService.GetCustomerNamePhone(this.HttpContext);
 
             if (_selecteditem.Count() > 0)
@@ -462,20 +446,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult CRUDReservedItem(long selectedID = newReservationMode)
         {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
-
-            int min;
-            int max;
-            int checkIn;
-            int checkOut;
-            GetTimeRange(
-                out min, out max,
-                out checkIn, out checkOut,
-                selectedID);
-
-            ViewBag.minDate = min;
-            ViewBag.maxDate = max;
-            ViewBag.checkInDate = checkIn;
-            ViewBag.checkOutDate = checkOut;
+            CreateViewBagsForDates(selectedID);
 
             // Parameters for Edit Reservation, NOT used for New Reservation
             if (selectedID != newReservationMode)
@@ -618,7 +589,7 @@ namespace IPMRVPark.WebUI.Controllers
             decimal dueAmount = Math.Max((sum - reservationsum), 0);
             decimal refundAmount = Math.Max((reservationsum - sum), 0);
             // Check if there is a cancellation fee
-            decimal cancelationFee = 50;
+            decimal cancelationFee = sessionService.GetCancelationFee(this.HttpContext);
             if (sum < reservationsum)
             {
                 if ((reservationsum - sum) < cancelationFee)
