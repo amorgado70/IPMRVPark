@@ -157,7 +157,7 @@
             $('#waitMsg').show();// Show wait message
             var postpath = root + 'Reservation/SelectSite';
             $.ajax({                
-                url: '/Reservation/SelectSite',
+                url: postpath,
                 type: 'POST',
                 dataType: 'json',
                 data: { //Passing data

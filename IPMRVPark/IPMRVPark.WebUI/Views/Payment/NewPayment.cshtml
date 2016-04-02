@@ -12,6 +12,14 @@ Payments & Refunds
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // Resolve root path
+        var origin = window.location.origin;
+        if (origin == 'http://www.alvm.com.br') {
+            var root = 'http://www.alvm.com.br/ipmrvpark/';
+        }
+        else {
+            var root = '../';
+        }
         // **** Handle form submit
         var formSubmit = false;
         $("form").submit(function() {
@@ -24,7 +32,7 @@ Payments & Refunds
         // ***** Load partial view Payments For Customer
         $('#account-details').load('../Payment/ShowPaymentPerCustomer/@ViewBag.CustomerID');
         // ***** Load partial view Reservations For Customer
-        $('#reservation-summary').load('/Reservation/ShowSelectionSummary');
+        $('#reservation-summary').load('../Reservation/ShowSelectionSummary');
         $('#ReasonForPayment').change(function () {
             updateReasonForPayment()
         });
