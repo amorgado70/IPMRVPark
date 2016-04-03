@@ -18,7 +18,8 @@ namespace IPMRVPark.Services
 
         public SessionService(
             IRepositoryBase<session> sessions,
-            IRepositoryBase<customer_view> customers)
+            IRepositoryBase<customer_view> customers
+            )
         {
             this.sessions = sessions;
             this.customers = customers;
@@ -97,6 +98,12 @@ namespace IPMRVPark.Services
 
         const long IDnotFound = -1;
 
+        public long GetSessionID(HttpContextBase httpContext)
+        {
+            session _session = GetSession(httpContext);
+            return _session.ID;
+        }
+
         public long GetSessionUserID(HttpContextBase httpContext)
         {
             session _session = GetSession(httpContext);
@@ -115,10 +122,10 @@ namespace IPMRVPark.Services
             }
         }
 
-        private bool GetSessionCustomer(ref customer_view customer, HttpContextBase httpContext)
+        private bool GetSessionCustomer(ref customer_view customer, long sessionID)
         {
             // Read customer from session
-            session _session = GetSession(httpContext);
+            session _session = sessions.GetById(sessionID);
             bool customerFound = false;
             try //checks if customer is in database
             {
@@ -133,10 +140,10 @@ namespace IPMRVPark.Services
             return customerFound;
         }
 
-        public long GetCustomerID(HttpContextBase httpContext)
+        public long GetSessionCustomerID(long sessionID)
         {
             customer_view _customer = new customer_view();
-            if (GetSessionCustomer(ref _customer, httpContext))
+            if (GetSessionCustomer(ref _customer, sessionID))
             {
                 return (_customer.id);
             }
@@ -145,11 +152,10 @@ namespace IPMRVPark.Services
                 return IDnotFound;
             }
         }
-
-        public string GetCustomerNamePhone(HttpContextBase httpContext)
+        public string GetSessionCustomerNamePhone(long sessionID)
         {
             customer_view _customer = new customer_view();
-            if (GetSessionCustomer(ref _customer, httpContext))
+            if (GetSessionCustomer(ref _customer, sessionID))
             {
                 return (_customer.fullName + ", " + _customer.mainPhone);
             }
@@ -158,14 +164,19 @@ namespace IPMRVPark.Services
                 return string.Empty;
             }
         }
-
-        public decimal GetProvinceTax(HttpContextBase httpContext)
+        // Reset session customer
+        public void ResetSessionCustomer(long sessionID)
         {
-            return 13; // HST value for Ontario
+            session _session = sessions.GetById(sessionID);
+            _session.idCustomer = null;
+            sessions.Update(_session);
+            sessions.Commit();
         }
-        public decimal GetCancelationFee(HttpContextBase httpContext)
+
+        public long GetSessionIPMEventID(long sessionID)
         {
-            return 50; // Value for 2016
+            session _session = sessions.GetById(sessionID);
+            return _session.idIPMEvent;
         }
     }
 }

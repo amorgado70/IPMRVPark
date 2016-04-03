@@ -167,14 +167,18 @@
     <Property Name="idPaymentMethod" Type="Int64" Nullable="false" />
     <Property Name="idCustomer" Type="Int64" Nullable="false" />
     <Property Name="idReasonForPayment" Type="Int64" />
-    <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="idSession" Type="Int64" />
+    <Property Name="cupom" Type="Decimal" Nullable="false" />
+    <Property Name="without_tax" Type="Decimal" Nullable="false" />
+    <Property Name="tax" Type="Decimal" Nullable="false" />
+    <Property Name="cancellation_fee" Type="Decimal" />
     <Property Name="isCredit" Type="Boolean" />
+    <Property Name="amount" Type="Decimal" Nullable="false" />
     <Property Name="payDocType" Type="Int64" />
     <Property Name="docNumber" Type="String" />
     <Property Name="comments" Type="String" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
-    <Property Name="idSession" Type="Int64" />
     <NavigationProperty Name="customer" Relationship="Self.Payment_Customer_FK" FromRole="payment" ToRole="customer" />
     <NavigationProperty Name="customeraccounts" Relationship="Self.idPayment_Payment_FK" FromRole="payment" ToRole="customeraccount" />
     <NavigationProperty Name="paydoctype1" Relationship="Self.Payment_PayDocType_FK" FromRole="payment" ToRole="paydoctype" />
@@ -452,6 +456,22 @@
     <Property Name="provinceName" Type="String" Nullable="false" />
     <Property Name="isEmailReceipt" Type="Boolean" />
   </EntityType>
+  <EntityType Name="partymember_view">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="firstName" />
+      <PropertyRef Name="lastName" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="firstName" Type="String" Nullable="false" />
+    <Property Name="lastName" Type="String" Nullable="false" />
+    <Property Name="fullName" Type="String" />
+    <Property Name="mainPhone" Type="String" />
+    <Property Name="email" Type="String" />
+    <Property Name="cellPhone" Type="String" />
+    <Property Name="petDescription" Type="String" />
+    <Property Name="comments" Type="String" />
+  </EntityType>
   <EntityType Name="reservation_view">
     <Key>
       <PropertyRef Name="idReservationItem" />
@@ -519,6 +539,8 @@
     <Property Name="PowerSupply" Type="String" Nullable="false" />
     <Property Name="backgroundColor" Type="String" />
     <Property Name="isAvaialable" Type="Int32" Nullable="false" />
+    <Property Name="SelectedFrom" Type="DateTime" />
+    <Property Name="SelectedUntil" Type="DateTime" />
     <Property Name="ReservedFrom" Type="DateTime" />
     <Property Name="ReservedUntil" Type="DateTime" />
     <Property Name="OutOfServiceFrom" Type="DateTime" />
@@ -562,6 +584,7 @@
     <Property Name="fullName" Type="String" />
     <Property Name="mainPhone" Type="String" />
     <Property Name="email" Type="String" />
+    <Property Name="role" Type="String" />
   </EntityType>
   <EntityType Name="total_per_customer_view">
     <Key>
@@ -693,6 +716,7 @@
     <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
     <Property Name="total" Type="Decimal" />
     <Property Name="idReservationItem" Type="Int64" />
+    <Property Name="reservationItemTotal" Type="Decimal" />
   </EntityType>
   <EntityType Name="total_per_session_view">
     <Key>
@@ -1272,6 +1296,7 @@
     <EntitySet Name="staffs" EntityType="Self.staff" />
     <EntitySet Name="styleurls" EntityType="Self.styleurl" />
     <EntitySet Name="customer_view" EntityType="Self.customer_view" />
+    <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
     <EntitySet Name="reservation_view" EntityType="Self.reservation_view" />
     <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
     <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />

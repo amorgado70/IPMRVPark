@@ -12,7 +12,7 @@ namespace IPMRVPark.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class staff_view
+    public partial class partymember_view
     {
         public long id { get; set; }
         public string firstName { get; set; }
@@ -20,6 +20,8 @@ namespace IPMRVPark.Models
         public string fullName { get; set; }
         public string mainPhone { get; set; }
         public string email { get; set; }
-        public string role { get; set; }
+        public string cellPhone { get; set; }
+        public string petDescription { get; set; }
+        public string comments { get; set; }
     }
 }

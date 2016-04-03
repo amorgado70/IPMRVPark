@@ -15,23 +15,37 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<customer_view> customers;
         IRepositoryBase<ipmevent> ipmevents;
         IRepositoryBase<session> sessions;
+        IRepositoryBase<payment> payments;
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<rvsite_available_view> rvsites_available;
+        IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
+        IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
+        IRepositoryBase<total_per_edititem_view> totals_per_edititem;
         SessionService sessionService;
 
         public SearchController(
             IRepositoryBase<customer_view> customers,
             IRepositoryBase<ipmevent> ipmevents,
-            IRepositoryBase<rvsite_available_view> rvsites_available,
-            IRepositoryBase<selecteditem> selecteditems,
+            IRepositoryBase<payment> payments,
+            IRepositoryBase<rvsite_available_view> rvsites_available,            
+            IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
+            IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
+            IRepositoryBase<total_per_edititem_view> totals_per_edititem,
             IRepositoryBase<session> sessions)
+
         {
             this.customers = customers;
             this.ipmevents = ipmevents;
-            this.selecteditems = selecteditems;
             this.sessions = sessions;
+            this.payments = payments;
             this.rvsites_available = rvsites_available;
-            sessionService = new SessionService(this.sessions, this.customers);
+            this.totals_per_selecteditem = totals_per_selecteditem;
+            this.totals_per_reservationitem = totals_per_reservationitem;
+            this.totals_per_edititem = totals_per_edititem;
+            sessionService = new SessionService(
+                this.sessions,
+                this.customers
+                );
         }//end Constructor
 
         // Search results for customer autocomplete dropdown list

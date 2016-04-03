@@ -147,14 +147,18 @@
           <ScalarProperty Name="idPaymentMethod" ColumnName="idPaymentMethod" />
           <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
           <ScalarProperty Name="idReasonForPayment" ColumnName="idReasonForPayment" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="idSession" ColumnName="idSession" />
+          <ScalarProperty Name="cupom" ColumnName="cupom" />
+          <ScalarProperty Name="without_tax" ColumnName="without_tax" />
+          <ScalarProperty Name="tax" ColumnName="tax" />
+          <ScalarProperty Name="cancellation_fee" ColumnName="cancellation_fee" />
           <ScalarProperty Name="isCredit" ColumnName="isCredit" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="payDocType" ColumnName="payDocType" />
           <ScalarProperty Name="docNumber" ColumnName="docNumber" />
           <ScalarProperty Name="comments" ColumnName="comments" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
-          <ScalarProperty Name="idSession" ColumnName="idSession" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -385,6 +389,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="partymember_view">
+      <EntityTypeMapping TypeName="ipmrvparkModel.partymember_view">
+        <MappingFragment StoreEntitySet="partymember_view">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
+          <ScalarProperty Name="petDescription" ColumnName="petDescription" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="reservation_view">
       <EntityTypeMapping TypeName="ipmrvparkModel.reservation_view">
         <MappingFragment StoreEntitySet="reservation_view">
@@ -436,6 +455,8 @@
           <ScalarProperty Name="PowerSupply" ColumnName="PowerSupply" />
           <ScalarProperty Name="backgroundColor" ColumnName="backgroundColor" />
           <ScalarProperty Name="isAvaialable" ColumnName="isAvaialable" />
+          <ScalarProperty Name="SelectedFrom" ColumnName="SelectedFrom" />
+          <ScalarProperty Name="SelectedUntil" ColumnName="SelectedUntil" />
           <ScalarProperty Name="ReservedFrom" ColumnName="ReservedFrom" />
           <ScalarProperty Name="ReservedUntil" ColumnName="ReservedUntil" />
           <ScalarProperty Name="OutOfServiceFrom" ColumnName="OutOfServiceFrom" />
@@ -481,6 +502,7 @@
           <ScalarProperty Name="fullName" ColumnName="fullName" />
           <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
           <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="role" ColumnName="role" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -590,6 +612,7 @@
           <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
           <ScalarProperty Name="total" ColumnName="total" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
+          <ScalarProperty Name="reservationItemTotal" ColumnName="reservationItemTotal" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

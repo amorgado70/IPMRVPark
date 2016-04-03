@@ -92,6 +92,9 @@
     <Compile Include="partymember.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="partymember_view.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="paydoctype.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

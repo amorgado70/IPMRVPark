@@ -20,10 +20,12 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<reservationitem> reservationitems;
         IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
         IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
+        IRepositoryBase<total_per_edititem_view> totals_per_edititem;
         IRepositoryBase<total_per_payment_view> totals_per_payment;
         IRepositoryBase<paymentreservationitem> paymentsreservationitems;
         IRepositoryBase<session> sessions;
         SessionService sessionService;
+        PaymentService paymentService;
 
         public PaymentController(IRepositoryBase<payment> payments,
             IRepositoryBase<customer_view> customers,
@@ -34,9 +36,11 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<reservationitem> reservationitems,
             IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
             IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
+            IRepositoryBase<total_per_edititem_view> totals_per_edititem,
             IRepositoryBase<total_per_payment_view> totals_per_payment,
             IRepositoryBase<paymentreservationitem> paymentsreservationitems,
-            IRepositoryBase<session> sessions)
+            IRepositoryBase<session> sessions
+            )
         {
             this.sessions = sessions;
             this.payments = payments;
@@ -48,9 +52,18 @@ namespace IPMRVPark.WebUI.Controllers
             this.reservationitems = reservationitems;
             this.totals_per_selecteditem = totals_per_selecteditem;
             this.totals_per_reservationitem = totals_per_reservationitem;
+            this.totals_per_edititem = totals_per_edititem;
             this.totals_per_payment = totals_per_payment;
             this.paymentsreservationitems = paymentsreservationitems;
-            sessionService = new SessionService(this.sessions, this.customers);
+            sessionService = new SessionService(
+                this.sessions,
+                this.customers
+                );
+            paymentService = new PaymentService(
+                this.selecteditems,
+                this.reservationitems,
+                this.payments
+                );
         }//end Constructor
 
         const long IDnotFound = -1;
@@ -76,7 +89,7 @@ namespace IPMRVPark.WebUI.Controllers
         }
         // Configure dropdown list items
         private void paymentMethods(string defaultMethod)
-        {            
+        {
             var paymentmethod = paymentmethods.GetAll().OrderBy(s => s.description);
             List<SelectListItem> selectPaymentMethod = new List<SelectListItem>();
             List<SelectListItem> selectPayDocType = new List<SelectListItem>();
@@ -101,9 +114,10 @@ namespace IPMRVPark.WebUI.Controllers
         // For Partial View : Show Payments Per Customer
         public ActionResult ShowPaymentPerCustomer(long id = IDnotFound)
         {
-            long customerID = sessionService.GetCustomerID(this.HttpContext);
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            long customerID = sessionService.GetSessionCustomerID(sessionID);
             ViewBag.CustomerID = customerID;
-            ViewBag.CustomerName = sessionService.GetCustomerNamePhone(this.HttpContext);
+            ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
 
             if (customerID != IDnotFound)
             {
@@ -140,6 +154,7 @@ namespace IPMRVPark.WebUI.Controllers
 
         public ActionResult PrintPayment(long id)
         {
+
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             var _payment = payments.GetById(id);
@@ -159,25 +174,30 @@ namespace IPMRVPark.WebUI.Controllers
             ViewBag.CustomerBalance = CustomerAccountFinalBalance(_payment.idCustomer);
 
             // Tax Percentage
-            ViewBag.ProvinceTax = sessionService.GetProvinceTax(this.HttpContext);
+            ViewBag.ProvinceTax = paymentService.GetProvinceTax(
+                sessionService.GetSessionID(this.HttpContext)
+                );
 
             return View(_reservationitems);
         }
         #endregion
 
         #region Payment for New Reservation
-
         // Payment for New Reservation
-        public ActionResult NewPayment(string reason = "New Reservation", bool isCredit = true)
+        public ActionResult NewReservation()
         {
+            string reason = "New Reservation";
+            bool isCredit = true;
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
             ViewBag.PageTitle = "Payment For " + reason;
             session _session = sessionService.GetSession(this.HttpContext);
-            long CustomerID = sessionService.GetCustomerID(this.HttpContext);
+            long CustomerID = sessionService.GetSessionCustomerID(sessionID);
 
             ViewBag.CustomerID = CustomerID;
-            ViewBag.CustomerName = sessionService.GetCustomerNamePhone(this.HttpContext);
+            ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
 
             if (CustomerID != IDnotFound)
             {
@@ -203,7 +223,9 @@ namespace IPMRVPark.WebUI.Controllers
             };
 
             // Tax Percentage
-            ViewBag.ProvinceTax = sessionService.GetProvinceTax(this.HttpContext);
+            ViewBag.ProvinceTax = paymentService.GetProvinceTax(
+                sessionService.GetSessionID(this.HttpContext)
+                );
 
             reasonsForPayment(reason);
             paymentMethods("VISA");
@@ -257,33 +279,65 @@ namespace IPMRVPark.WebUI.Controllers
                 paymentsreservationitems.Commit();
             }
 
-            // Clean items that are in selected table
-            var _olditems_to_be_removed = selecteditems.GetAll().Where(c => c.idSession == _session.ID);
-            bool tryResult = false;
-            try
+            // Clean selected items
+            paymentService.CleanSelectedItemList(sessionID);
+            // 
+            sessionService.ResetSessionCustomer(sessionID);
+
+            return RedirectToAction("PrintPayment", new { id = ID });
+        }
+        #endregion
+        #region Payment for Extend Reservation
+        public ActionResult ExtendReservation()
+        {
+            string reason = "Extend Reservation";
+            bool isCredit = true;
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+
+            ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
+            ViewBag.PageTitle = "Payment For " + reason;
+            session _session = sessionService.GetSession(this.HttpContext);
+            long CustomerID = sessionService.GetSessionCustomerID(sessionID);
+
+            ViewBag.CustomerID = CustomerID;
+            ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
+
+            if (CustomerID != IDnotFound)
             {
-                var _oldselecteditem = _olditems_to_be_removed.FirstOrDefault();
-                tryResult = !(_oldselecteditem.Equals(default(session)));
+                ViewBag.CustomerBalance = CustomerAccountFinalBalance(CustomerID);
+            };
+
+            // Read total for session
+            total_per_session_view _total_per_session = new total_per_session_view();
+            bool tryResult = false;
+            try //checks if total is in database
+            {
+                _total_per_session = totals_per_session.GetAll().Where(c => c.idSession == _session.ID).FirstOrDefault();
+                tryResult = !(_total_per_session.Equals(default(session)));
             }
             catch (Exception e)
             {
                 Console.WriteLine("An error occurred: '{0}'", e);
             }
-            if (tryResult)// Items found in database, remove them
+
+            if (tryResult)//total found in database
             {
-                foreach (var _olditem in _olditems_to_be_removed)
-                {
-                    selecteditems.Delete(_olditem.ID);
-                }
-                selecteditems.Commit();
-            }
+                ViewBag.Total = _total_per_session.total_amount;
+            };
 
-            // Reset customer
-            _session.idCustomer = null;
-            sessions.Update(_session);
-            sessions.Commit();
+            // Tax Percentage
+            ViewBag.ProvinceTax = paymentService.GetProvinceTax(
+                sessionService.GetSessionID(this.HttpContext)
+                );
 
-            return RedirectToAction("PrintPayment", new { id = ID });
+            reasonsForPayment(reason);
+            paymentMethods("VISA");
+
+            var payment = new payment();
+            payment.isCredit = isCredit;
+
+            return View(payment);
         }
         #endregion
     }

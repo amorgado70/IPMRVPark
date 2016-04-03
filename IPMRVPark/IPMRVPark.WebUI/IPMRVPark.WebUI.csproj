@@ -385,7 +385,7 @@
     <Content Include="Views\Maintenance\Province3Create.cshtml" />
     <Content Include="Views\Reservation\SelectedList.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Payment\NewPayment.cshtml" />
+    <Content Include="Views\Payment\NewReservation.cshtml" />
     <Content Include="Views\Reservation\SelectionSummary.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Login\Menu.cshtml" />
@@ -400,6 +400,8 @@
     <Content Include="Views\Reservation\EditReserved.cshtml" />
     <Content Include="Views\Reservation\CRUDReservedItem.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
+    <Content Include="Views\Payment\ExtendReservation.cshtml" />
+    <Content Include="Views\Reservation\EditReservationSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -137,14 +137,18 @@
     <Property Name="idPaymentMethod" Type="bigint" Nullable="false" />
     <Property Name="idCustomer" Type="bigint" Nullable="false" />
     <Property Name="idReasonForPayment" Type="bigint" />
-    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="idSession" Type="bigint" />
+    <Property Name="cupom" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="without_tax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="tax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="cancellation_fee" Type="decimal" Precision="12" Scale="2" />
     <Property Name="isCredit" Type="bit" />
+    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="payDocType" Type="bigint" />
     <Property Name="docNumber" Type="varchar" MaxLength="100" />
     <Property Name="comments" Type="varchar" MaxLength="120" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
-    <Property Name="idSession" Type="bigint" />
   </EntityType>
   <EntityType Name="paymentmethod">
     <Key>
@@ -365,6 +369,24 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
     <Property Name="isEmailReceipt" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="partymember_view">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="firstName" />
+      <PropertyRef Name="lastName" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="firstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="lastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="fullName" Type="varchar" MaxLength="101" />
+    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
+    <Property Name="email" Type="varchar" MaxLength="30" />
+    <Property Name="cellPhone" Type="varchar" MaxLength="30" />
+    <Property Name="petDescription" Type="varchar" MaxLength="50" />
+    <Property Name="comments" Type="varchar" MaxLength="120" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="reservation_view">
     <Key>
@@ -439,6 +461,8 @@ warning 6002: The table/view 'def.ipmrvpark.rvsite_status_view' does not have a 
     <Property Name="PowerSupply" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="backgroundColor" Type="varchar" MaxLength="8" />
     <Property Name="isAvaialable" Type="int" Nullable="false" />
+    <Property Name="SelectedFrom" Type="date" />
+    <Property Name="SelectedUntil" Type="date" />
     <Property Name="ReservedFrom" Type="date" />
     <Property Name="ReservedUntil" Type="date" />
     <Property Name="OutOfServiceFrom" Type="date" />
@@ -490,6 +514,7 @@ warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary 
     <Property Name="fullName" Type="varchar" MaxLength="101" />
     <Property Name="mainPhone" Type="varchar" MaxLength="30" />
     <Property Name="email" Type="varchar" MaxLength="30" />
+    <Property Name="role" Type="varchar" MaxLength="30" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.total_per_customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -538,7 +563,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_edititem_view' does not ha
     <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
     <Property Name="amount" Type="decimal" Precision="22" Scale="2" />
     <Property Name="isSiteChecked" Type="bit" Nullable="false" />
-    <Property Name="total" Type="decimal" Precision="22" Scale="2" />
+    <Property Name="total" Type="decimal" Precision="23" Scale="2" />
     <Property Name="idReservationItem" Type="bigint" Nullable="false" />
     <Property Name="idPayment" Type="bigint" />
     <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
@@ -629,8 +654,9 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_selecteditem_view' does no
     <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
     <Property Name="amount" Type="decimal" Precision="22" Scale="2" />
     <Property Name="isSiteChecked" Type="bit" Nullable="false" />
-    <Property Name="total" Type="decimal" Precision="22" Scale="2" />
+    <Property Name="total" Type="decimal" Precision="23" Scale="2" />
     <Property Name="idReservationItem" Type="bigint" />
+    <Property Name="reservationItemTotal" Type="decimal" Precision="22" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -641,7 +667,7 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
     <Property Name="idSession" Type="bigint" Nullable="false" />
     <Property Name="idCustomer" Type="bigint" />
     <Property Name="idStaff" Type="bigint" />
-    <Property Name="total_amount" Type="decimal" Precision="44" Scale="2" />
+    <Property Name="total_amount" Type="decimal" Precision="45" Scale="2" />
   </EntityType>
   <Association Name="CheckInOut_PlaceInMap_FK">
     <End Role="placeinmap" Type="Self.placeinmap" Multiplicity="1" />
@@ -1233,6 +1259,19 @@ warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not hav
 `customer_view`.`isEmailReceipt`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="ipmrvpark">
+      <DefiningQuery>SELECT
+`partymember_view`.`id`, 
+`partymember_view`.`firstName`, 
+`partymember_view`.`lastName`, 
+`partymember_view`.`fullName`, 
+`partymember_view`.`mainPhone`, 
+`partymember_view`.`email`, 
+`partymember_view`.`cellPhone`, 
+`partymember_view`.`petDescription`, 
+`partymember_view`.`comments`
+FROM `partymember_view` AS `partymember_view`</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `reservation_view`.`idReservationItem`, 
@@ -1277,6 +1316,8 @@ FROM `rvsite_coord_view` AS `rvsite_coord_view`</DefiningQuery>
 `rvsite_status_view`.`PowerSupply`, 
 `rvsite_status_view`.`backgroundColor`, 
 `rvsite_status_view`.`isAvaialable`, 
+`rvsite_status_view`.`SelectedFrom`, 
+`rvsite_status_view`.`SelectedUntil`, 
 `rvsite_status_view`.`ReservedFrom`, 
 `rvsite_status_view`.`ReservedUntil`, 
 `rvsite_status_view`.`OutOfServiceFrom`, 
@@ -1313,7 +1354,8 @@ FROM `siterate_by_sitetype_view` AS `siterate_by_sitetype_view`</DefiningQuery>
 `staff_view`.`lastName`, 
 `staff_view`.`fullName`, 
 `staff_view`.`mainPhone`, 
-`staff_view`.`email`
+`staff_view`.`email`, 
+`staff_view`.`role`
 FROM `staff_view` AS `staff_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="total_per_customer_view" EntityType="Self.total_per_customer_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1412,7 +1454,8 @@ FROM `total_per_reservationitem_view` AS `total_per_reservationitem_view`</Defin
 `total_per_selecteditem_view`.`amount`, 
 `total_per_selecteditem_view`.`isSiteChecked`, 
 `total_per_selecteditem_view`.`total`, 
-`total_per_selecteditem_view`.`idReservationItem`
+`total_per_selecteditem_view`.`idReservationItem`, 
+`total_per_selecteditem_view`.`reservationItemTotal`
 FROM `total_per_selecteditem_view` AS `total_per_selecteditem_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="total_per_session_view" EntityType="Self.total_per_session_view" store:Type="Views" store:Schema="ipmrvpark">

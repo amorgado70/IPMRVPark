@@ -1,17 +1,5 @@
 ﻿@model IEnumerable<IPMRVPark.Models.total_per_edititem_view>
 
-@{
-    ViewBag.Title = "Site Reservation";
-    ViewBag.PageTitle = "Edit Reservation";
-}
-
-@Html.ActionLink("Home", "Menu", "Reservation")
-<span class="glyphicon glyphicon-chevron-right"></span>
-Site Reservation
-<span class="glyphicon glyphicon-chevron-right"></span>
-@Html.ActionLink("Edit Reservation", "Reservation", "Reservation")
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         $("#waitMsg").hide();// Hide wait message
@@ -22,15 +10,6 @@ Site Reservation
 </script>
 
 <div class="container-fluid">
-    <div class="row form-top-margin">
-        <div class="col-sm-2 col-xs-12 form-top-margin">
-            <label>Customer</label>
-        </div>
-        <div class="col-sm-6 col-xs-12 form-top-margin">
-            <div>@ViewBag.Customer</div>
-        </div>
-    </div>
-
     <!-- List of selected sites -->
     <div class="row form-top-margin">
         <div class="col-xs-12">
@@ -42,17 +21,6 @@ Site Reservation
                         <th>Check In</th>
                         <th>Check Out</th>
                         <th style="text-align:right;">Total</th>
-                        <th style="border-top:none">
-                            <div class="dropdown pull-right">
-                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Action
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right">
-                                    <li class="showWaitMsg"><a id="removeAllSelected" href="@Url.Action("RemoveAllReserved","Reservation")"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel All</a></li>
-                                </ul>
-                            </div>
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,29 +33,6 @@ Site Reservation
                             <td>@item.reservationCheckInDate.ToString("ddd"), @item.reservationCheckInDate.ToString("dd") @item.reservationCheckInDate.ToString("MMM")</td>
                             <td>@item.reservationCheckOutDate.ToString("ddd"), @item.reservationCheckOutDate.ToString("dd") @item.reservationCheckOutDate.ToString("MMM")</td>
                             <td style="text-align:right;">@Html.DisplayFor(modelItem => item.reservationAmount)</td>
-                            <td rowspan="2" style="border-top:none">
-                                <div class="dropdown pull-right">
-                                    <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-                                        Action
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a href="@Url.Action("EditReserved", "Reservation", new { selectedID = item.idSelected })">
-                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
-                                            </a>
-                                        </li>
-                                        @if (item.isSiteChecked)
-                                        {
-                                            <li class="showWaitMsg"><a href="@Url.Action("RemoveReserved","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li class="showWaitMsg"><a href="@Url.Action("ReinsertReserved","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-plus"></span>&nbsp; Reinsert</a></li>
-                                        }
-                                    </ul>
-                                </div>
-                            </td>
                         </tr>
                     <!-- Show changed values if there are changes-->
                         if (item.reservationAmount != item.total)
@@ -100,7 +45,6 @@ Site Reservation
                                     <td style="border-top:none; padding-top: 0;">@item.checkInDate.ToString("ddd"), @item.checkInDate.ToString("dd") @item.checkInDate.ToString("MMM")</td>
                                     <td style="border-top:none; padding-top: 0;">@item.checkOutDate.ToString("ddd"), @item.checkOutDate.ToString("dd") @item.checkOutDate.ToString("MMM")</td>
                                     <td style="border-top:none; padding-top: 0; text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td style="border-top:none; padding-top: 0;"></td>
                                 </tr>
                             }
                             else
@@ -114,7 +58,7 @@ Site Reservation
                         }
                         else
                         {
-                            <tr></tr>
+
                         }
                     }
                     <tr>
@@ -123,7 +67,6 @@ Site Reservation
                         <td></td>
                         <td></td>
                         <td style="text-align:right;">@ViewBag.reservationAmount</td>
-                        <td></td>
                     </tr>
                     <!-- There are changes-->
                     @if (ViewBag.reservationAmount != ViewBag.totalAmount)
@@ -134,22 +77,19 @@ Site Reservation
                             <td></td>
                             <td></td>
                             <td style="text-align:right;">@ViewBag.totalAmount</td>
-                            <td></td>
                         </tr>
-                        if (ViewBag.cancelationFee != "0.00")
+                        if (ViewBag.cancelationFee != "$0.00")
                         {
                             <tr>
                                 <td colspan="4" style="text-align:right;">Cancelation Fee</td>
                                 <td style="text-align:right;">@ViewBag.cancelationFee</td>
-                                <td></td>
                             </tr>
                         }
-                        if (ViewBag.dueAmount != "0.00")
+                        if (ViewBag.dueAmount != "$0.00")
                         {
                             <tr>
                                 <td colspan="4" style="text-align:right;">Due Amount</td>
                                 <td style="text-align:right;">@ViewBag.dueAmount</td>
-                                <td></td>
                             </tr>
                         }
                         else
@@ -157,7 +97,6 @@ Site Reservation
                             <tr>
                                 <td colspan="4" style="text-align:right;">Refund Amount</td>
                                 <td style="text-align:right;">@ViewBag.refundAmount</td>
-                                <td></td>
                             </tr>
                         }
                     }
@@ -165,34 +104,4 @@ Site Reservation
             </table>
         </div>
     </div>
-    @if (ViewBag.dueAmount != "0.00")
-    {
-    <!-- Proceed To Payment -->
-        <div class="showWaitMsg">
-            <div class="row form-top-margin">
-                <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                    <a id="btnPayment" href="@Url.Action("ExtendReservation", "Payment")" class="btn btn-block btn-default btn-mylink pagination-centered">
-                        <span class="glyphicon glyphicon-usd"></span>
-                        <span>Payment</span>
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    }
-    @if (ViewBag.refundAmount != "0.00")
-    {
-    <!-- Proceed To Refund -->
-        <div class="showWaitMsg">
-            <div class="row form-top-margin">
-                <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                    <a id="btnRefund" href="@Url.Action("ShortenReservation", "Payment")" class="btn btn-block btn-warning btn-mylink pagination-centered">
-                        <span class="glyphicon glyphicon-usd"></span>
-                        <span>Refund</span>
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    }
 </div>

@@ -33,5 +33,6 @@ namespace IPMRVPark.Models
         public bool isSiteChecked { get; set; }
         public Nullable<decimal> total { get; set; }
         public Nullable<long> idReservationItem { get; set; }
+        public Nullable<decimal> reservationItemTotal { get; set; }
     }
 }

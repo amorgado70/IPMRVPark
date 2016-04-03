@@ -20,18 +20,20 @@ namespace IPMRVPark.WebUI.Controllers
 
         public LoginController(
             IRepositoryBase<ipmevent> ipmevents,
-            IRepositoryBase<session> sessions,
             IRepositoryBase<customer_view> customers,
-                    IRepositoryBase<selecteditem> selecteditems,
-        IRepositoryBase<staff> users)
+            IRepositoryBase<selecteditem> selecteditems,
+            IRepositoryBase<staff> users,
+            IRepositoryBase<session> sessions)
         {
             this.ipmevents = ipmevents;
             this.sessions = sessions;
             this.customers = customers;
             this.selecteditems = selecteditems;
             this.users = users;
-            sessionService = new SessionService(this.sessions,
-                this.customers);
+            sessionService = new SessionService(
+                this.sessions,
+                this.customers
+                );
         }//end Constructor
 
         const long IDnotFound = -1;
