@@ -12,9 +12,11 @@ namespace IPMRVPark.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sitedescription_by_sitetype_view
+    public partial class province_view
     {
-        public long idSiteType { get; set; }
-        public string description { get; set; }
+        public string provinceCode { get; set; }
+        public string provinceName { get; set; }
+        public string countryCode { get; set; }
+        public string countryName { get; set; }
     }
 }

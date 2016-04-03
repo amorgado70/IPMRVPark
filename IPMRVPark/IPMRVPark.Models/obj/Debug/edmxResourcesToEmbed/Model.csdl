@@ -168,17 +168,19 @@
     <Property Name="idCustomer" Type="Int64" Nullable="false" />
     <Property Name="idReasonForPayment" Type="Int64" />
     <Property Name="idSession" Type="Int64" />
-    <Property Name="cupom" Type="Decimal" Nullable="false" />
-    <Property Name="without_tax" Type="Decimal" Nullable="false" />
-    <Property Name="tax" Type="Decimal" Nullable="false" />
-    <Property Name="cancellation_fee" Type="Decimal" />
     <Property Name="isCredit" Type="Boolean" />
-    <Property Name="amount" Type="Decimal" Nullable="false" />
     <Property Name="payDocType" Type="Int64" />
     <Property Name="docNumber" Type="String" />
+    <Property Name="cupomTotal" Type="Decimal" Nullable="false" />
+    <Property Name="selectionTotal" Type="Decimal" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="withoutTax" Type="Decimal" Nullable="false" />
+    <Property Name="tax" Type="Decimal" Nullable="false" />
+    <Property Name="balance" Type="Decimal" Nullable="false" />
     <Property Name="comments" Type="String" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
+    <Property Name="cancellationFee" Type="Decimal" Nullable="false" />
     <NavigationProperty Name="customer" Relationship="Self.Payment_Customer_FK" FromRole="payment" ToRole="customer" />
     <NavigationProperty Name="customeraccounts" Relationship="Self.idPayment_Payment_FK" FromRole="payment" ToRole="customeraccount" />
     <NavigationProperty Name="paydoctype1" Relationship="Self.Payment_PayDocType_FK" FromRole="payment" ToRole="paydoctype" />
@@ -277,6 +279,11 @@
     <Property Name="idStaff" Type="Int64" Nullable="false" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="duration" Type="Int32" Nullable="false" />
+    <Property Name="weeks" Type="Int32" Nullable="false" />
+    <Property Name="days" Type="Int32" Nullable="false" />
+    <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
+    <Property Name="dailyRate" Type="Decimal" Nullable="false" />
     <Property Name="totalAmount" Type="Decimal" />
     <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
     <Property Name="isCancelled" Type="Boolean" />
@@ -319,7 +326,18 @@
     <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="siteType" Type="String" />
+    <Property Name="duration" Type="Int32" Nullable="false" />
+    <Property Name="weeks" Type="Int32" Nullable="false" />
+    <Property Name="days" Type="Int32" Nullable="false" />
+    <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
+    <Property Name="dailyRate" Type="Decimal" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="total" Type="Decimal" Nullable="false" />
     <Property Name="idReservationItem" Type="Int64" />
+    <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
+    <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="reservationAmount" Type="DateTime" Nullable="false" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
     <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
@@ -472,6 +490,18 @@
     <Property Name="petDescription" Type="String" />
     <Property Name="comments" Type="String" />
   </EntityType>
+  <EntityType Name="province_view">
+    <Key>
+      <PropertyRef Name="provinceCode" />
+      <PropertyRef Name="provinceName" />
+      <PropertyRef Name="countryCode" />
+      <PropertyRef Name="countryName" />
+    </Key>
+    <Property Name="provinceCode" Type="String" Nullable="false" />
+    <Property Name="provinceName" Type="String" Nullable="false" />
+    <Property Name="countryCode" Type="String" Nullable="false" />
+    <Property Name="countryName" Type="String" Nullable="false" />
+  </EntityType>
   <EntityType Name="reservation_view">
     <Key>
       <PropertyRef Name="idReservationItem" />
@@ -496,16 +526,12 @@
   <EntityType Name="rvsite_available_view">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="idSiteType" />
+      <PropertyRef Name="RVSite" />
+      <PropertyRef Name="idIPMEvent" />
     </Key>
     <Property Name="id" Type="Int64" Nullable="false" />
-    <Property Name="site" Type="String" Nullable="false" />
-    <Property Name="idIPMEvent" Type="Int64" />
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
-    <Property Name="description" Type="String" />
-    <Property Name="weeklyRate" Type="Decimal" />
-    <Property Name="dailyRate" Type="Decimal" />
+    <Property Name="RVSite" Type="String" Nullable="false" />
+    <Property Name="idIPMEvent" Type="Int64" Nullable="false" />
   </EntityType>
   <EntityType Name="rvsite_coord_view">
     <Key>
@@ -548,29 +574,18 @@
   </EntityType>
   <EntityType Name="site_description_rate_view">
     <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="idIPMEvent" />
+      <PropertyRef Name="RVSite" />
       <PropertyRef Name="idSiteType" />
     </Key>
-    <Property Name="idIPMEvent" Type="Int64" />
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="idIPMEvent" Type="Int64" Nullable="false" />
+    <Property Name="RVSite" Type="String" Nullable="false" />
     <Property Name="idSiteType" Type="Int64" Nullable="false" />
     <Property Name="description" Type="String" />
-    <Property Name="weeklyRate" Type="Decimal" />
     <Property Name="dailyRate" Type="Decimal" />
-  </EntityType>
-  <EntityType Name="sitedescription_by_sitetype_view">
-    <Key>
-      <PropertyRef Name="idSiteType" />
-    </Key>
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
-    <Property Name="description" Type="String" />
-  </EntityType>
-  <EntityType Name="siterate_by_sitetype_view">
-    <Key>
-      <PropertyRef Name="idSiteType" />
-    </Key>
-    <Property Name="idIPMEvent" Type="Int64" />
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
     <Property Name="weeklyRate" Type="Decimal" />
-    <Property Name="dailyRate" Type="Decimal" />
   </EntityType>
   <EntityType Name="staff_view">
     <Key>
@@ -585,147 +600,6 @@
     <Property Name="mainPhone" Type="String" />
     <Property Name="email" Type="String" />
     <Property Name="role" Type="String" />
-  </EntityType>
-  <EntityType Name="total_per_customer_view">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" />
-    <Property Name="fullName" Type="String" />
-    <Property Name="mainPhone" Type="String" />
-    <Property Name="balance" Type="Decimal" />
-  </EntityType>
-  <EntityType Name="total_per_edititem_view">
-    <Key>
-      <PropertyRef Name="idSelected" />
-      <PropertyRef Name="idSession" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-      <PropertyRef Name="isSiteChecked" />
-      <PropertyRef Name="idReservationItem" />
-      <PropertyRef Name="reservationCheckInDate" />
-      <PropertyRef Name="reservationCheckOutDate" />
-      <PropertyRef Name="reservationDuration" />
-    </Key>
-    <Property Name="idSelected" Type="Int64" Nullable="false" />
-    <Property Name="idSession" Type="Int64" Nullable="false" />
-    <Property Name="idRVSite" Type="Int64" />
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
-    <Property Name="site" Type="String" Nullable="false" />
-    <Property Name="siteType" Type="String" />
-    <Property Name="idCustomer" Type="Int64" />
-    <Property Name="fullName" Type="String" />
-    <Property Name="mainPhone" Type="String" />
-    <Property Name="idStaff" Type="Int64" />
-    <Property Name="checkInDate" Type="DateTime" Nullable="false" />
-    <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="duration" Type="Int64" Nullable="false" />
-    <Property Name="weeks" Type="Int64" />
-    <Property Name="weeklyRate" Type="Decimal" />
-    <Property Name="days" Type="Int64" />
-    <Property Name="dailyRate" Type="Decimal" />
-    <Property Name="amount" Type="Decimal" />
-    <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
-    <Property Name="total" Type="Decimal" />
-    <Property Name="idReservationItem" Type="Int64" Nullable="false" />
-    <Property Name="idPayment" Type="Int64" />
-    <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
-    <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="reservationDuration" Type="Int64" Nullable="false" />
-    <Property Name="reservationWeeks" Type="Int64" />
-    <Property Name="reservationWeeklyRate" Type="Decimal" />
-    <Property Name="reservationDays" Type="Int64" />
-    <Property Name="reservationDailyRate" Type="Decimal" />
-    <Property Name="reservationAmount" Type="Decimal" />
-  </EntityType>
-  <EntityType Name="total_per_payment_view">
-    <Key>
-      <PropertyRef Name="idPayment" />
-      <PropertyRef Name="balance" />
-    </Key>
-    <Property Name="idPayment" Type="Int64" Nullable="false" />
-    <Property Name="createDate" Type="DateTime" />
-    <Property Name="reasonForPayment" Type="String" />
-    <Property Name="idCustomer" Type="Int64" />
-    <Property Name="idStaff" Type="Int64" />
-    <Property Name="paymentAmount" Type="Decimal" />
-    <Property Name="reservationitem_total" Type="Decimal" />
-    <Property Name="balance" Type="Decimal" Nullable="false" />
-  </EntityType>
-  <EntityType Name="total_per_reservationitem_view">
-    <Key>
-      <PropertyRef Name="idReservationItem" />
-      <PropertyRef Name="idRVSite" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="idCustomer" />
-      <PropertyRef Name="idStaff" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-    </Key>
-    <Property Name="idPayment" Type="Int64" />
-    <Property Name="idReservationItem" Type="Int64" Nullable="false" />
-    <Property Name="idRVSite" Type="Int64" Nullable="false" />
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
-    <Property Name="site" Type="String" Nullable="false" />
-    <Property Name="descriptionRVSite" Type="String" />
-    <Property Name="idCustomer" Type="Int64" Nullable="false" />
-    <Property Name="fullName" Type="String" />
-    <Property Name="mainPhone" Type="String" />
-    <Property Name="idStaff" Type="Int64" Nullable="false" />
-    <Property Name="checkInDate" Type="DateTime" Nullable="false" />
-    <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="duration" Type="Int64" Nullable="false" />
-    <Property Name="weeks" Type="Int64" />
-    <Property Name="weeklyRate" Type="Decimal" />
-    <Property Name="days" Type="Int64" />
-    <Property Name="dailyRate" Type="Decimal" />
-    <Property Name="amount" Type="Decimal" />
-  </EntityType>
-  <EntityType Name="total_per_selecteditem_view">
-    <Key>
-      <PropertyRef Name="idSelected" />
-      <PropertyRef Name="idSession" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-      <PropertyRef Name="isSiteChecked" />
-    </Key>
-    <Property Name="idSelected" Type="Int64" Nullable="false" />
-    <Property Name="idSession" Type="Int64" Nullable="false" />
-    <Property Name="idRVSite" Type="Int64" />
-    <Property Name="idSiteType" Type="Int64" Nullable="false" />
-    <Property Name="site" Type="String" Nullable="false" />
-    <Property Name="siteType" Type="String" />
-    <Property Name="idCustomer" Type="Int64" />
-    <Property Name="idStaff" Type="Int64" />
-    <Property Name="checkInDate" Type="DateTime" Nullable="false" />
-    <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="duration" Type="Int64" Nullable="false" />
-    <Property Name="weeks" Type="Int64" />
-    <Property Name="weeklyRate" Type="Decimal" />
-    <Property Name="days" Type="Int64" />
-    <Property Name="dailyRate" Type="Decimal" />
-    <Property Name="amount" Type="Decimal" />
-    <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
-    <Property Name="total" Type="Decimal" />
-    <Property Name="idReservationItem" Type="Int64" />
-    <Property Name="reservationItemTotal" Type="Decimal" />
-  </EntityType>
-  <EntityType Name="total_per_session_view">
-    <Key>
-      <PropertyRef Name="idSession" />
-    </Key>
-    <Property Name="idSession" Type="Int64" Nullable="false" />
-    <Property Name="idCustomer" Type="Int64" />
-    <Property Name="idStaff" Type="Int64" />
-    <Property Name="total_amount" Type="Decimal" />
   </EntityType>
   <Association Name="CheckInOut_PlaceInMap_FK">
     <End Role="placeinmap" Type="Self.placeinmap" Multiplicity="1" />
@@ -1297,20 +1171,13 @@
     <EntitySet Name="styleurls" EntityType="Self.styleurl" />
     <EntitySet Name="customer_view" EntityType="Self.customer_view" />
     <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
+    <EntitySet Name="province_view" EntityType="Self.province_view" />
     <EntitySet Name="reservation_view" EntityType="Self.reservation_view" />
     <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
     <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
     <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" />
     <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" />
-    <EntitySet Name="sitedescription_by_sitetype_view" EntityType="Self.sitedescription_by_sitetype_view" />
-    <EntitySet Name="siterate_by_sitetype_view" EntityType="Self.siterate_by_sitetype_view" />
     <EntitySet Name="staff_view" EntityType="Self.staff_view" />
-    <EntitySet Name="total_per_customer_view" EntityType="Self.total_per_customer_view" />
-    <EntitySet Name="total_per_edititem_view" EntityType="Self.total_per_edititem_view" />
-    <EntitySet Name="total_per_payment_view" EntityType="Self.total_per_payment_view" />
-    <EntitySet Name="total_per_reservationitem_view" EntityType="Self.total_per_reservationitem_view" />
-    <EntitySet Name="total_per_selecteditem_view" EntityType="Self.total_per_selecteditem_view" />
-    <EntitySet Name="total_per_session_view" EntityType="Self.total_per_session_view" />
     <AssociationSet Name="CheckInOut_PlaceInMap_FK" Association="Self.CheckInOut_PlaceInMap_FK">
       <End Role="placeinmap" EntitySet="placeinmaps" />
       <End Role="checkinout" EntitySet="checkinouts" />

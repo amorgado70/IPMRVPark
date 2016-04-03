@@ -138,17 +138,19 @@
     <Property Name="idCustomer" Type="bigint" Nullable="false" />
     <Property Name="idReasonForPayment" Type="bigint" />
     <Property Name="idSession" Type="bigint" />
-    <Property Name="cupom" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="without_tax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="tax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="cancellation_fee" Type="decimal" Precision="12" Scale="2" />
     <Property Name="isCredit" Type="bit" />
-    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="payDocType" Type="bigint" />
     <Property Name="docNumber" Type="varchar" MaxLength="100" />
+    <Property Name="cupomTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="withoutTax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="tax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="balance" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="comments" Type="varchar" MaxLength="120" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
+    <Property Name="cancellationFee" Type="decimal" Precision="12" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="paymentmethod">
     <Key>
@@ -224,6 +226,11 @@
     <Property Name="idStaff" Type="bigint" Nullable="false" />
     <Property Name="checkInDate" Type="date" Nullable="false" />
     <Property Name="checkOutDate" Type="date" Nullable="false" />
+    <Property Name="duration" Type="int" Nullable="false" />
+    <Property Name="weeks" Type="int" Nullable="false" />
+    <Property Name="days" Type="int" Nullable="false" />
+    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" />
     <Property Name="numberMemberInParty" Type="int" Nullable="false" />
     <Property Name="isCancelled" Type="bit" />
@@ -256,7 +263,18 @@
     <Property Name="isSiteChecked" Type="bit" Nullable="false" />
     <Property Name="checkInDate" Type="date" Nullable="false" />
     <Property Name="checkOutDate" Type="date" Nullable="false" />
+    <Property Name="siteType" Type="varchar" MaxLength="40" />
+    <Property Name="duration" Type="int" Nullable="false" />
+    <Property Name="weeks" Type="int" Nullable="false" />
+    <Property Name="days" Type="int" Nullable="false" />
+    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="idReservationItem" Type="bigint" />
+    <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
+    <Property Name="reservationCheckOutDate" Type="date" Nullable="false" />
+    <Property Name="reservationAmount" Type="date" Nullable="false" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
@@ -387,6 +405,20 @@ warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a pr
     <Property Name="comments" Type="varchar" MaxLength="120" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'def.ipmrvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="province_view">
+    <Key>
+      <PropertyRef Name="provinceCode" />
+      <PropertyRef Name="provinceName" />
+      <PropertyRef Name="countryCode" />
+      <PropertyRef Name="countryName" />
+    </Key>
+    <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="countryCode" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="reservation_view">
     <Key>
@@ -414,16 +446,12 @@ warning 6002: The table/view 'def.ipmrvpark.rvsite_available_view' does not have
   <EntityType Name="rvsite_available_view">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="idSiteType" />
+      <PropertyRef Name="RVSite" />
+      <PropertyRef Name="idIPMEvent" />
     </Key>
     <Property Name="id" Type="bigint" Nullable="false" />
-    <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
-    <Property Name="idIPMEvent" Type="bigint" />
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
-    <Property Name="description" Type="varchar" MaxLength="41" />
-    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
+    <Property Name="RVSite" Type="varchar" MaxLength="16" Nullable="false" />
+    <Property Name="idIPMEvent" Type="bigint" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.rvsite_coord_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -472,33 +500,18 @@ warning 6002: The table/view 'def.ipmrvpark.rvsite_status_view' does not have a 
 warning 6002: The table/view 'def.ipmrvpark.site_description_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="site_description_rate_view">
     <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="idIPMEvent" />
+      <PropertyRef Name="RVSite" />
       <PropertyRef Name="idSiteType" />
     </Key>
-    <Property Name="idIPMEvent" Type="bigint" />
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="idIPMEvent" Type="bigint" Nullable="false" />
+    <Property Name="RVSite" Type="varchar" MaxLength="16" Nullable="false" />
     <Property Name="idSiteType" Type="bigint" Nullable="false" />
     <Property Name="description" Type="varchar" MaxLength="41" />
-    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
     <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.sitedescription_by_sitetype_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="sitedescription_by_sitetype_view">
-    <Key>
-      <PropertyRef Name="idSiteType" />
-    </Key>
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
-    <Property Name="description" Type="varchar" MaxLength="41" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.siterate_by_sitetype_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="siterate_by_sitetype_view">
-    <Key>
-      <PropertyRef Name="idSiteType" />
-    </Key>
-    <Property Name="idIPMEvent" Type="bigint" />
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
     <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -515,159 +528,6 @@ warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary 
     <Property Name="mainPhone" Type="varchar" MaxLength="30" />
     <Property Name="email" Type="varchar" MaxLength="30" />
     <Property Name="role" Type="varchar" MaxLength="30" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_customer_view">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="bigint" Nullable="false" />
-    <Property Name="fullName" Type="varchar" MaxLength="101" />
-    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-    <Property Name="balance" Type="decimal" Precision="65" Scale="6" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_edititem_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_edititem_view">
-    <Key>
-      <PropertyRef Name="idSelected" />
-      <PropertyRef Name="idSession" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-      <PropertyRef Name="isSiteChecked" />
-      <PropertyRef Name="idReservationItem" />
-      <PropertyRef Name="reservationCheckInDate" />
-      <PropertyRef Name="reservationCheckOutDate" />
-      <PropertyRef Name="reservationDuration" />
-    </Key>
-    <Property Name="idSelected" Type="bigint" Nullable="false" />
-    <Property Name="idSession" Type="bigint" Nullable="false" />
-    <Property Name="idRVSite" Type="bigint" />
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
-    <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
-    <Property Name="siteType" Type="varchar" MaxLength="41" />
-    <Property Name="idCustomer" Type="bigint" />
-    <Property Name="fullName" Type="varchar" MaxLength="101" />
-    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-    <Property Name="idStaff" Type="bigint" />
-    <Property Name="checkInDate" Type="date" Nullable="false" />
-    <Property Name="checkOutDate" Type="date" Nullable="false" />
-    <Property Name="duration" Type="bigint" Nullable="false" />
-    <Property Name="weeks" Type="bigint" />
-    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="days" Type="bigint" />
-    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="amount" Type="decimal" Precision="22" Scale="2" />
-    <Property Name="isSiteChecked" Type="bit" Nullable="false" />
-    <Property Name="total" Type="decimal" Precision="23" Scale="2" />
-    <Property Name="idReservationItem" Type="bigint" Nullable="false" />
-    <Property Name="idPayment" Type="bigint" />
-    <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
-    <Property Name="reservationCheckOutDate" Type="date" Nullable="false" />
-    <Property Name="reservationDuration" Type="bigint" Nullable="false" />
-    <Property Name="reservationWeeks" Type="bigint" />
-    <Property Name="reservationWeeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="reservationDays" Type="bigint" />
-    <Property Name="reservationDailyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="reservationAmount" Type="decimal" Precision="22" Scale="2" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_payment_view">
-    <Key>
-      <PropertyRef Name="idPayment" />
-      <PropertyRef Name="balance" />
-    </Key>
-    <Property Name="idPayment" Type="bigint" Nullable="false" />
-    <Property Name="createDate" Type="date" />
-    <Property Name="reasonForPayment" Type="varchar" MaxLength="45" />
-    <Property Name="idCustomer" Type="bigint" />
-    <Property Name="idStaff" Type="bigint" />
-    <Property Name="paymentAmount" Type="decimal" Precision="38" Scale="6" />
-    <Property Name="reservationitem_total" Type="decimal" Precision="44" Scale="2" />
-    <Property Name="balance" Type="decimal" Precision="3" Scale="2" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_reservationitem_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_reservationitem_view">
-    <Key>
-      <PropertyRef Name="idReservationItem" />
-      <PropertyRef Name="idRVSite" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="idCustomer" />
-      <PropertyRef Name="idStaff" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-    </Key>
-    <Property Name="idPayment" Type="bigint" />
-    <Property Name="idReservationItem" Type="bigint" Nullable="false" />
-    <Property Name="idRVSite" Type="bigint" Nullable="false" />
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
-    <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
-    <Property Name="descriptionRVSite" Type="varchar" MaxLength="41" />
-    <Property Name="idCustomer" Type="bigint" Nullable="false" />
-    <Property Name="fullName" Type="varchar" MaxLength="101" />
-    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-    <Property Name="idStaff" Type="bigint" Nullable="false" />
-    <Property Name="checkInDate" Type="date" Nullable="false" />
-    <Property Name="checkOutDate" Type="date" Nullable="false" />
-    <Property Name="duration" Type="bigint" Nullable="false" />
-    <Property Name="weeks" Type="bigint" />
-    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="days" Type="bigint" />
-    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="amount" Type="decimal" Precision="22" Scale="2" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_selecteditem_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_selecteditem_view">
-    <Key>
-      <PropertyRef Name="idSelected" />
-      <PropertyRef Name="idSession" />
-      <PropertyRef Name="idSiteType" />
-      <PropertyRef Name="site" />
-      <PropertyRef Name="checkInDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="duration" />
-      <PropertyRef Name="isSiteChecked" />
-    </Key>
-    <Property Name="idSelected" Type="bigint" Nullable="false" />
-    <Property Name="idSession" Type="bigint" Nullable="false" />
-    <Property Name="idRVSite" Type="bigint" />
-    <Property Name="idSiteType" Type="bigint" Nullable="false" />
-    <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
-    <Property Name="siteType" Type="varchar" MaxLength="41" />
-    <Property Name="idCustomer" Type="bigint" />
-    <Property Name="idStaff" Type="bigint" />
-    <Property Name="checkInDate" Type="date" Nullable="false" />
-    <Property Name="checkOutDate" Type="date" Nullable="false" />
-    <Property Name="duration" Type="bigint" Nullable="false" />
-    <Property Name="weeks" Type="bigint" />
-    <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="days" Type="bigint" />
-    <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="amount" Type="decimal" Precision="22" Scale="2" />
-    <Property Name="isSiteChecked" Type="bit" Nullable="false" />
-    <Property Name="total" Type="decimal" Precision="23" Scale="2" />
-    <Property Name="idReservationItem" Type="bigint" />
-    <Property Name="reservationItemTotal" Type="decimal" Precision="22" Scale="2" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.total_per_session_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="total_per_session_view">
-    <Key>
-      <PropertyRef Name="idSession" />
-    </Key>
-    <Property Name="idSession" Type="bigint" Nullable="false" />
-    <Property Name="idCustomer" Type="bigint" />
-    <Property Name="idStaff" Type="bigint" />
-    <Property Name="total_amount" Type="decimal" Precision="45" Scale="2" />
   </EntityType>
   <Association Name="CheckInOut_PlaceInMap_FK">
     <End Role="placeinmap" Type="Self.placeinmap" Multiplicity="1" />
@@ -1272,6 +1132,14 @@ FROM `customer_view` AS `customer_view`</DefiningQuery>
 `partymember_view`.`comments`
 FROM `partymember_view` AS `partymember_view`</DefiningQuery>
     </EntitySet>
+    <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="ipmrvpark">
+      <DefiningQuery>SELECT
+`province_view`.`provinceCode`, 
+`province_view`.`provinceName`, 
+`province_view`.`countryCode`, 
+`province_view`.`countryName`
+FROM `province_view` AS `province_view`</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `reservation_view`.`idReservationItem`, 
@@ -1289,12 +1157,8 @@ FROM `reservation_view` AS `reservation_view`</DefiningQuery>
     <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `rvsite_available_view`.`id`, 
-`rvsite_available_view`.`site`, 
-`rvsite_available_view`.`idIPMEvent`, 
-`rvsite_available_view`.`idSiteType`, 
-`rvsite_available_view`.`description`, 
-`rvsite_available_view`.`weeklyRate`, 
-`rvsite_available_view`.`dailyRate`
+`rvsite_available_view`.`RVSite`, 
+`rvsite_available_view`.`idIPMEvent`
 FROM `rvsite_available_view` AS `rvsite_available_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1326,26 +1190,14 @@ FROM `rvsite_status_view` AS `rvsite_status_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
+`site_description_rate_view`.`id`, 
 `site_description_rate_view`.`idIPMEvent`, 
+`site_description_rate_view`.`RVSite`, 
 `site_description_rate_view`.`idSiteType`, 
 `site_description_rate_view`.`description`, 
-`site_description_rate_view`.`weeklyRate`, 
-`site_description_rate_view`.`dailyRate`
+`site_description_rate_view`.`dailyRate`, 
+`site_description_rate_view`.`weeklyRate`
 FROM `site_description_rate_view` AS `site_description_rate_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="sitedescription_by_sitetype_view" EntityType="Self.sitedescription_by_sitetype_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`sitedescription_by_sitetype_view`.`idSiteType`, 
-`sitedescription_by_sitetype_view`.`description`
-FROM `sitedescription_by_sitetype_view` AS `sitedescription_by_sitetype_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="siterate_by_sitetype_view" EntityType="Self.siterate_by_sitetype_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`siterate_by_sitetype_view`.`idIPMEvent`, 
-`siterate_by_sitetype_view`.`idSiteType`, 
-`siterate_by_sitetype_view`.`weeklyRate`, 
-`siterate_by_sitetype_view`.`dailyRate`
-FROM `siterate_by_sitetype_view` AS `siterate_by_sitetype_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="staff_view" EntityType="Self.staff_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
@@ -1357,114 +1209,6 @@ FROM `siterate_by_sitetype_view` AS `siterate_by_sitetype_view`</DefiningQuery>
 `staff_view`.`email`, 
 `staff_view`.`role`
 FROM `staff_view` AS `staff_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_customer_view" EntityType="Self.total_per_customer_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_customer_view`.`id`, 
-`total_per_customer_view`.`fullName`, 
-`total_per_customer_view`.`mainPhone`, 
-`total_per_customer_view`.`balance`
-FROM `total_per_customer_view` AS `total_per_customer_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_edititem_view" EntityType="Self.total_per_edititem_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_edititem_view`.`idSelected`, 
-`total_per_edititem_view`.`idSession`, 
-`total_per_edititem_view`.`idRVSite`, 
-`total_per_edititem_view`.`idSiteType`, 
-`total_per_edititem_view`.`site`, 
-`total_per_edititem_view`.`siteType`, 
-`total_per_edititem_view`.`idCustomer`, 
-`total_per_edititem_view`.`fullName`, 
-`total_per_edititem_view`.`mainPhone`, 
-`total_per_edititem_view`.`idStaff`, 
-`total_per_edititem_view`.`checkInDate`, 
-`total_per_edititem_view`.`checkOutDate`, 
-`total_per_edititem_view`.`duration`, 
-`total_per_edititem_view`.`weeks`, 
-`total_per_edititem_view`.`weeklyRate`, 
-`total_per_edititem_view`.`days`, 
-`total_per_edititem_view`.`dailyRate`, 
-`total_per_edititem_view`.`amount`, 
-`total_per_edititem_view`.`isSiteChecked`, 
-`total_per_edititem_view`.`total`, 
-`total_per_edititem_view`.`idReservationItem`, 
-`total_per_edititem_view`.`idPayment`, 
-`total_per_edititem_view`.`reservationCheckInDate`, 
-`total_per_edititem_view`.`reservationCheckOutDate`, 
-`total_per_edititem_view`.`reservationDuration`, 
-`total_per_edititem_view`.`reservationWeeks`, 
-`total_per_edititem_view`.`reservationWeeklyRate`, 
-`total_per_edititem_view`.`reservationDays`, 
-`total_per_edititem_view`.`reservationDailyRate`, 
-`total_per_edititem_view`.`reservationAmount`
-FROM `total_per_edititem_view` AS `total_per_edititem_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_payment_view" EntityType="Self.total_per_payment_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_payment_view`.`idPayment`, 
-`total_per_payment_view`.`createDate`, 
-`total_per_payment_view`.`reasonForPayment`, 
-`total_per_payment_view`.`idCustomer`, 
-`total_per_payment_view`.`idStaff`, 
-`total_per_payment_view`.`paymentAmount`, 
-`total_per_payment_view`.`reservationitem_total`, 
-`total_per_payment_view`.`balance`
-FROM `total_per_payment_view` AS `total_per_payment_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_reservationitem_view" EntityType="Self.total_per_reservationitem_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_reservationitem_view`.`idPayment`, 
-`total_per_reservationitem_view`.`idReservationItem`, 
-`total_per_reservationitem_view`.`idRVSite`, 
-`total_per_reservationitem_view`.`idSiteType`, 
-`total_per_reservationitem_view`.`site`, 
-`total_per_reservationitem_view`.`descriptionRVSite`, 
-`total_per_reservationitem_view`.`idCustomer`, 
-`total_per_reservationitem_view`.`fullName`, 
-`total_per_reservationitem_view`.`mainPhone`, 
-`total_per_reservationitem_view`.`idStaff`, 
-`total_per_reservationitem_view`.`checkInDate`, 
-`total_per_reservationitem_view`.`checkOutDate`, 
-`total_per_reservationitem_view`.`duration`, 
-`total_per_reservationitem_view`.`weeks`, 
-`total_per_reservationitem_view`.`weeklyRate`, 
-`total_per_reservationitem_view`.`days`, 
-`total_per_reservationitem_view`.`dailyRate`, 
-`total_per_reservationitem_view`.`amount`
-FROM `total_per_reservationitem_view` AS `total_per_reservationitem_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_selecteditem_view" EntityType="Self.total_per_selecteditem_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_selecteditem_view`.`idSelected`, 
-`total_per_selecteditem_view`.`idSession`, 
-`total_per_selecteditem_view`.`idRVSite`, 
-`total_per_selecteditem_view`.`idSiteType`, 
-`total_per_selecteditem_view`.`site`, 
-`total_per_selecteditem_view`.`siteType`, 
-`total_per_selecteditem_view`.`idCustomer`, 
-`total_per_selecteditem_view`.`idStaff`, 
-`total_per_selecteditem_view`.`checkInDate`, 
-`total_per_selecteditem_view`.`checkOutDate`, 
-`total_per_selecteditem_view`.`duration`, 
-`total_per_selecteditem_view`.`weeks`, 
-`total_per_selecteditem_view`.`weeklyRate`, 
-`total_per_selecteditem_view`.`days`, 
-`total_per_selecteditem_view`.`dailyRate`, 
-`total_per_selecteditem_view`.`amount`, 
-`total_per_selecteditem_view`.`isSiteChecked`, 
-`total_per_selecteditem_view`.`total`, 
-`total_per_selecteditem_view`.`idReservationItem`, 
-`total_per_selecteditem_view`.`reservationItemTotal`
-FROM `total_per_selecteditem_view` AS `total_per_selecteditem_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="total_per_session_view" EntityType="Self.total_per_session_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`total_per_session_view`.`idSession`, 
-`total_per_session_view`.`idCustomer`, 
-`total_per_session_view`.`idStaff`, 
-`total_per_session_view`.`total_amount`
-FROM `total_per_session_view` AS `total_per_session_view`</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="CheckInOut_PlaceInMap_FK" Association="Self.CheckInOut_PlaceInMap_FK">
       <End Role="placeinmap" EntitySet="placeinmap" />

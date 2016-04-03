@@ -64,14 +64,9 @@
     <Compile Include="Repositories\PaymentRepository.cs" />
     <Compile Include="Repositories\ReasonForPaymentRepository.cs" />
     <Compile Include="Repositories\PaymentReservationItemRepository.cs" />
+    <Compile Include="Repositories\SiteDescriptionRateViewRepository.cs" />
     <Compile Include="Repositories\ReservationItemRepository.cs" />
     <Compile Include="Repositories\StaffRepository.cs" />
-    <Compile Include="Repositories\SiteDescriptionRateViewRepository.cs" />
-    <Compile Include="Repositories\TotalPerPaymentView.cs" />
-    <Compile Include="Repositories\TotalPerReservationItemView.cs" />
-    <Compile Include="Repositories\TotalPerEditItemViewRepository.cs" />
-    <Compile Include="Repositories\TotalPerSessionViewRepository.cs" />
-    <Compile Include="Repositories\TotalPerSelectedItemViewRepository.cs" />
     <Compile Include="Repositories\SelectedItemRepository.cs" />
     <Compile Include="Repositories\RVSiteAvailableViewRepository.cs" />
     <Compile Include="Repositories\IPMEventRepository.cs" />

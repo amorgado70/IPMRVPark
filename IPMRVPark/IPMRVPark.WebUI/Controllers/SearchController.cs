@@ -5,7 +5,6 @@ using IPMRVPark.Models;
 using IPMRVPark.Contracts.Repositories;
 using IPMRVPark.Services;
 using System.Collections.Generic;
-using IPMRVPark.Models.View;
 using System.Text.RegularExpressions;
 
 namespace IPMRVPark.WebUI.Controllers
@@ -18,9 +17,6 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<payment> payments;
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<rvsite_available_view> rvsites_available;
-        IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
-        IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
-        IRepositoryBase<total_per_edititem_view> totals_per_edititem;
         SessionService sessionService;
 
         public SearchController(
@@ -28,9 +24,6 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<ipmevent> ipmevents,
             IRepositoryBase<payment> payments,
             IRepositoryBase<rvsite_available_view> rvsites_available,            
-            IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
-            IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
-            IRepositoryBase<total_per_edititem_view> totals_per_edititem,
             IRepositoryBase<session> sessions)
 
         {
@@ -39,9 +32,6 @@ namespace IPMRVPark.WebUI.Controllers
             this.sessions = sessions;
             this.payments = payments;
             this.rvsites_available = rvsites_available;
-            this.totals_per_selecteditem = totals_per_selecteditem;
-            this.totals_per_reservationitem = totals_per_reservationitem;
-            this.totals_per_edititem = totals_per_edititem;
             sessionService = new SessionService(
                 this.sessions,
                 this.customers
@@ -130,10 +120,10 @@ namespace IPMRVPark.WebUI.Controllers
                 //Filter by RV Site
                 foreach (rvsite_available_view rvsite in allRVSites)
                 {
-                    string rvsiteShort = rgx.Replace(rvsite.site, "").ToUpper();
+                    string rvsiteShort = rgx.Replace(rvsite.RVSite, "").ToUpper();
                     if (rvsiteShort.Contains(searchString))
                     {
-                        results.Add(new SelectionOptionID(rvsite.id, rvsite.site));
+                        results.Add(new SelectionOptionID(rvsite.id, rvsite.RVSite));
                     }
                     if (results.Count() > 25)
                     {

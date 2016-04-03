@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IPMRVPark.Models.View
+namespace IPMRVPark.Models
 {
     public class SelectionOptionID
     {

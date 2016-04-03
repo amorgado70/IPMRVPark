@@ -29,6 +29,11 @@ namespace IPMRVPark.Models
         public long idStaff { get; set; }
         public System.DateTime checkInDate { get; set; }
         public System.DateTime checkOutDate { get; set; }
+        public int duration { get; set; }
+        public int weeks { get; set; }
+        public int days { get; set; }
+        public decimal weeklyRate { get; set; }
+        public decimal dailyRate { get; set; }
         public Nullable<decimal> totalAmount { get; set; }
         public int numberMemberInParty { get; set; }
         public Nullable<bool> isCancelled { get; set; }

@@ -14,18 +14,23 @@ namespace IPMRVPark.Services
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<reservationitem> reservationitems;
         IRepositoryBase<payment> payments;
+        IRepositoryBase<paymentreservationitem> paymentsreservationitems;
 
         public PaymentService(
             IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<reservationitem> reservationitems,
-            IRepositoryBase<payment> payments
+            IRepositoryBase<payment> payments,
+            IRepositoryBase<paymentreservationitem> paymentsreservationitems
             )
         {
             this.selecteditems = selecteditems;
             this.reservationitems = reservationitems;
             this.payments = payments;
+            this.paymentsreservationitems = paymentsreservationitems;
         }
-        #region
+        #region Common
+        const long IDnotFound = -1;
+
         // Clean selected items
         public void CleanSelectedItemList(long sessionID)
         {
@@ -62,49 +67,164 @@ namespace IPMRVPark.Services
             return 50; // Value for 2016
         }
 
-    //    public void GetPaymentTotal(HttpContextBase httpContext)
-    //    {
+        // Calculate Total for Selected Site
+        public decimal CalculateSiteTotal(DateTime checkInDate, DateTime checkOutDate,
+            decimal weeklyRate, decimal dailyRate)
+        {
+            int duration = (int)(checkOutDate - checkInDate).TotalDays;
+            int weeks = duration / 7;
+            int days = duration % 7;
+            decimal amount = weeklyRate * weeks +
+                dailyRate * days;
+
+            return amount;
+        }
+
+        // Sum and Count for Selected Items
+        public decimal CalculateNewSelectedTotal(long sessionID, out int count)
+        {
+            var _selecteditem = selecteditems.GetAll();
+            _selecteditem = _selecteditem.Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
+
+            count = 0;
+            decimal sum = 0;
+            foreach (var i in _selecteditem)
+            {
+                count = count + 1;
+                sum = sum + i.total;
+            }
+
+            return sum;
+        }
+
+        // Sum and Count for Reserved Items
+        public decimal CalculateReservedTotal(long customerID)
+        {
+            var _reserveditems = reservationitems.GetAll().
+                Where(q => q.idCustomer == customerID).OrderByDescending(o => o.ID);
+
+            int count = 0;
+            decimal sum = 0;
+            foreach (var i in _reserveditems)
+            {
+                count = count + 1;
+                sum = sum + i.totalAmount.Value;
+            }
+
+            return sum;
+        }
+
+        public payment CalculateEditSelectedTotal(long sessionID, long customerID)
+        {
+            payment _payment = new payment();
+
+            var _selecteditems = selecteditems.GetAll();
+            _selecteditems = _selecteditems.Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
+            int count = 0;
+            decimal selectionTotal = 0; // Thhis selection or edit reservation total
+            decimal reservationTotal = 0; // Previous reservation total
+            foreach (var _selecteditem in _selecteditems)
+            {
+                count = count + 1;
+                selectionTotal = selectionTotal + _selecteditem.total;
+                // Check if selected item was a reserved item,
+                // this means the selected item is in edit reservation mode
+                if (_selecteditem.idReservationItem != null && _selecteditem.idReservationItem != IDnotFound)
+                {
+                    var _reservationitem = reservationitems.GetById(_selecteditem.idReservationItem);
+                    reservationTotal = reservationTotal + _reservationitem.totalAmount.Value;
+                }
+            }
+
+            // *****
+            decimal dueAmount = Math.Max((selectionTotal - reservationTotal), 0);
+            decimal refundAmount = Math.Max((reservationTotal - selectionTotal), 0);
+            // Check if a cancellation fee applies
+            decimal cancelationFee = GetCancelationFee(sessionID);
+            if (selectionTotal < reservationTotal)
+            {
+                if ((reservationTotal - selectionTotal) < cancelationFee)
+                {
+                    refundAmount = 0;
+                    dueAmount = cancelationFee - (reservationTotal - selectionTotal);
+                }
+                else
+                {
+                    refundAmount = refundAmount - cancelationFee;
+                }
+            }
+            else
+            {
+                cancelationFee = 0;
+            }
+
+            // Value of previous reservation, just before edit reservation mode started
+            _payment.cupomTotal = reservationTotal;
+            _payment.selectionTotal = selectionTotal;
+            _payment.cancellationFee = cancelationFee;
+            /// Suggested value for payment
+            _payment.amount = dueAmount - refundAmount + CustomerAccountBalance(customerID);
+            _payment.tax = Math.Round(dueAmount * GetProvinceTax(sessionID), 2, MidpointRounding.AwayFromZero);
+            _payment.withoutTax = dueAmount - _payment.tax;
+
+            return _payment;
+        }
+
+        public decimal CustomerAccountBalance(long customerID)
+        {
+            var _payments = payments.GetAll().
+                Where(p => p.idCustomer == customerID).OrderBy(p => p.ID);
+
+            var _last = _payments.LastOrDefault();
+            decimal finalBalance = (_last != null) ? _last.balance : 0;
+
+            return finalBalance;
+        }
 
 
-    //    // Data to be presented on the view
-    //    var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID && s.idCustomer == _session.idCustomer);
-    //    int count = 0;
-    //    decimal sum = 0;
-    //    decimal reservationsum = 0;
-    //        foreach (var item in _edititems)
-    //        {
-    //            count = count + 1;
-    //            sum = sum + item.total.Value;
-    //            reservationsum = reservationsum + item.reservationAmount.Value;
-    //        }
+        //    public void GetPaymentTotal(HttpContextBase httpContext)
+        //    {
 
-    //decimal dueAmount = Math.Max((sum - reservationsum), 0);
-    //decimal refundAmount = Math.Max((reservationsum - sum), 0);
-    //// Check if there is a cancellation fee
-    //decimal cancelationFee = sessionService.GetCancelationFee(this.HttpContext);
-    //        if (sum<reservationsum)
-    //        {
-    //            if ((reservationsum - sum) < cancelationFee)
-    //            {
-    //                refundAmount = 0;
-    //                dueAmount = cancelationFee - (reservationsum - sum);
-    //            }
-    //            else
-    //            {
-    //                refundAmount = refundAmount - cancelationFee;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            cancelationFee = 0;
-    //        }
 
-    //        ViewBag.totalAmount = sum.ToString("N2");
-    //        ViewBag.reservationAmount = reservationsum.ToString("N2");
-    //        ViewBag.dueAmount = dueAmount.ToString("N2");
-    //        ViewBag.refundAmount = refundAmount.ToString("N2");
-    //        ViewBag.cancelationFee = cancelationFee.ToString("N2");
-    //    }
+        //    // Data to be presented on the view
+        //    var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID && s.idCustomer == _session.idCustomer);
+        //    int count = 0;
+        //    decimal sum = 0;
+        //    decimal reservationsum = 0;
+        //        foreach (var item in _edititems)
+        //        {
+        //            count = count + 1;
+        //            sum = sum + item.total.Value;
+        //            reservationsum = reservationsum + item.reservationAmount.Value;
+        //        }
+
+        //decimal dueAmount = Math.Max((sum - reservationsum), 0);
+        //decimal refundAmount = Math.Max((reservationsum - sum), 0);
+        //// Check if there is a cancellation fee
+        //decimal cancelationFee = sessionService.GetCancelationFee(this.HttpContext);
+        //        if (sum<reservationsum)
+        //        {
+        //            if ((reservationsum - sum) < cancelationFee)
+        //            {
+        //                refundAmount = 0;
+        //                dueAmount = cancelationFee - (reservationsum - sum);
+        //            }
+        //            else
+        //            {
+        //                refundAmount = refundAmount - cancelationFee;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            cancelationFee = 0;
+        //        }
+
+        //        ViewBag.totalAmount = sum.ToString("N2");
+        //        ViewBag.reservationAmount = reservationsum.ToString("N2");
+        //        ViewBag.dueAmount = dueAmount.ToString("N2");
+        //        ViewBag.refundAmount = refundAmount.ToString("N2");
+        //        ViewBag.cancelationFee = cancelationFee.ToString("N2");
+        //    }
         #endregion
     }
 }

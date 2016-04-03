@@ -25,17 +25,19 @@ namespace IPMRVPark.Models
         public long idCustomer { get; set; }
         public Nullable<long> idReasonForPayment { get; set; }
         public Nullable<long> idSession { get; set; }
-        public decimal cupom { get; set; }
-        public decimal without_tax { get; set; }
-        public decimal tax { get; set; }
-        public Nullable<decimal> cancellation_fee { get; set; }
         public Nullable<bool> isCredit { get; set; }
-        public decimal amount { get; set; }
         public Nullable<long> payDocType { get; set; }
         public string docNumber { get; set; }
+        public decimal cupomTotal { get; set; }
+        public decimal selectionTotal { get; set; }
+        public decimal amount { get; set; }
+        public decimal withoutTax { get; set; }
+        public decimal tax { get; set; }
+        public decimal balance { get; set; }
         public string comments { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
+        public decimal cancellationFee { get; set; }
     
         public virtual customer customer { get; set; }
         public virtual ICollection<customeraccount> customeraccounts { get; set; }

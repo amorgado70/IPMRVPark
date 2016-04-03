@@ -17,10 +17,9 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<reservationitem> reservationitems;
         IRepositoryBase<payment> payments;
+        IRepositoryBase<paymentreservationitem> paymentsreservationitems;
         IRepositoryBase<rvsite_available_view> rvsites_available;
-        IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem;
-        IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem;
-        IRepositoryBase<total_per_edititem_view> totals_per_edititem;
+        IRepositoryBase<site_description_rate_view> sites_description_rate;
         SessionService sessionService;
         PaymentService paymentService;
 
@@ -32,21 +31,19 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<reservationitem> reservationitems,
             IRepositoryBase<payment> payments,
-            IRepositoryBase<total_per_selecteditem_view> totals_per_selecteditem,
-            IRepositoryBase<total_per_reservationitem_view> totals_per_reservationitem,
-            IRepositoryBase<total_per_edititem_view> totals_per_edititem,            
-            IRepositoryBase<session> sessions
+            IRepositoryBase<paymentreservationitem> paymentsreservationitems,
+        IRepositoryBase<session> sessions,
+            IRepositoryBase<site_description_rate_view> sites_description_rate
             )
         {
             this.customers = customers;
             this.ipmevents = ipmevents;
             this.payments = payments;
+            this.paymentsreservationitems = paymentsreservationitems;
             this.placesinmap = placesinmap;
             this.selecteditems = selecteditems;
             this.rvsites_available = rvsites_available;
-            this.totals_per_selecteditem = totals_per_selecteditem;
-            this.totals_per_reservationitem = totals_per_reservationitem;
-            this.totals_per_edititem = totals_per_edititem;
+            this.sites_description_rate = sites_description_rate;
             this.sessions = sessions;
             sessionService = new SessionService(
                 this.sessions,
@@ -55,11 +52,12 @@ namespace IPMRVPark.WebUI.Controllers
             paymentService = new PaymentService(
                 this.selecteditems,
                 this.reservationitems,
-                this.payments
+                this.payments,
+                this.paymentsreservationitems
                 );
         }//end Constructor
 
-        #region common
+        #region Common
 
         const long newReservationMode = -1;
         const long IDnotFound = -1;
@@ -141,14 +139,14 @@ namespace IPMRVPark.WebUI.Controllers
             else
             {
                 ViewBag.SiteID = newReservationMode;
-            }           
+            }
 
             return PartialView();
         }
 
         // New Reservation Page - Site Selection
         public ActionResult NewReservation()
-        {            
+        {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
             // Clean items that are in selected table
             paymentService.CleanSelectedItemList(
@@ -209,22 +207,20 @@ namespace IPMRVPark.WebUI.Controllers
         [HttpPost]
         public ActionResult GetSiteData(long idRVSite, DateTime checkInDate, DateTime checkOutDate)
         {
-            double amount = 0;
-            double weeklyRate = 0;
-            double dailyRate = 0;
+            decimal amount = 0;
+            decimal weeklyRate = 0;
+            decimal dailyRate = 0;
 
-            var site = rvsites_available.GetAll().Where(s => s.id == idRVSite).First();
+            var site = sites_description_rate.GetAll().Where(s => s.id == idRVSite).First();
             if (site != null)
             {
-                int duration = (int)(checkOutDate - checkInDate).TotalDays;
-                int weeks = duration / 7;
-                int days = duration % 7;
-                weeklyRate = Convert.ToDouble(site.weeklyRate);
-                dailyRate = Convert.ToDouble(site.dailyRate);
-                amount = weeklyRate * weeks +
-                    dailyRate * days;
+                weeklyRate = site.weeklyRate.Value;
+                dailyRate = site.dailyRate.Value;
+                amount = paymentService.CalculateSiteTotal(
+                    checkInDate, checkOutDate,
+                    weeklyRate, dailyRate
+                    );
             }
-            string result = amount.ToString("N2");
 
             return Json(new
             {
@@ -236,46 +232,37 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         // Sum and Count for Selected Items
-        private void CreateViewBagForSelectedTotal()
+        private void CreateViewBagForSelectedTotal(long sessionID)
         {
-            var _session = sessionService.GetSession(this.HttpContext);
-            var _selecteditem = totals_per_selecteditem.GetAll();
-            _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
+            int count;
+            decimal selectedTotal = paymentService.CalculateNewSelectedTotal(sessionID, out count);
 
-            int count = 0;
-            decimal sum = 0;
-            foreach (var i in _selecteditem)
+            if (selectedTotal > 0)
             {
-                count = count + 1;
-                sum = sum + i.amount.Value;
-            }
-
-            if (count > 0)
-            {
-                ViewBag.totalAmount = sum.ToString("N2");
+                ViewBag.totalAmount = selectedTotal.ToString("N2");
             }
         }
 
         // For Partial View : Selected Site List
         public ActionResult UpdateSelectedList()
         {
-            var _session = sessionService.GetSession(this.HttpContext);
-            var _selecteditem = totals_per_selecteditem.GetAll();
-            _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            var _selecteditems = selecteditems.GetAll().
+                Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
 
-            CreateViewBagForSelectedTotal();
+            CreateViewBagForSelectedTotal(sessionID);
 
-            return PartialView("SelectedList", _selecteditem);
+            return PartialView("SelectedList", _selecteditems);
         }
 
         // For Partial View : Show Reservation Summary
         public ActionResult ShowSelectionSummary()
         {
             long sessionID = sessionService.GetSessionID(this.HttpContext);
-            var _selecteditem = totals_per_selecteditem.GetAll();
-            _selecteditem = _selecteditem.Where(q => q.idSession == sessionID).OrderByDescending(o => o.idSelected);
+            var _selecteditem = selecteditems.GetAll().
+                Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
 
-            CreateViewBagForSelectedTotal();
+            CreateViewBagForSelectedTotal(sessionID);
 
             ViewBag.Customer = sessionService.GetSessionCustomerNamePhone(sessionID);
 
@@ -289,26 +276,12 @@ namespace IPMRVPark.WebUI.Controllers
             }
         }
 
-        public void CalculateSelectionTotal(out int count, out decimal sum)
-        {
-            var _session = sessionService.GetSession(this.HttpContext);
-            var _selecteditem = totals_per_selecteditem.GetAll();
-            _selecteditem = _selecteditem.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
-            count = 0;
-            sum = 0;
-            foreach (var i in _selecteditem)
-            {
-                count = count + 1;
-                sum = sum + i.amount.Value;
-            }
-        }
-
         // Selected sites total
         public ActionResult GetSelectionTotal()
         {
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
             int count;
-            decimal sum;
-            CalculateSelectionTotal(out count, out sum);
+            decimal sum = paymentService.CalculateNewSelectedTotal(sessionID, out count);
 
             string totalAmount = "";
             if (count > 0)
@@ -346,15 +319,15 @@ namespace IPMRVPark.WebUI.Controllers
         // Delete all selected sites
         public ActionResult RemoveAllSelected()
         {
-            var _session = sessionService.GetSession(this.HttpContext);
-            var allSelected = totals_per_selecteditem.GetAll();
-            allSelected = allSelected.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            var allSelected = selecteditems.GetAll().
+                Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
 
             if (allSelected.Count() > 0)
             {
                 foreach (var _selected in allSelected)
                 {
-                    selecteditems.Delete(selecteditems.GetById(_selected.idSelected));
+                    selecteditems.Delete(selecteditems.GetById(_selected.ID));
                 }
                 selecteditems.Commit();
             }
@@ -405,14 +378,14 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult RemoveAllReserved()
         {
             var _session = sessionService.GetSession(this.HttpContext);
-            var allSelected = totals_per_selecteditem.GetAll();
-            allSelected = allSelected.Where(q => q.idSession == _session.ID).OrderByDescending(o => o.idSelected);
+            var allSelected = selecteditems.GetAll().
+                Where(q => q.idSession == _session.ID).OrderByDescending(o => o.ID);
 
             if (allSelected.Count() > 0)
             {
                 foreach (var i in allSelected)
                 {
-                    var _selecteditem = selecteditems.GetById(i.idSelected);
+                    var _selecteditem = selecteditems.GetById(i.ID);
                     _selecteditem.isSiteChecked = false;
                     selecteditems.Update(_selecteditem);
                 }
@@ -466,30 +439,20 @@ namespace IPMRVPark.WebUI.Controllers
 
             return View();
         }
-
+        
         // For Partial View : Reserved Site List
         public ActionResult UpdateReservedList()
         {
             long sessionID = sessionService.GetSessionID(this.HttpContext);
+            long customerID = sessionService.GetSessionCustomerID(sessionID);
+            var _reserveditems = reservationitems.GetAll().
+                Where(q => q.idCustomer == customerID).OrderByDescending(o => o.ID);
 
-            long idCustomer = sessionService.GetSessionCustomerID(sessionID);      
-            var _reserveditems = totals_per_reservationitem.GetAll();
-            if (idCustomer != -1)
-            {
-                _reserveditems = _reserveditems.Where(q => q.idCustomer == idCustomer).OrderByDescending(o => o.idRVSite);
-            }
+            decimal reservedTotal = paymentService.CalculateReservedTotal(customerID);
 
-            int count = 0;
-            decimal sum = 0;
-            foreach (var i in _reserveditems)
+            if (reservedTotal > 0)
             {
-                count = count + 1;
-                sum = sum + i.amount.Value;
-            }
-
-            if (count > 0)
-            {
-                ViewBag.totalAmount = sum.ToString("N2");
+                ViewBag.totalAmount = reservedTotal.ToString("N2");
             }
 
             return PartialView("../Reservation/ReservedList", _reserveditems);
@@ -514,7 +477,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             long sessionIPMEventID = sessionService.GetSessionIPMEventID(sessionID);
 
-            var _reserveditems = totals_per_reservationitem.GetAll();
+            var _reserveditems = reservationitems.GetAll();
             if (sessionCustomerID != IDnotFound)
             {
                 _reserveditems = _reserveditems.Where(q => q.idCustomer == sessionCustomerID).OrderByDescending(o => o.idRVSite);
@@ -523,116 +486,86 @@ namespace IPMRVPark.WebUI.Controllers
             foreach (var item in _reserveditems)
             {
                 // If reserved item is not in the selected item table
-                var _checkitem = totals_per_selecteditem.GetAll().Where(s => s.idRVSite == item.idRVSite).FirstOrDefault();
+                var _checkitem = selecteditems.GetAll().Where(s => s.idRVSite == item.idRVSite).FirstOrDefault();
                 if (_checkitem == null)
                 {
                     // Add reserved item as selected item                
                     selecteditem _selecteditem = new selecteditem();
-                    _selecteditem.checkInDate = item.checkInDate;
-                    _selecteditem.checkOutDate = item.checkOutDate;
                     _selecteditem.idRVSite = item.idRVSite;
                     _selecteditem.idSession = sessionID;
                     _selecteditem.idIPMEvent = sessionIPMEventID;
                     _selecteditem.idStaff = sessionUserID;
                     _selecteditem.idCustomer = item.idCustomer;
+                    _selecteditem.checkInDate = item.checkInDate;
+                    _selecteditem.checkOutDate = item.checkOutDate;
+                    _selecteditem.duration = item.duration;
+                    _selecteditem.weeks = item.weeks;
+                    _selecteditem.weeklyRate = item.weeklyRate;
+                    _selecteditem.days = item.days;
+                    _selecteditem.dailyRate = item.dailyRate;
+                    _selecteditem.amount = item.totalAmount.Value;
                     _selecteditem.isSiteChecked = true;
                     _selecteditem.createDate = DateTime.Now;
                     _selecteditem.lastUpdate = DateTime.Now;
-                    _selecteditem.idReservationItem = item.idReservationItem;
+                    _selecteditem.idReservationItem = item.ID;
                     selecteditems.Insert(_selecteditem);
                 }
             }
             selecteditems.Commit();
 
             // Data to be presented on the view
-            var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == sessionID && s.idCustomer == sessionCustomerID);
-            int count = 0;
-            decimal sum = 0;
-            decimal reservationsum = 0;
-            foreach (var item in _edititems)
-            {
-                count = count + 1;
-                sum = sum + item.total.Value;
-                reservationsum = reservationsum + item.reservationAmount.Value;
-            }
+            var _selecteditems = selecteditems.GetAll().
+                Where(s => s.idSession == sessionID && s.idCustomer == sessionCustomerID);
 
-            decimal dueAmount = Math.Max((sum - reservationsum), 0);
-            decimal refundAmount = Math.Max((reservationsum - sum), 0);
-            // Check if there is a cancellation fee
-            decimal cancelationFee = paymentService.GetCancelationFee(
-                sessionService.GetSessionID(this.HttpContext)
-                );
-            if (sum < reservationsum)
+            payment _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
+
+            // Value of previous reservation, just before edit reservation mode started
+            ViewBag.CupomTotal = _payment.cupomTotal.ToString("N2");
+            ViewBag.SelectionTotal = _payment.selectionTotal.ToString("N2");
+            ViewBag.CancellationFee = _payment.cancellationFee.ToString("N2");
+            // Suggested value for payment            
+            if (_payment.amount >= 0)
             {
-                if ((reservationsum - sum) < cancelationFee)
-                {
-                    refundAmount = 0;
-                    dueAmount = cancelationFee - (reservationsum - sum);
-                }
-                else
-                {
-                    refundAmount = refundAmount - cancelationFee;
-                }
+                ViewBag.dueAmount = _payment.amount.ToString("N2");
+                ViewBag.refundAmount = "0.00";
             }
             else
             {
-                cancelationFee = 0;
+                ViewBag.refundAmount = (_payment.amount*-1).ToString("N2");
+                ViewBag.duedAmount = "0.00";
             }
 
-            ViewBag.totalAmount = sum.ToString("N2");
-            ViewBag.reservationAmount = reservationsum.ToString("N2");
-            ViewBag.dueAmount = dueAmount.ToString("N2");
-            ViewBag.refundAmount = refundAmount.ToString("N2");
-            ViewBag.cancelationFee = cancelationFee.ToString("N2");
-
-            return View(_edititems);
+            return View(_selecteditems);
         }
 
         public ActionResult EditReservationSummary()
         {
-            // Data to be presented on the view
-            var _session = sessionService.GetSession(this.HttpContext);
-            var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID && s.idCustomer == _session.idCustomer);
-            int count = 0;
-            decimal sum = 0;
-            decimal reservationsum = 0;
-            foreach (var item in _edititems)
-            {
-                count = count + 1;
-                sum = sum + item.total.Value;
-                reservationsum = reservationsum + item.reservationAmount.Value;
-            }
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            long sessionCustomerID = sessionService.GetSessionCustomerID(sessionID);
 
-            decimal dueAmount = Math.Max((sum - reservationsum), 0);
-            decimal refundAmount = Math.Max((reservationsum - sum), 0);
-            // Check if there is a cancellation fee
-            decimal cancelationFee = paymentService.GetCancelationFee(
-                sessionService.GetSessionID(this.HttpContext)
-                );
-            if (sum < reservationsum)
+            // Data to be presented on the view
+            var _selecteditems = selecteditems.GetAll().
+                Where(s => s.idSession == sessionID && s.idCustomer == sessionCustomerID);
+
+            payment _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
+
+            // Value of previous reservation, just before edit reservation mode started
+            ViewBag.CupomTotal = _payment.cupomTotal.ToString("N2");
+            ViewBag.SelectionTotal = _payment.selectionTotal.ToString("N2");
+            ViewBag.CancellationFee = _payment.cancellationFee.ToString("N2");
+            // Suggested value for payment            
+            if (_payment.amount >= 0)
             {
-                if ((reservationsum - sum) < cancelationFee)
-                {
-                    refundAmount = 0;
-                    dueAmount = cancelationFee - (reservationsum - sum);
-                }
-                else
-                {
-                    refundAmount = refundAmount - cancelationFee;
-                }
+                ViewBag.dueAmount = _payment.amount.ToString("N2");
+                ViewBag.refundAmount = "0.00";
             }
             else
             {
-                cancelationFee = 0;
+                ViewBag.refundAmount = (_payment.amount * -1).ToString("N2");
+                ViewBag.duedAmount = "0.00";
             }
 
-            ViewBag.totalAmount = sum.ToString("N2");
-            ViewBag.reservationAmount = reservationsum.ToString("N2");
-            ViewBag.dueAmount = dueAmount.ToString("N2");
-            ViewBag.refundAmount = refundAmount.ToString("N2");
-            ViewBag.cancelationFee = cancelationFee.ToString("N2");
-
-            return PartialView(_edititems);
+            return View(_selecteditems);
         }
 
         #endregion
