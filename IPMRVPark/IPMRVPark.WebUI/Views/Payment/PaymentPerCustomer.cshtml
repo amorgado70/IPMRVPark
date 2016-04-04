@@ -38,11 +38,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.idPayment)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ID )</td>
                         <td>@item.createDate.Value.ToString("MMM") @item.createDate.Value.ToString("dd") @item.createDate.Value.ToString("yyyy") </td>
-                        <td>@Html.DisplayFor(modelItem => item.reasonForPayment)</td>
-                        <td style="text-align:right;">@Html.DisplayFor(modelItem => item.reservationitem_total)</td>
-                        <td style="text-align:right;">@Html.DisplayFor(modelItem => item.paymentAmount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.idReasonForPayment )</td>
+                        <td style="text-align:right;">@Html.DisplayFor(modelItem => item.selectionTotal)</td>
+                        <td style="text-align:right;">@Html.DisplayFor(modelItem => item.amount )</td>
                         <td style="text-align:right;">@Html.DisplayFor(modelItem => item.balance)</td>
                     </tr>
                 }

@@ -36,7 +36,7 @@ namespace IPMRVPark.Services
         {
             // Clean edit items that are in selected table
             var _olditems_to_be_removed = selecteditems.GetAll().
-                Where(c => c.idSession == sessionID && c.idReservationItem > 0);
+                Where(c => c.idSession == sessionID);
             bool tryResult = false;
             try
             {
@@ -154,7 +154,7 @@ namespace IPMRVPark.Services
             _payment.cancellationFee = cancelationFee;
             /// Suggested value for payment
             _payment.amount = dueAmount - refundAmount + CustomerAccountBalance(customerID);
-            _payment.tax = Math.Round(dueAmount * GetProvinceTax(sessionID), 2, MidpointRounding.AwayFromZero);
+            _payment.tax = Math.Round((dueAmount * GetProvinceTax(sessionID) / 100 ), 2, MidpointRounding.AwayFromZero);
             _payment.withoutTax = dueAmount - _payment.tax;
 
             return _payment;
@@ -165,7 +165,7 @@ namespace IPMRVPark.Services
             var _payments = payments.GetAll().
                 Where(p => p.idCustomer == customerID).OrderBy(p => p.ID);
 
-            var _last = _payments.LastOrDefault();
+            var _last = _payments.ToList().LastOrDefault();
             decimal finalBalance = (_last != null) ? _last.balance : 0;
 
             return finalBalance;

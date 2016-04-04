@@ -22,12 +22,18 @@ Payments & Refunds
         }
         // **** Handle form submit
         var formSubmit = false;
-        $("form").submit(function() {
+        $('form').submit(function() {
             return formSubmit;
         });
-        $( "#btnSave" ).click(function() {
-            $("#waitMsg").show();// Show wait message
+        $( '#btnConfirm' ).click(function() {
+            $('btnConfirm').prop('disabled',true);
+            $('#btnSave').prop('disabled', false);
+            $('btnSave').focus();
+        });
+        $( '#btnSave' ).click(function() {
+            $('#waitMsg').show();// Show wait message
             formSubmit = true;
+            $('form').submit();
         });
         // ***** Load partial view Payments For Customer
         $('#account-details').load('../Payment/ShowPaymentPerCustomer/@ViewBag.CustomerID');
@@ -53,65 +59,55 @@ Payments & Refunds
             array = array.sort(function(a, b){
                 return a.Value-b.Value
             });
-            //var text = "";
+            //var text = '';
             //for (i = 0; i < array.length; i++) {
-            //    text += array[i].Value + " " + array[i].Text + "<br>";
+            //    text += array[i].Value + ' ' + array[i].Text + '<br>';
             //}
             //alert(text);
-            //alert(array[id-1].Value + " " + array[id-1].Text);
-            $('#docNumber').prop('placeholder', "Type here: " + array[id-1].Text);
+            //alert(array[id-1].Value + ' ' + array[id-1].Text);
+            $('#docNumber').prop('placeholder', 'Type here: ' + array[id-1].Text);
         }
         // ***** Total Calculation
-        showTotal();
-        function showTotal(){
-            var customerBalance = parseFloat(@ViewBag.CustomerBalance);
-            var reservationTotal = parseFloat(@ViewBag.Total);
-            var provinceTax = parseFloat(@ViewBag.ProvinceTax);
-            var i = (reservationTotal * 100 / (100 + provinceTax)).toFixed(2);
-            var ii = reservationTotal - i;
-            var tempBalance = customerBalance - reservationTotal;
-            var amount = tempBalance * -1;
-            var finalBalance = (amount + tempBalance)*-1;
-            $('#customerBalance').text(customerBalance.toFixed(2));
-            $('#reservationTotal').text(reservationTotal.toFixed(2));
-            $('#provinceTax').text(provinceTax.toFixed(2));
-            $('#i').text(i);
-            $('#ii').text(ii.toFixed(2));
-            $('#tempBalance').text(tempBalance.toFixed(2));
-            $('#amount').val(parseFloat(amount).toFixed(2));
-            $('#finalBalance').text(finalBalance.toFixed(2));
-            $('#PaymentMethod').focus();
-        }
+        $('#amount').val(@Model.amount);
+        updateTotal();
         $('#amount').click(function(){
-            $('#amount').val("");
+            $('#amount').val('');
         });
         $('#amount').change(function(){
             updateTotal();
-            $('#PaymentMethod').focus();
         });
-        function updateTotal(){
+        function updateTotal(){            
             var amount = $('#amount').val();
-            var amount = parseFloat(amount).toFixed(2)
+            var amount = parseFloat(amount).toFixed(2);
             $('#amount').val(amount);
             var tempBalance = parseFloat($('#tempBalance').text());
-            var finalBalance = (parseFloat(amount) + tempBalance)*-1;
-            var finalBalance = parseFloat(finalBalance).toFixed(2)
-            $('#finalBalance').text(finalBalance);
+            // Balance after payment
+            var balance = (parseFloat(amount) + tempBalance)*-1;
+            var balance = parseFloat(balance).toFixed(2);
+            $('#balance').val(balance);
+            $('#PaymentMethod').focus()
+            if( @ViewBag.CustomerID != -1 &&
+                amount > 0 ){
+                $('#btnConfirm').prop('disabled', false);
+            }
+            else{
+                $('#btnConfirm').prop('disabled', true);
+            };
         }
         // Create Date
-        $("#paymentDate").datepicker({
+        $('#paymentDate').datepicker({
             dateFormat: 'D, dd M',
             showOtherMonths: true,
             selectOtherMonths: true,
-            dayNamesMin: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             onSelect: function () {
-                var createDate = $("#paymentDate").datepicker('getDate');
-                $("#createDate").val(createDate.toISOString().substring(0, 10));
+                var createDate = $('#paymentDate').datepicker('getDate');
+                $('#createDate').val(createDate.toISOString().substring(0, 10));
             }
         });
-        $("#paymentDate").datepicker( "setDate", "0" );
-        var createDate = $("#paymentDate").datepicker('getDate');
-        $("#createDate").val(createDate.toISOString().substring(0, 10));
+        $('#paymentDate').datepicker( 'setDate', '0' );
+        var createDate = $('#paymentDate').datepicker('getDate');
+        $('#createDate').val(createDate.toISOString().substring(0, 10));
     });
 </script>
 
@@ -128,7 +124,7 @@ Payments & Refunds
                 <label>Customer</label>
             </div>
             <div class="col-sm-6 col-xs-10 form-top-margin">
-                @if (ViewBag.CustomerName == null)
+                @if (ViewBag.CustomerID == -1)
                 {
                     <div class="form-control reservationWarning">NO CUSTOMER SELECTED YET</div>
                 }
@@ -153,7 +149,7 @@ Payments & Refunds
                 <label>(a) Account Balance</label>
             </div>
             <div class="col-sm-4 col-xs-10 form-top-margin">
-                <div disabled class="form-control payment-output" type="text" id="customerBalance" name="customerBalance"></div>
+                <div disabled class="form-control payment-output" type="text" id="customerBalance" name="customerBalance">@Model.balance</div>
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Click To Expand/Collapse">
                 <button type="button" class="btn btn-block btn-default" data-toggle="collapse" data-target="#account-details">
@@ -173,13 +169,13 @@ Payments & Refunds
                 <label>(b) New Reservation Total</label>
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin">
-                @if (ViewBag.Total == null)
+                @if (Model.selectionTotal == 0)
                 {
                     <div class="form-control reservationWarning">NO SITE SELECTED YET</div>
                 }
                 else
                 {
-                    <div id="reservationTotal" disabled class="form-control payment-output"></div>
+                    <input id="selectionTotal" disabled class="form-control payment-output" value="@Model.selectionTotal"/>
                 }
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Click To Expand/Collapse">
@@ -205,7 +201,7 @@ Payments & Refunds
                     <label>(i) Amount Without Tax</label>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <output disabled name="i" id="i" step="0.01" class="form-control payment-output" for="a"></output>
+                    <input disabled name="withoutTax" id="withoutTax" step="0.01" class="form-control payment-output" for="a" value="@Model.withoutTax"/>
                 </div>
             </div>
             <div class="row form-top-margin">
@@ -213,7 +209,7 @@ Payments & Refunds
                     <label>(ii) Tax HST/QST/PST (@ViewBag.ProvinceTax%)</label>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <output disabled name="ii" id="ii" step="0.01" class="form-control payment-output" for="a"></output>
+                    <input disabled name="tax" id="tax" step="0.01" class="form-control payment-output" for="a" value="@Model.tax"/>
                 </div>
             </div>
         </div>
@@ -223,7 +219,7 @@ Payments & Refunds
                 <label>(c) Temp Balance (a)-(b)</label>
             </div>
             <div class="col-sm-4 col-xs-12 ">
-                <div id="tempBalance" disabled class="form-control payment-output"></div>
+                <div id="tempBalance" disabled class="form-control payment-output">@ViewBag.TempBalance</div>
             </div>
         </div>
 
@@ -250,7 +246,7 @@ Payments & Refunds
                 <label>(e) Due Amount (d)-(c)</label>
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin">
-                <div id="finalBalance" disabled class="form-control payment-output">0.01</div>
+                <input id="balance" disabled class="form-control payment-output" value="0.00"/>
             </div>
         </div>
 
@@ -278,9 +274,17 @@ Payments & Refunds
         </div>
         <div class="row form-top-margin">
             <div class="col-sm-4 col-sm-push-8 col-xs-12">
-                <button id="btnSave" class="btn btn-block btn-default" type="submit">
+                <button id="btnConfirm" class="btn btn-block btn-default" disabled type="button">
                     <span class="col-xs-1 glyphicon glyphicon-ok"></span>
                     <span class="col-xs-9">Confirm</span>
+                </button>
+            </div>
+        </div>
+        <div class="row form-top-margin">
+            <div class="col-sm-4 col-sm-push-8 col-xs-12">
+                <button id="btnSave" class="btn btn-block btn-default" disabled type="button">
+                    <span class="col-xs-1 glyphicon glyphicon-save"></span>
+                    <span class="col-xs-9">Save</span>
                 </button>
             </div>
         </div>

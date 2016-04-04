@@ -17,12 +17,6 @@ Payments & Refunds
         $("#btnPrint").click(function () {
             window.print();
         });
-        var reservationTotal = parseFloat(@ViewBag.ReservationTotal);
-        var provinceTax = parseFloat(@ViewBag.ProvinceTax);
-        var i = (reservationTotal * 100 / (100 + provinceTax)).toFixed(2);
-        var ii = reservationTotal - i;
-        $('#i').text(i);
-        $('#ii').text(ii.toFixed(2));
     });
 </script>
 
@@ -33,7 +27,7 @@ Payments & Refunds
             <label>Payment #</label>
         </div>
         <div class="col-sm-3 col-xs-6 form-top-margin">
-            <div disabled class="form-control">@ViewBag.PaymentID</div>
+            <div disabled class="form-control">@ViewBag.Payment.ID</div>
         </div>
         <div class="col-sm-3 col-sm-push-1 col-xs-6 form-top-margin">
             <label>Date</label>
@@ -53,7 +47,7 @@ Payments & Refunds
             <label>Paid Amount</label>
         </div>
         <div class="col-sm-3 col-sm-push-1 col-xs-6 form-top-margin">
-            <div style="text-align:right;" disabled class="form-control">@ViewBag.PaymentAmount</div>
+            <div style="text-align:right;" disabled class="form-control">@ViewBag.Payment.amount</div>
         </div>
     </div>
     <!-- Reservation Info -->
@@ -76,22 +70,22 @@ Payments & Refunds
                             <td>@Html.DisplayFor(modelItem => item.site)</td>
                             <td>@item.checkInDate.ToString("ddd"), @item.checkInDate.ToString("dd") @item.checkInDate.ToString("MMM")</td>
                             <td>@item.checkOutDate.ToString("ddd"), @item.checkOutDate.ToString("dd") @item.checkOutDate.ToString("MMM")</td>
-                            <td style="text-align:right;">@Html.DisplayFor(modelItem => item.amount)</td>
+                            <td style="text-align:right;">@Html.DisplayFor(modelItem => item.totalAmount)</td>
                         </tr>
                     }
                     <tr>
-                        <td colspan="3" style="text-align:right;">Total Without Tax</td>
-                        <td id="i" style="text-align:right;"></td>
+                        <td colspan="3" style="text-align:right;">Without Tax</td>
+                        <td id="withoutTax" style="text-align:right;">@ViewBag.Payment.withoutTax</td>
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align:right;">Tax HST/QST/PST (@ViewBag.ProvinceTax%)</td>
-                        <td id="ii" style="text-align:right;"></td>
+                        <td id="tax" style="text-align:right;">@ViewBag.Payment.tax</td>
                     </tr>
                     <tr>
                         <td>Total</td>
                         <td></td>
                         <td></td>
-                        <td style="text-align:right;">@ViewBag.ReservationTotal</td>
+                        <td style="text-align:right;">@ViewBag.Payment.selectionTotal</td>
                     </tr>
                 </tbody>
             </table>
@@ -103,14 +97,13 @@ Payments & Refunds
             <label>Customer</label>
         </div>
         <div class="col-sm-6 col-xs-12 form-top-margin">
-            <div disabled class="form-control">@Model.First().fullName , Phone: @Model.First().mainPhone</div>
+            <div disabled class="form-control">@ViewBag.CustomerName</div>
         </div>
         <div class="col-sm-2 col-xs-12 form-top-margin">
             <label>Due Amount</label>
         </div>
         <div class="col-sm-2 col-xs-12 form-top-margin">
-            @{ string DueAmount = (ViewBag.CustomerBalance * -1).ToString("0.00"); }
-            <div style="text-align:right;" disabled class="form-control">@DueAmount</div>
+            <div style="text-align:right;" disabled class="form-control">@ViewBag.Payment.balance</div>
         </div>
 
     </div>

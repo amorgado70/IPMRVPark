@@ -123,26 +123,29 @@ namespace IPMRVPark.WebUI.Controllers
 
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
 
+            // Find all reservation items related to this payment
             var _payment = payments.GetById(id);
+            ViewBag.Payment = _payment;
 
-            DataContext contextForIndex = new DataContext();
-            var _reservationitems =
-                from p in contextForIndex.payments
-                join x in contextForIndex.paymentreservationitems on p.ID equals x.idPayment
-                join ri in contextForIndex.reservationitems on x.idReservationItem equals ri.ID
-                where p.ID == _payment.ID
-                select new { ri = ri };
+            var _paymentreservationitems = paymentsreservationitems.GetAll().
+                Where(p => p.idPayment == id);
+            var _reservationitems = new List<reservationitem>();
+            foreach(var item in _paymentreservationitems)
+            {
+                reservationitem _reservationitem = new reservationitem();
+                _reservationitem = reservationitems.GetById(item.idReservationItem);
+                _reservationitems.Add(_reservationitem);
+            }            
 
-            ViewBag.ReservationTotal = _reservationitems.Sum(q => q.ri.totalAmount);
-
-            ViewBag.PaymentID = _payment.ID;
-            ViewBag.PaymentAmount = _payment.amount;
             if (_payment.createDate != null)
             {
                 ViewBag.PaymentDate = _payment.createDate.Value.ToString("R").Substring(0, 16);
             }
             ViewBag.PaymentMethod = paymentmethods.GetById(_payment.idPaymentMethod).description;
 
+            var _customer = customers.GetAll().Where(c => c.id == _payment.idCustomer).FirstOrDefault();
+
+            ViewBag.CustomerName = (_customer.fullName + ", " + _customer.mainPhone);
             decimal finalBalance = paymentService.CustomerAccountBalance(_payment.idCustomer);
             ViewBag.CustomerBalance = finalBalance;
 
@@ -156,7 +159,6 @@ namespace IPMRVPark.WebUI.Controllers
         #endregion
 
         #region Payment for New Reservation
-        // Payment for New Reservation
         public ActionResult NewReservation()
         {
             string reason = "New Reservation";
@@ -172,16 +174,15 @@ namespace IPMRVPark.WebUI.Controllers
             ViewBag.CustomerID = customerID;
             ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
 
+            decimal customerBalance = 0 ;
             if (customerID != IDnotFound)
             {
-                decimal finalBalance = paymentService.CustomerAccountBalance(customerID);
-                ViewBag.CustomerBalance = finalBalance;
+                customerBalance = paymentService.CustomerAccountBalance(customerID);
+                ViewBag.CustomerBalance = customerBalance;
             };
 
             // Tax Percentage
-            ViewBag.ProvinceTax = paymentService.GetProvinceTax(
-                sessionService.GetSessionID(this.HttpContext)
-                );
+            ViewBag.ProvinceTax = paymentService.GetProvinceTax(sessionID);
 
             reasonsForPayment(reason);
             paymentMethods("VISA");
@@ -189,6 +190,8 @@ namespace IPMRVPark.WebUI.Controllers
             // Retrieve totals for selected items in this session and transfer them to payment
             payment _payment = new payment();
             _payment = paymentService.CalculateEditSelectedTotal(sessionID,customerID);
+
+            ViewBag.TempBalance = customerBalance - _payment.selectionTotal;
 
             return View(_payment);
         }
@@ -206,6 +209,7 @@ namespace IPMRVPark.WebUI.Controllers
             _payment.idReasonForPayment = 2; // New Reservation
             _payment.createDate = DateTime.Now;
             _payment.lastUpdate = DateTime.Now;
+
             payments.Insert(_payment);
             payments.Commit();
             long ID = _payment.ID;
