@@ -76,7 +76,7 @@ Payments & Refunds
         $('#amount').change(function(){
             updateTotal();
         });
-        function updateTotal(){            
+        function updateTotal(){
             var amount = $('#amount').val();
             var amount = parseFloat(amount).toFixed(2);
             $('#amount').val(amount);
@@ -85,6 +85,7 @@ Payments & Refunds
             var balance = (parseFloat(amount) + tempBalance)*-1;
             var balance = parseFloat(balance).toFixed(2);
             $('#balance').val(balance);
+            $('#finalBalance').val(balance);
             $('#PaymentMethod').focus()
             if( @ViewBag.CustomerID != -1 &&
                 amount > 0 ){
@@ -175,7 +176,8 @@ Payments & Refunds
                 }
                 else
                 {
-                    <input id="selectionTotal" disabled class="form-control payment-output" value="@Model.selectionTotal"/>
+                    <input type="text" class="form-control payment-output" value="@Model.selectionTotal" disabled>
+                    <input type="hidden" name="selectionTotal" id="selectionTotal" class="form-control" value="@Model.selectionTotal">
                 }
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Click To Expand/Collapse">
@@ -200,8 +202,9 @@ Payments & Refunds
                 <div class="col-sm-4 col-sm-push-1 col-xs-12">
                     <label>(i) Amount Without Tax</label>
                 </div>
-                <div class="col-sm-4 col-xs-12">
-                    <input disabled name="withoutTax" id="withoutTax" step="0.01" class="form-control payment-output" for="a" value="@Model.withoutTax"/>
+                <div class="col-sm-4 col-xs-12">                    
+                    <input type="text" class="form-control payment-output" value="@Model.withoutTax" disabled>
+                    <input type="hidden" name="withoutTax" id="withoutTax" class="form-control" value="@Model.withoutTax">
                 </div>
             </div>
             <div class="row form-top-margin">
@@ -209,7 +212,8 @@ Payments & Refunds
                     <label>(ii) Tax HST/QST/PST (@ViewBag.ProvinceTax%)</label>
                 </div>
                 <div class="col-sm-4 col-xs-12">
-                    <input disabled name="tax" id="tax" step="0.01" class="form-control payment-output" for="a" value="@Model.tax"/>
+                    <input type="text" class="form-control payment-output" value="@Model.tax" disabled>
+                    <input type="hidden" name="tax" id="tax" class="form-control" value="@Model.tax">
                 </div>
             </div>
         </div>
@@ -246,7 +250,8 @@ Payments & Refunds
                 <label>(e) Due Amount (d)-(c)</label>
             </div>
             <div class="col-sm-4 col-xs-12 form-top-margin">
-                <input id="balance" disabled class="form-control payment-output" value="0.00"/>
+                <input type="text" name="finalBalance" id="finalBalance" class="form-control payment-output" value="0.00" disabled>
+                <input type="hidden" name="balance" id="balance" class="form-control" value="0.00">
             </div>
         </div>
 
@@ -264,10 +269,10 @@ Payments & Refunds
             </div>
         </div>
         <div class="row form-top-margin">
-            <div class="col-sm-6 col-xs-12">
-                <label>Special Notes</label>
+            <div class="col-sm-2 col-xs-12">
+                <label>Comments</label>
             </div>
-            <div class="col-sm-6 col-xs-12">
+            <div class="col-sm-10 col-xs-12">
                 <textarea class="form-control" name="comments" id="comments" rows="2"></textarea>
                 @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
             </div>

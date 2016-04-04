@@ -143,7 +143,7 @@ namespace IPMRVPark.WebUI.Controllers
             }
             ViewBag.PaymentMethod = paymentmethods.GetById(_payment.idPaymentMethod).description;
 
-            var _customer = customers.GetAll().Where(c => c.id == _payment.idCustomer).FirstOrDefault();
+            var _customer = customers.GetByKey("id",_payment.idCustomer);
 
             ViewBag.CustomerName = (_customer.fullName + ", " + _customer.mainPhone);
             decimal finalBalance = paymentService.CustomerAccountBalance(_payment.idCustomer);
