@@ -279,12 +279,14 @@
     <Property Name="idStaff" Type="Int64" Nullable="false" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="site" Type="String" Nullable="false" />
+    <Property Name="siteType" Type="String" Nullable="false" />
     <Property Name="duration" Type="Int32" Nullable="false" />
     <Property Name="weeks" Type="Int32" Nullable="false" />
     <Property Name="days" Type="Int32" Nullable="false" />
     <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
     <Property Name="dailyRate" Type="Decimal" Nullable="false" />
-    <Property Name="totalAmount" Type="Decimal" />
+    <Property Name="totalAmount" Type="Decimal" Nullable="false" />
     <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
     <Property Name="isCancelled" Type="Boolean" />
     <Property Name="comments" Type="String" />
@@ -326,6 +328,7 @@
     <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
     <Property Name="checkInDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+    <Property Name="site" Type="String" Nullable="false" />
     <Property Name="siteType" Type="String" />
     <Property Name="duration" Type="Int32" Nullable="false" />
     <Property Name="weeks" Type="Int32" Nullable="false" />
@@ -337,7 +340,7 @@
     <Property Name="idReservationItem" Type="Int64" />
     <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
     <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="reservationAmount" Type="DateTime" Nullable="false" />
+    <Property Name="reservationAmount" Type="Decimal" Nullable="false" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
     <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
@@ -510,6 +513,7 @@
       <PropertyRef Name="RVSite" />
       <PropertyRef Name="checkInlDate" />
       <PropertyRef Name="checkOutDate" />
+      <PropertyRef Name="totalAmount" />
       <PropertyRef Name="numberMemberInParty" />
     </Key>
     <Property Name="idReservationItem" Type="Int64" Nullable="false" />
@@ -519,7 +523,7 @@
     <Property Name="fullName" Type="String" />
     <Property Name="checkInlDate" Type="DateTime" Nullable="false" />
     <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-    <Property Name="totalAmount" Type="Decimal" />
+    <Property Name="totalAmount" Type="Decimal" Nullable="false" />
     <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
     <Property Name="isCancelled" Type="Boolean" />
   </EntityType>

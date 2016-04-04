@@ -23,6 +23,7 @@ namespace IPMRVPark.Models
         public bool isSiteChecked { get; set; }
         public System.DateTime checkInDate { get; set; }
         public System.DateTime checkOutDate { get; set; }
+        public string site { get; set; }
         public string siteType { get; set; }
         public int duration { get; set; }
         public int weeks { get; set; }
@@ -34,7 +35,7 @@ namespace IPMRVPark.Models
         public Nullable<long> idReservationItem { get; set; }
         public System.DateTime reservationCheckInDate { get; set; }
         public System.DateTime reservationCheckOutDate { get; set; }
-        public System.DateTime reservationAmount { get; set; }
+        public decimal reservationAmount { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
     

@@ -21,7 +21,7 @@ namespace IPMRVPark.Models
         public string fullName { get; set; }
         public System.DateTime checkInlDate { get; set; }
         public System.DateTime checkOutDate { get; set; }
-        public Nullable<decimal> totalAmount { get; set; }
+        public decimal totalAmount { get; set; }
         public int numberMemberInParty { get; set; }
         public Nullable<bool> isCancelled { get; set; }
     }

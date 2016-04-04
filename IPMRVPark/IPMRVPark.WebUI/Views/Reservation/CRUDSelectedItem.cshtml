@@ -72,7 +72,6 @@
                 selectCheckInOutDates(); // Update session with dates
                 getSiteData(); // Calculate total for selected site
                 $('#siteName').focus();
-                //$('body').scrollTo('#siteName');
             }
         });
         $('#checkOutDate').datepicker('setDate', @ViewBag.checkOutDate);
@@ -86,8 +85,8 @@
         function selectCheckInOutDates() {
             var postpath = root + 'Reservation/SelectCheckInOutDates';
             $.ajax({
-                url: postpath, // Controller/View
-                type: 'POST', //HTTP POST Method
+                url: postpath,
+                type: 'POST',
                 dataType: 'json',
                 data: { //Passing data
                     checkInDate: $('#checkInDate').val(), //Reading text box values using jQuery
@@ -123,7 +122,6 @@
                 $('#idRVSite').val(ui.item.ID); // name of form input field: CustomerID, ProductID
                 $('#btnSelectSite').prop('disabled', false);
                 $('#btnSelectSite').focus();
-                //$('body').scrollTo('#btnSelectSite');
                 getSiteData(); // Calculate total for selected site
             }
         });
@@ -172,7 +170,6 @@
                     $('#siteTotal').text(''); // Reset site total
                     $('#waitMsg').hide();
                     $('#customerName').focus();
-                    //$('body').scrollTo('#customerName');
                 },
                 error: function (result) {
                     alert('2 Some error occured.' + $('#idRVSite').val() );

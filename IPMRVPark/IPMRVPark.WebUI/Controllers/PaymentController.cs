@@ -222,7 +222,8 @@ namespace IPMRVPark.WebUI.Controllers
                     _reservationitem.idStaff = item.idStaff.Value;
                     _reservationitem.checkInDate = item.checkInDate;
                     _reservationitem.checkOutDate = item.checkOutDate;
-                    _reservationitem.duration = item.duration;
+                    _reservationitem.site = item.site;
+                    _reservationitem.siteType = item.siteType;
                     _reservationitem.weeks = item.weeks;
                     _reservationitem.weeklyRate = item.weeklyRate;
                     _reservationitem.days = item.days;

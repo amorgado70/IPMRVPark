@@ -243,6 +243,8 @@
           <ScalarProperty Name="idStaff" ColumnName="idStaff" />
           <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
           <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="site" ColumnName="site" />
+          <ScalarProperty Name="siteType" ColumnName="siteType" />
           <ScalarProperty Name="duration" ColumnName="duration" />
           <ScalarProperty Name="weeks" ColumnName="weeks" />
           <ScalarProperty Name="days" ColumnName="days" />
@@ -282,6 +284,7 @@
           <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
           <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
           <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+          <ScalarProperty Name="site" ColumnName="site" />
           <ScalarProperty Name="siteType" ColumnName="siteType" />
           <ScalarProperty Name="duration" ColumnName="duration" />
           <ScalarProperty Name="weeks" ColumnName="weeks" />

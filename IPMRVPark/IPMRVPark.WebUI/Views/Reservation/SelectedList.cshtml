@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IPMRVPark.Models.total_per_selecteditem_view>
+﻿@model IEnumerable<IPMRVPark.Models.selecteditem>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -49,11 +49,11 @@
                             </button>
                             <ul class="dropdown-menu pull-right">
                                 <li>
-                                    <a href="@Url.Action("EditSelected", "Reservation", new { selectedID = item.idSelected })">
+                                    <a href="@Url.Action("EditSelected", "Reservation", new { selectedID = item.ID })">
                                     <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
                                     </a>
                                 </li>
-                                <li><a href="@Url.Action("RemoveSelected","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
+                                <li><a href="@Url.Action("RemoveSelected","Reservation", new { id=item.ID })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
                             </ul>
                         </div>
                     </td>

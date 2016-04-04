@@ -67,19 +67,6 @@ namespace IPMRVPark.Services
             return 50; // Value for 2016
         }
 
-        // Calculate Total for Selected Site
-        public decimal CalculateSiteTotal(DateTime checkInDate, DateTime checkOutDate,
-            decimal weeklyRate, decimal dailyRate)
-        {
-            int duration = (int)(checkOutDate - checkInDate).TotalDays;
-            int weeks = duration / 7;
-            int days = duration % 7;
-            decimal amount = weeklyRate * weeks +
-                dailyRate * days;
-
-            return amount;
-        }
-
         // Sum and Count for Selected Items
         public decimal CalculateNewSelectedTotal(long sessionID, out int count)
         {
@@ -88,10 +75,13 @@ namespace IPMRVPark.Services
 
             count = 0;
             decimal sum = 0;
-            foreach (var i in _selecteditem)
+            if (_selecteditem != null)
             {
-                count = count + 1;
-                sum = sum + i.total;
+                foreach (var i in _selecteditem)
+                {
+                    count = count + 1;
+                    sum = sum + i.total;
+                }
             }
 
             return sum;
@@ -108,7 +98,7 @@ namespace IPMRVPark.Services
             foreach (var i in _reserveditems)
             {
                 count = count + 1;
-                sum = sum + i.totalAmount.Value;
+                sum = sum + i.totalAmount;
             }
 
             return sum;
@@ -132,7 +122,7 @@ namespace IPMRVPark.Services
                 if (_selecteditem.idReservationItem != null && _selecteditem.idReservationItem != IDnotFound)
                 {
                     var _reservationitem = reservationitems.GetById(_selecteditem.idReservationItem);
-                    reservationTotal = reservationTotal + _reservationitem.totalAmount.Value;
+                    reservationTotal = reservationTotal + _reservationitem.totalAmount;
                 }
             }
 

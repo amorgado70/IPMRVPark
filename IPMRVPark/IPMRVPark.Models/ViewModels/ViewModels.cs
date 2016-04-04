@@ -25,4 +25,25 @@ namespace IPMRVPark.Models
             Label = label;
         }
     }
+
+    // Calculate Total for Selected Site
+    public class CalcSiteTotal
+    {
+        public int duration;
+        public int weeks;
+        public int days;
+        public decimal amount;
+        public decimal total;
+
+        public CalcSiteTotal(DateTime checkInDate, DateTime checkOutDate,
+            decimal weeklyRate, decimal dailyRate, bool isChecked)
+        {
+            duration = (int)(checkOutDate - checkInDate).TotalDays;
+            weeks = duration / 7;
+            days = duration % 7;
+            amount = weeklyRate * weeks +
+                dailyRate * days;
+            total = (isChecked) ? amount : 0;
+        }
+    }
 }

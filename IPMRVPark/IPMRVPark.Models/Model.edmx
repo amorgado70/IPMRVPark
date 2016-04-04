@@ -231,12 +231,14 @@
           <Property Name="idStaff" Type="bigint" Nullable="false" />
           <Property Name="checkInDate" Type="date" Nullable="false" />
           <Property Name="checkOutDate" Type="date" Nullable="false" />
+          <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="siteType" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="duration" Type="int" Nullable="false" />
           <Property Name="weeks" Type="int" Nullable="false" />
           <Property Name="days" Type="int" Nullable="false" />
           <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="numberMemberInParty" Type="int" Nullable="false" />
           <Property Name="isCancelled" Type="bit" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
@@ -268,6 +270,7 @@
           <Property Name="isSiteChecked" Type="bit" Nullable="false" />
           <Property Name="checkInDate" Type="date" Nullable="false" />
           <Property Name="checkOutDate" Type="date" Nullable="false" />
+          <Property Name="site" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="siteType" Type="varchar" MaxLength="40" />
           <Property Name="duration" Type="int" Nullable="false" />
           <Property Name="weeks" Type="int" Nullable="false" />
@@ -279,7 +282,7 @@
           <Property Name="idReservationItem" Type="bigint" />
           <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
           <Property Name="reservationCheckOutDate" Type="date" Nullable="false" />
-          <Property Name="reservationAmount" Type="date" Nullable="false" />
+          <Property Name="reservationAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
@@ -433,6 +436,7 @@ warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a pr
             <PropertyRef Name="RVSite" />
             <PropertyRef Name="checkInlDate" />
             <PropertyRef Name="checkOutDate" />
+            <PropertyRef Name="totalAmount" />
             <PropertyRef Name="numberMemberInParty" />
           </Key>
           <Property Name="idReservationItem" Type="bigint" Nullable="false" />
@@ -442,7 +446,7 @@ warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a pr
           <Property Name="fullName" Type="varchar" MaxLength="101" />
           <Property Name="checkInlDate" Type="date" Nullable="false" />
           <Property Name="checkOutDate" Type="date" Nullable="false" />
-          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="numberMemberInParty" Type="int" Nullable="false" />
           <Property Name="isCancelled" Type="bit" />
         </EntityType>
@@ -1680,12 +1684,14 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="idStaff" Type="Int64" Nullable="false" />
           <Property Name="checkInDate" Type="DateTime" Nullable="false" />
           <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+          <Property Name="site" Type="String" Nullable="false" />
+          <Property Name="siteType" Type="String" Nullable="false" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="weeks" Type="Int32" Nullable="false" />
           <Property Name="days" Type="Int32" Nullable="false" />
           <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
           <Property Name="dailyRate" Type="Decimal" Nullable="false" />
-          <Property Name="totalAmount" Type="Decimal" />
+          <Property Name="totalAmount" Type="Decimal" Nullable="false" />
           <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
           <Property Name="isCancelled" Type="Boolean" />
           <Property Name="comments" Type="String" />
@@ -1727,6 +1733,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="isSiteChecked" Type="Boolean" Nullable="false" />
           <Property Name="checkInDate" Type="DateTime" Nullable="false" />
           <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
+          <Property Name="site" Type="String" Nullable="false" />
           <Property Name="siteType" Type="String" />
           <Property Name="duration" Type="Int32" Nullable="false" />
           <Property Name="weeks" Type="Int32" Nullable="false" />
@@ -1738,7 +1745,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="idReservationItem" Type="Int64" />
           <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
           <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
-          <Property Name="reservationAmount" Type="DateTime" Nullable="false" />
+          <Property Name="reservationAmount" Type="Decimal" Nullable="false" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
           <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
@@ -1911,6 +1918,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             <PropertyRef Name="RVSite" />
             <PropertyRef Name="checkInlDate" />
             <PropertyRef Name="checkOutDate" />
+            <PropertyRef Name="totalAmount" />
             <PropertyRef Name="numberMemberInParty" />
           </Key>
           <Property Name="idReservationItem" Type="Int64" Nullable="false" />
@@ -1920,7 +1928,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="fullName" Type="String" />
           <Property Name="checkInlDate" Type="DateTime" Nullable="false" />
           <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-          <Property Name="totalAmount" Type="Decimal" />
+          <Property Name="totalAmount" Type="Decimal" Nullable="false" />
           <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
           <Property Name="isCancelled" Type="Boolean" />
         </EntityType>
@@ -3008,6 +3016,8 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="idStaff" ColumnName="idStaff" />
                 <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
                 <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+                <ScalarProperty Name="site" ColumnName="site" />
+                <ScalarProperty Name="siteType" ColumnName="siteType" />
                 <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="weeks" ColumnName="weeks" />
                 <ScalarProperty Name="days" ColumnName="days" />
@@ -3047,6 +3057,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="isSiteChecked" ColumnName="isSiteChecked" />
                 <ScalarProperty Name="checkInDate" ColumnName="checkInDate" />
                 <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
+                <ScalarProperty Name="site" ColumnName="site" />
                 <ScalarProperty Name="siteType" ColumnName="siteType" />
                 <ScalarProperty Name="duration" ColumnName="duration" />
                 <ScalarProperty Name="weeks" ColumnName="weeks" />

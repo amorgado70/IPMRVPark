@@ -103,6 +103,9 @@ namespace IPMRVPark.WebUI.Controllers
 
         private List<SelectionOptionID> SearchSiteByName(string searchString)
         {
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            long IPMEventID = sessionService.GetSessionIPMEventID(sessionID);
+
             //Return value
             List<SelectionOptionID> results = new List<SelectionOptionID>();
 
@@ -110,7 +113,8 @@ namespace IPMRVPark.WebUI.Controllers
             Regex rgx = new Regex("[^a-zA-Z0-9]");
 
             //Read RVSite available
-            var allRVSites = rvsites_available.GetAll();
+            var allRVSites = rvsites_available.GetAll().
+                Where(s => s.idIPMEvent == IPMEventID);
 
             //Remove characters from search string
             searchString = rgx.Replace(searchString, "").ToUpper();

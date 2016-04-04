@@ -32,7 +32,7 @@ namespace IPMRVPark.WebUI.Controllers
             IRepositoryBase<reservationitem> reservationitems,
             IRepositoryBase<payment> payments,
             IRepositoryBase<paymentreservationitem> paymentsreservationitems,
-        IRepositoryBase<session> sessions,
+            IRepositoryBase<session> sessions,
             IRepositoryBase<site_description_rate_view> sites_description_rate
             )
         {
@@ -42,6 +42,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.paymentsreservationitems = paymentsreservationitems;
             this.placesinmap = placesinmap;
             this.selecteditems = selecteditems;
+            this.reservationitems = reservationitems;
             this.rvsites_available = rvsites_available;
             this.sites_description_rate = sites_description_rate;
             this.sessions = sessions;
@@ -186,14 +187,32 @@ namespace IPMRVPark.WebUI.Controllers
 
             // Add selected item to the database
             var _selecteditem = new selecteditem();
+            var type_rates = sites_description_rate.GetAll().
+                Where(s => s.id == idRVSite).FirstOrDefault();
+
             _selecteditem.checkInDate = checkInDate;
             _selecteditem.checkOutDate = checkOutDate;
+            _selecteditem.weeklyRate = type_rates.weeklyRate.Value;
+            _selecteditem.dailyRate = type_rates.dailyRate.Value;
             _selecteditem.idRVSite = idRVSite;
             _selecteditem.idSession = _session.ID;
             _selecteditem.idIPMEvent = _session.idIPMEvent;
             _selecteditem.idStaff = _session.idStaff;
             _selecteditem.idCustomer = _session.idCustomer;
+            _selecteditem.site = type_rates.RVSite;
+            _selecteditem.siteType = type_rates.description;
             _selecteditem.isSiteChecked = true;
+            CalcSiteTotal calcResults = new CalcSiteTotal(
+                checkInDate,
+                checkOutDate,
+                type_rates.weeklyRate.Value,
+                type_rates.dailyRate.Value,
+                true);
+            _selecteditem.duration = calcResults.duration;
+            _selecteditem.weeks = calcResults.weeks;
+            _selecteditem.days = calcResults.days;
+            _selecteditem.amount = calcResults.amount;
+            _selecteditem.total = calcResults.total;
             _selecteditem.createDate = DateTime.Now;
             _selecteditem.lastUpdate = DateTime.Now;
 
@@ -211,15 +230,20 @@ namespace IPMRVPark.WebUI.Controllers
             decimal weeklyRate = 0;
             decimal dailyRate = 0;
 
-            var site = sites_description_rate.GetAll().Where(s => s.id == idRVSite).First();
+            var site = sites_description_rate.GetAll().Where(s => s.id == idRVSite).FirstOrDefault();
+
             if (site != null)
             {
                 weeklyRate = site.weeklyRate.Value;
                 dailyRate = site.dailyRate.Value;
-                amount = paymentService.CalculateSiteTotal(
-                    checkInDate, checkOutDate,
-                    weeklyRate, dailyRate
-                    );
+
+                CalcSiteTotal calcResults = new CalcSiteTotal(
+                    checkInDate,
+                    checkOutDate,
+                    weeklyRate,
+                    dailyRate,
+                    true);
+                amount = calcResults.amount;
             }
 
             return Json(new
@@ -297,9 +321,19 @@ namespace IPMRVPark.WebUI.Controllers
         {
             var _session = sessionService.GetSession(this.HttpContext);
             var _selecteditem = selecteditems.GetById(id);
-
             _selecteditem.checkInDate = _session.checkInDate.Value;
             _selecteditem.checkOutDate = _session.checkOutDate.Value;
+            CalcSiteTotal calcResults = new CalcSiteTotal(
+                _selecteditem.checkInDate,
+                _selecteditem.checkOutDate,
+                _selecteditem.weeklyRate,
+                _selecteditem.dailyRate,
+                true);
+            _selecteditem.duration = calcResults.duration;
+            _selecteditem.weeks = calcResults.weeks;
+            _selecteditem.days = calcResults.days;
+            _selecteditem.amount = calcResults.amount;
+            _selecteditem.total = calcResults.total;
             _selecteditem.lastUpdate = DateTime.Now;
 
             selecteditems.Update(_selecteditem);
@@ -343,9 +377,19 @@ namespace IPMRVPark.WebUI.Controllers
         {
             var _session = sessionService.GetSession(this.HttpContext);
             var _selecteditem = selecteditems.GetById(id);
-
             _selecteditem.checkInDate = _session.checkInDate.Value;
             _selecteditem.checkOutDate = _session.checkOutDate.Value;
+            CalcSiteTotal calcResults = new CalcSiteTotal(
+                _selecteditem.checkInDate,
+                _selecteditem.checkOutDate,
+                _selecteditem.weeklyRate,
+                _selecteditem.dailyRate,
+                true);
+            _selecteditem.duration = calcResults.duration;
+            _selecteditem.weeks = calcResults.weeks;
+            _selecteditem.days = calcResults.days;
+            _selecteditem.amount = calcResults.amount;
+            _selecteditem.total = calcResults.total;
             _selecteditem.lastUpdate = DateTime.Now;
 
             selecteditems.Update(_selecteditem);
@@ -439,7 +483,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             return View();
         }
-        
+
         // For Partial View : Reserved Site List
         public ActionResult UpdateReservedList()
         {
@@ -489,6 +533,7 @@ namespace IPMRVPark.WebUI.Controllers
                 var _checkitem = selecteditems.GetAll().Where(s => s.idRVSite == item.idRVSite).FirstOrDefault();
                 if (_checkitem == null)
                 {
+                    var site_type_rates = sites_description_rate.GetById(item.idRVSite);
                     // Add reserved item as selected item                
                     selecteditem _selecteditem = new selecteditem();
                     _selecteditem.idRVSite = item.idRVSite;
@@ -498,16 +543,35 @@ namespace IPMRVPark.WebUI.Controllers
                     _selecteditem.idCustomer = item.idCustomer;
                     _selecteditem.checkInDate = item.checkInDate;
                     _selecteditem.checkOutDate = item.checkOutDate;
+                    _selecteditem.site = site_type_rates.RVSite;
+                    _selecteditem.siteType = site_type_rates.description;
                     _selecteditem.duration = item.duration;
                     _selecteditem.weeks = item.weeks;
                     _selecteditem.weeklyRate = item.weeklyRate;
                     _selecteditem.days = item.days;
                     _selecteditem.dailyRate = item.dailyRate;
-                    _selecteditem.amount = item.totalAmount.Value;
+                    _selecteditem.amount = item.totalAmount;
                     _selecteditem.isSiteChecked = true;
+                    CalcSiteTotal calcResults = new CalcSiteTotal(
+                        item.checkInDate,
+                        item.checkOutDate,
+                        site_type_rates.weeklyRate.Value,
+                        site_type_rates.dailyRate.Value,
+                        true);
+                    _selecteditem.duration = calcResults.duration;
+                    _selecteditem.weeks = calcResults.weeks;
+                    _selecteditem.days = calcResults.days;
+                    _selecteditem.amount = calcResults.amount;
+                    _selecteditem.total = calcResults.total;
                     _selecteditem.createDate = DateTime.Now;
                     _selecteditem.lastUpdate = DateTime.Now;
                     _selecteditem.idReservationItem = item.ID;
+                    _selecteditem.reservationCheckInDate = item.checkInDate;
+                    _selecteditem.reservationCheckOutDate = item.checkOutDate;
+                    _selecteditem.reservationAmount = item.totalAmount;
+
+
+
                     selecteditems.Insert(_selecteditem);
                 }
             }
@@ -531,7 +595,7 @@ namespace IPMRVPark.WebUI.Controllers
             }
             else
             {
-                ViewBag.refundAmount = (_payment.amount*-1).ToString("N2");
+                ViewBag.refundAmount = (_payment.amount * -1).ToString("N2");
                 ViewBag.duedAmount = "0.00";
             }
 
