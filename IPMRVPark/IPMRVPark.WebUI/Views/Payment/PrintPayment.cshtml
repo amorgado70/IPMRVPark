@@ -13,6 +13,8 @@ Payments & Refunds
 
 <script type="text/javascript">
     $(document).ready(function () {
+        // ***** Load partial view Payments For Customer
+        $('#account-details').load('/Payment/ShowPaymentPerCustomer/@ViewBag.Payment.idCustomer');
         $("#waitMsg").hide();// Show wait message
         $("#btnPrint").click(function () {
             window.print();
@@ -99,13 +101,37 @@ Payments & Refunds
         <div class="col-sm-6 col-xs-12 form-top-margin">
             <div disabled class="form-control">@ViewBag.CustomerName</div>
         </div>
-        <div class="col-sm-2 col-xs-12 form-top-margin">
-            <label>Due Amount</label>
+        @{decimal due = ViewBag.Payment.balance * -1;}
+        @if (@ViewBag.Payment.balance < 0)
+        {
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>Due Amount</label>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <div style="text-align:right;" disabled class="form-control">@due.ToString("N2")</div>
+            </div>
+        }
+        @{decimal refund = ViewBag.Payment.balance * 1;}
+        @if (@ViewBag.Payment.balance >= 0)
+        {
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <label>Credit</label>
+            </div>
+            <div class="col-sm-2 col-xs-12 form-top-margin">
+                <div style="text-align:right;" disabled class="form-control">@refund.ToString("N2")</div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <!-- Customer Account History -->
+        <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Click To Expand/Collapse">
+            <button type="button" class="btn btn-block btn-default" data-toggle="collapse" data-target="#account-details">
+                <span class="col-xs-1 glyphicon glyphicon-info-sign"></span>
+                <span class="col-xs-9">Account History &nbsp;<span class="caret"></span></span>
+            </button>
         </div>
-        <div class="col-sm-2 col-xs-12 form-top-margin">
-            <div style="text-align:right;" disabled class="form-control">@ViewBag.Payment.balance</div>
-        </div>
-
+    </div>
+    <div id="account-details" class="collapse">
     </div>
     <!-- Print Payment Info-->
     <div class="row top-margin">

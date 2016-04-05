@@ -14,7 +14,7 @@ namespace IPMRVPark.WebUI.Controllers
     {
         IRepositoryBase<payment> payments;
         IRepositoryBase<customer_view> customers;
-        IRepositoryBase<reasonforpayment> reasonforpayments;
+        IRepositoryBase<reasonforpayment> reasonsforpayment;
         IRepositoryBase<paymentmethod> paymentmethods;
         IRepositoryBase<selecteditem> selecteditems;
         IRepositoryBase<reservationitem> reservationitems;
@@ -25,7 +25,7 @@ namespace IPMRVPark.WebUI.Controllers
 
         public PaymentController(IRepositoryBase<payment> payments,
             IRepositoryBase<customer_view> customers,
-            IRepositoryBase<reasonforpayment> reasonforpayments,
+            IRepositoryBase<reasonforpayment> reasonsforpayment,
             IRepositoryBase<paymentmethod> paymentmethods,
             IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<reservationitem> reservationitems,
@@ -36,7 +36,7 @@ namespace IPMRVPark.WebUI.Controllers
             this.sessions = sessions;
             this.payments = payments;
             this.customers = customers;
-            this.reasonforpayments = reasonforpayments;
+            this.reasonsforpayment = reasonsforpayment;
             this.paymentmethods = paymentmethods;
             this.selecteditems = selecteditems;
             this.reservationitems = reservationitems;
@@ -59,7 +59,7 @@ namespace IPMRVPark.WebUI.Controllers
         // Configure dropdown list items
         private void reasonsForPayment(string defaultReason)
         {
-            var reasonforpayment = reasonforpayments.GetAll().OrderBy(s => s.description);
+            var reasonforpayment = reasonsforpayment.GetAll().OrderBy(s => s.description);
             List<SelectListItem> selectReasonForPayment = new List<SelectListItem>();
             foreach (var item in reasonforpayment)
             {
@@ -101,7 +101,8 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult ShowPaymentPerCustomer(long id = IDnotFound)
         {
             long sessionID = sessionService.GetSessionID(this.HttpContext);
-            long customerID = sessionService.GetSessionCustomerID(sessionID);
+            //long customerID = sessionService.GetSessionCustomerID(sessionID);
+            long customerID = id;
             ViewBag.CustomerID = customerID;
             ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
 
@@ -111,6 +112,11 @@ namespace IPMRVPark.WebUI.Controllers
                 ViewBag.CustomerBalance = finalBalance;
                 var _payments = payments.GetAll().
                     Where(s => s.idCustomer == customerID);
+                // Populate reason for payment
+                foreach(var _payment in _payments)
+                {
+                    _payment.reasonforpayment = reasonsforpayment.GetById(_payment.idReasonForPayment);
+                }
 
                 return PartialView("PaymentPerCustomer", _payments);
             };

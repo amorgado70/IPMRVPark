@@ -153,7 +153,7 @@ namespace IPMRVPark.Services
             _payment.selectionTotal = selectionTotal;
             _payment.cancellationFee = cancelationFee;
             /// Suggested value for payment
-            _payment.amount = dueAmount - refundAmount + CustomerAccountBalance(customerID);
+            _payment.amount = dueAmount - refundAmount - CustomerAccountBalance(customerID);
             _payment.tax = Math.Round((dueAmount * GetProvinceTax(sessionID) / 100 ), 2, MidpointRounding.AwayFromZero);
             _payment.withoutTax = dueAmount - _payment.tax;
 
