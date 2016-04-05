@@ -78,7 +78,6 @@
     <Compile Include="Repositories\ProvinceRepository.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
-    <Compile Include="Repositories\ReservationViewRepository.cs" />
     <Compile Include="Repositories\CustomerViewRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
   </ItemGroup>

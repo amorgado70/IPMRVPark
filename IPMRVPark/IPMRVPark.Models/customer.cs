@@ -34,6 +34,7 @@ namespace IPMRVPark.Models
         public string countryCode { get; set; }
         public string comments { get; set; }
         public Nullable<bool> isEmailReceipt { get; set; }
+        public Nullable<bool> isPartyMember { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
     

@@ -113,7 +113,7 @@ namespace IPMRVPark.WebUI.Controllers
                 var _payments = payments.GetAll().
                     Where(s => s.idCustomer == customerID);
                 // Populate reason for payment
-                foreach(var _payment in _payments)
+                foreach (var _payment in _payments)
                 {
                     _payment.reasonforpayment = reasonsforpayment.GetById(_payment.idReasonForPayment);
                 }
@@ -136,12 +136,12 @@ namespace IPMRVPark.WebUI.Controllers
             var _paymentreservationitems = paymentsreservationitems.GetAll().
                 Where(p => p.idPayment == id);
             var _reservationitems = new List<reservationitem>();
-            foreach(var item in _paymentreservationitems)
+            foreach (var item in _paymentreservationitems)
             {
                 reservationitem _reservationitem = new reservationitem();
                 _reservationitem = reservationitems.GetById(item.idReservationItem);
                 _reservationitems.Add(_reservationitem);
-            }            
+            }
 
             if (_payment.createDate != null)
             {
@@ -149,7 +149,7 @@ namespace IPMRVPark.WebUI.Controllers
             }
             ViewBag.PaymentMethod = paymentmethods.GetById(_payment.idPaymentMethod).description;
 
-            var _customer = customers.GetByKey("id",_payment.idCustomer);
+            var _customer = customers.GetByKey("id", _payment.idCustomer);
 
             ViewBag.CustomerName = (_customer.fullName + ", " + _customer.mainPhone);
             decimal finalBalance = paymentService.CustomerAccountBalance(_payment.idCustomer);
@@ -164,43 +164,100 @@ namespace IPMRVPark.WebUI.Controllers
         }
         #endregion
 
+        #region
+        #endregion
+
         #region Payment for New Reservation
-        public ActionResult NewReservation()
+        public ActionResult PaymentOrRefund(bool isCredit = true)
         {
-            string reason = "New Reservation";
-            bool isCredit = true;
-            long sessionID = sessionService.GetSessionID(this.HttpContext);
-
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
-
-            ViewBag.PageTitle = "Payment For " + reason;
-            session _session = sessionService.GetSession(this.HttpContext);
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
             long customerID = sessionService.GetSessionCustomerID(sessionID);
+            string customerName = sessionService.GetSessionCustomerNamePhone(sessionID);
 
-            ViewBag.CustomerID = customerID;
-            ViewBag.CustomerName = sessionService.GetSessionCustomerNamePhone(sessionID);
-
-            decimal customerBalance = 0 ;
-            if (customerID != IDnotFound)
-            {
-                customerBalance = paymentService.CustomerAccountBalance(customerID);
-                ViewBag.CustomerBalance = customerBalance;
-            };
-
-            // Tax Percentage
-            ViewBag.ProvinceTax = paymentService.GetProvinceTax(sessionID);
-
-            reasonsForPayment(reason);
-            paymentMethods("VISA");
+            // Check customer's account balance
+            decimal customerBalance = paymentService.CustomerAccountBalance(customerID);
 
             // Retrieve totals for selected items in this session and transfer them to payment
             payment _payment = new payment();
-            _payment = paymentService.CalculateEditSelectedTotal(sessionID,customerID);
+            _payment = paymentService.CalculateEditSelectedTotal(sessionID, customerID);
 
-            ViewBag.OwedAmount = _payment.selectionTotal
+            decimal owedAmount = _payment.selectionTotal
                 + _payment.cancellationFee
                 - customerBalance
-                - _payment.cupomTotal;
+                - _payment.primaryTotal;
+            
+            string pageTitle = string.Empty;
+            string owedText = string.Empty;
+            string balanceText = string.Empty;
+            string primaryText = string.Empty;
+            string feeText = string.Empty;
+            string selectionText = string.Empty;
+            string amountText = string.Empty;
+            string dueText = string.Empty;
+
+            // Payment for a New Reservation
+            if (owedAmount > 0 && _payment.primaryTotal == 0)
+            {
+                isCredit = true;
+                pageTitle = "Payment For New Reservation";
+                owedText = "(a) Owed Amount (u)-(y)";
+                balanceText = "(u) Account Balance";
+                primaryText = string.Empty;
+                feeText = string.Empty;
+                selectionText = "(y) New Reservation Total";
+                amountText = "(b) Customer Paid";
+                dueText = "(c) Due Amount |(b)-(a)|";
+            }
+            // Payment for a Edit Reservation
+            if (owedAmount > 0 && _payment.primaryTotal > 0)
+            {
+                isCredit = true;
+                pageTitle = "Payment For Extend Reservation";
+                owedText = "(a) Owed Amount (u)+(v)-(y)";
+                balanceText = "(u) Account Balance";
+                primaryText = "(v) Primary Reservation Total";
+                feeText = string.Empty;
+                selectionText = "(y) New Reservation Total";
+                amountText = "(b) Customer Paid";
+                dueText = "(c) Due Amount |(b)-(a)|";
+            }
+            // Refund for a Edit Reservation
+            if (owedAmount < 0 && _payment.primaryTotal > 0)
+            {
+                isCredit = false;
+                pageTitle = "Refund For Shorten Reservation";
+                owedText = "(a) Refund Amount (u)+(v)-(x)-(y)";
+                balanceText = "(u) Account Balance";
+                primaryText = "(v) Primary Reservation Total";
+                feeText = "(x) Cancellation Fee";
+                selectionText = "(y) New Reservation Total";
+                amountText = "(b) Customer Received";
+                dueText = "(c) Credit Amount (b)-(a)";
+            }
+
+            // Texts for payment page
+            ViewBag.IsCredit = isCredit;
+            ViewBag.PageTitle = pageTitle;
+            ViewBag.OwedText = owedText;
+            ViewBag.BalanceText = balanceText;
+            ViewBag.PrimaryText = primaryText;
+            ViewBag.FeeText = feeText;
+            ViewBag.SelectionText = selectionText;
+            ViewBag.AmountText = amountText;
+            ViewBag.DueText = dueText;
+            // Tax Percentage
+            ViewBag.ProvinceTax = paymentService.GetProvinceTax(sessionID);
+            // Payment summary info
+            ViewBag.OwedAmount = owedAmount;
+            ViewBag.CustomerBalance = customerBalance;
+            ViewBag.CustomerID = customerID;
+            ViewBag.CustomerName = customerName;
+
+            // Create ViewBag for Dropdownlist            
+            reasonsForPayment(pageTitle);
+            // Create ViewBag for Dropdownlist
+            paymentMethods("VISA");
 
             return View(_payment);
         }
@@ -241,7 +298,7 @@ namespace IPMRVPark.WebUI.Controllers
                     _reservationitem.weeklyRate = item.weeklyRate;
                     _reservationitem.days = item.days;
                     _reservationitem.dailyRate = item.dailyRate;
-                    _reservationitem.totalAmount = item.total;
+                    _reservationitem.total = item.total;
                     _reservationitem.createDate = DateTime.Now;
                     _reservationitem.lastUpdate = DateTime.Now;
                     reservationitems.Insert(_reservationitem);

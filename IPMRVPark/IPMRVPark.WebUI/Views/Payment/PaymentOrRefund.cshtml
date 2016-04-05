@@ -8,7 +8,7 @@
 <span class="glyphicon glyphicon-chevron-right"></span>
 Payments & Refunds
 <span class="glyphicon glyphicon-chevron-right"></span>
-@Html.ActionLink("New Payment", "NewReservation", "Payment")
+@Html.ActionLink("PaymentOrRefund", "PaymentOrRefund", "Payment")
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -69,9 +69,16 @@ Payments & Refunds
             //alert(array[id-1].Value + ' ' + array[id-1].Text);
             $('#docNumber').prop('placeholder', 'Type here: ' + array[id-1].Text);
         }
-        // ***** Total Calculation
+        // ***** Format Totals - Calculate Due/Credit
         $('#amount').val(@Model.amount);
         updateTotal();
+        var False = 0;
+        var True = 1;
+        if (@ViewBag.isCredit==False){          
+            $('body').css('background-color', 'rgba(255,165,0,0.9)');
+            $('#amount').prop('disabled',true);
+        }
+        $('#amount').val(Math.abs(@Model.amount));
         $('#amount').click(function(){
             $('#amount').val('');
         });
@@ -79,9 +86,9 @@ Payments & Refunds
             updateTotal();
         });
         function updateTotal(){
-            var cupomTotal = parseFloat(@Model.cupomTotal).toFixed(2);
-            $('#cupomTotal').val(cupomTotal);
-            var owedAmount = parseFloat(@ViewBag.OwedAmount).toFixed(2);
+            var primaryTotal = parseFloat(@Model.primaryTotal).toFixed(2);
+            $('#primaryTotal').val(primaryTotal);
+            var owedAmount = parseFloat(Math.abs(@ViewBag.OwedAmount)).toFixed(2);
             $('#owedAmount').text(owedAmount);
             // Suggested amount for payment
             var amount = $('#amount').val();
@@ -110,7 +117,7 @@ Payments & Refunds
 
             $('#PaymentMethod').focus()
             if( @ViewBag.CustomerID != -1 &&
-                amount > 0 ){
+                amount != 0 ){
                 $('#btnConfirm').prop('disabled', false);
             }
             else{
@@ -167,10 +174,10 @@ Payments & Refunds
         </div>
         <!-- Owed Amount -->
         <div class="row top-margin">
-            <div class="col-sm-4 col-xs-12">
-                <label>(a) Owed Amount</label>
+            <div class="col-sm-5 col-xs-12">
+                <label>@ViewBag.OwedText</label>
             </div>
-            <div class="col-sm-4 col-xs-12 ">
+            <div class="col-sm-3 col-xs-12 ">
                 <div id="owedAmount" disabled class="form-control payment-output"></div>
             </div>
             <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
@@ -182,16 +189,10 @@ Payments & Refunds
         </div>
         <!-- Payment Calculation details -->
         <div id="calculation-details" class="collapse">
-            <div class="row form-top-margin">
+            <div class="row form-top-margin" style="border-top: 2px solid #453425;">
                 <!-- Customer Account History -->
                 <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
-                    <label>(a) = (u) + (v) - (x) - (y)</label>
-                </div>
-            </div>
-            <div class="row form-top-margin">
-                <!-- Customer Account History -->
-                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
-                    <label>(u) Account Balance</label>
+                    <label>@ViewBag.BalanceText</label>
                 </div>
                 <div class="col-sm-3 col-xs-12 form-top-margin">
                     <div disabled class="form-control payment-output" type="text" id="customerBalance" name="customerBalance">@ViewBag.CustomerBalance</div>
@@ -211,17 +212,17 @@ Payments & Refunds
             <div class="row">
                 <!-- Previous Reservation  -->
                 <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
-                    <label>(v) Previous Reservation Total</label>
+                    <label>@ViewBag.PrimaryText</label>
                 </div>
                 <div class="col-sm-3 col-xs-12 form-top-margin">
-                    <input type="text" class="form-control payment-output" value="@Model.cupomTotal" disabled>
-                    <input type="hidden" name="cupomTotal" id="cupomTotal" class="form-control">
+                    <input type="text" class="form-control payment-output" value="@Model.primaryTotal" disabled>
+                    <input type="hidden" name="primaryTotal" id="primaryTotal" class="form-control">
                 </div>
             </div>
             <div class="row">
                 <!-- Cancellation Fee  -->
                 <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
-                    <label>(x) Cancellation Fee</label>
+                    <label>@ViewBag.FeeText</label>
                 </div>
                 <div class="col-sm-3 col-xs-12 form-top-margin">
                     <input type="text" class="form-control payment-output" value="@Model.cancellationFee" disabled>
@@ -231,7 +232,7 @@ Payments & Refunds
             <div class="row">
                 <!-- New Reservation Details -->
                 <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
-                    <label>(y) New Reservation Total</label>
+                    <label>@ViewBag.SelectionText</label>
                 </div>
                 <div class="col-sm-3 col-xs-12 form-top-margin">
                     @if (Model.selectionTotal == 0)
@@ -281,35 +282,51 @@ Payments & Refunds
                     </div>
                 </div>
             </div>
+            <div class="row form-top-margin" style="border-top: 2px solid #453425;"></div>
         </div>
         <!-- End of calculation details -->
         <!-- Receive Total -->
         <div class="row top-margin">
-            <div class="col-sm-4 col-xs-12">
-                <label>(b) Received Amount</label>
+            <div class="col-sm-5 col-xs-12">
+                <label>@ViewBag.AmountText</label>
             </div>
-            <div class="col-sm-4 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 <input type="number" name="amount" id="amount" min="0.00" step="0.01" class="form-control payment-input">
             </div>
         </div>
         <!-- Receive Total -->
         <div class="row form-top-margin">
-            <div class="col-sm-4 col-xs-12">
+            <div class="col-sm-5 col-xs-12">
                 <label id="dueLabel">(c) Due Amount |(b)-(a)|</label>
                 <label id="creditLabel">(c) Credit (b)-(a)</label>
             </div>
-            <div class="col-sm-4 col-xs-12">
+            <div class="col-sm-3 col-xs-12">
                 <input type="text" name="dueAmount" id="dueAmount" class="form-control payment-output" value="0.00" disabled>
                 <input type="text" name="creditAmount" id="creditAmount" class="form-control payment-output" value="0.00" disabled>
                 <input type="hidden" name="balance" id="balance" class="form-control" value="0.00">
             </div>
+            <!-- Back To New Reservation -->
+            @if (ViewBag.PrimaryText == null)
+            {
+                <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Go To">
+                    <a href="@Url.Action("NewReservation", "Reservation" )" class="btn btn-block btn-default btn-mylink pagination-centered">
+                        <span class="glyphicon glyphicon-tag"></span>
+                        <span>&nbsp; Back To Reservation</span>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            }
+            <!-- Back To Edit Reservation -->
+            @if (ViewBag.PrimaryText != null)
+            {
             <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Go To">
-                <a href="@Url.Action("NewReservation", "Reservation" )" class="btn btn-block btn-default btn-mylink pagination-centered">
+                <a href="@Url.Action("EditReservation", "Reservation" )" class="btn btn-block btn-default btn-mylink pagination-centered">
                     <span class="glyphicon glyphicon-tag"></span>
-                    <span>&nbsp; Back To Reservation</span>
+                    <span>&nbsp; Back To Edit</span>
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
+            }
         </div>
 
         <div class="row form-top-margin">

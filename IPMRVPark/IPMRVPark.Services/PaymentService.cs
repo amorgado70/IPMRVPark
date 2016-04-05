@@ -98,7 +98,7 @@ namespace IPMRVPark.Services
             foreach (var i in _reserveditems)
             {
                 count = count + 1;
-                sum = sum + i.totalAmount;
+                sum = sum + i.total;
             }
 
             return sum;
@@ -122,7 +122,7 @@ namespace IPMRVPark.Services
                 if (_selecteditem.idReservationItem != null && _selecteditem.idReservationItem != IDnotFound)
                 {
                     var _reservationitem = reservationitems.GetById(_selecteditem.idReservationItem);
-                    reservationTotal = reservationTotal + _reservationitem.totalAmount;
+                    reservationTotal = reservationTotal + _reservationitem.total;
                 }
             }
 
@@ -149,7 +149,7 @@ namespace IPMRVPark.Services
             }
 
             // Value of previous reservation, just before edit reservation mode started
-            _payment.cupomTotal = reservationTotal;
+            _payment.primaryTotal = reservationTotal;
             _payment.selectionTotal = selectionTotal;
             _payment.cancellationFee = cancelationFee;
             /// Suggested value for payment
@@ -162,6 +162,11 @@ namespace IPMRVPark.Services
 
         public decimal CustomerAccountBalance(long customerID)
         {
+            if (customerID == IDnotFound)
+            {
+                return 0;
+            };
+
             var _payments = payments.GetAll().
                 Where(p => p.idCustomer == customerID).OrderBy(p => p.ID);
 

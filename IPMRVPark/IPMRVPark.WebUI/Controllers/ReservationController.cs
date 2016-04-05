@@ -290,8 +290,13 @@ namespace IPMRVPark.WebUI.Controllers
 
             ViewBag.Customer = sessionService.GetSessionCustomerNamePhone(sessionID);
 
+
+
+
             if (_selecteditem.Count() > 0)
             {
+                long sessionCustomerID = sessionService.GetSessionCustomerID(sessionID);
+                CreatePaymentViewBags(sessionID, sessionCustomerID);
                 return PartialView("SelectionSummary", _selecteditem);
             }
             else
@@ -402,8 +407,20 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult ReinsertReserved(int id)
         {
             var _selecteditem = selecteditems.GetById(id);
+            var item = reservationitems.GetById(_selecteditem.idReservationItem);
+            _selecteditem.checkInDate = item.checkInDate;
+            _selecteditem.checkOutDate = item.checkOutDate;
+            _selecteditem.duration = item.duration;
+            _selecteditem.weeks = item.weeks;
+            _selecteditem.weeklyRate = item.weeklyRate;
+            _selecteditem.days = item.days;
+            _selecteditem.dailyRate = item.dailyRate;
+            _selecteditem.amount = item.total;
+            _selecteditem.total = item.total;
             _selecteditem.isSiteChecked = true;
+            _selecteditem.lastUpdate = DateTime.Now;
             selecteditems.Update(selecteditems.GetById(id));
+
             selecteditems.Commit();
             return RedirectToAction("EditReservation");
         }
@@ -413,6 +430,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             var _selecteditem = selecteditems.GetById(id);
             _selecteditem.isSiteChecked = false;
+            _selecteditem.total = 0;
             selecteditems.Update(selecteditems.GetById(id));
             selecteditems.Commit();
             return RedirectToAction("EditReservation");
@@ -431,6 +449,7 @@ namespace IPMRVPark.WebUI.Controllers
                 {
                     var _selecteditem = selecteditems.GetById(i.ID);
                     _selecteditem.isSiteChecked = false;
+                    _selecteditem.total = 0;
                     selecteditems.Update(_selecteditem);
                 }
                 selecteditems.Commit();
@@ -550,7 +569,7 @@ namespace IPMRVPark.WebUI.Controllers
                     _selecteditem.weeklyRate = item.weeklyRate;
                     _selecteditem.days = item.days;
                     _selecteditem.dailyRate = item.dailyRate;
-                    _selecteditem.amount = item.totalAmount;
+                    _selecteditem.amount = item.total;
                     _selecteditem.isSiteChecked = true;
                     CalcSiteTotal calcResults = new CalcSiteTotal(
                         item.checkInDate,
@@ -568,7 +587,7 @@ namespace IPMRVPark.WebUI.Controllers
                     _selecteditem.idReservationItem = item.ID;
                     _selecteditem.reservationCheckInDate = item.checkInDate;
                     _selecteditem.reservationCheckOutDate = item.checkOutDate;
-                    _selecteditem.reservationAmount = item.totalAmount;
+                    _selecteditem.reservationAmount = item.total;
 
 
 
@@ -578,13 +597,42 @@ namespace IPMRVPark.WebUI.Controllers
             selecteditems.Commit();
 
             // Data to be presented on the view
+
+            CreatePaymentViewBags(sessionID, sessionCustomerID);
+
             var _selecteditems = selecteditems.GetAll().
                 Where(s => s.idSession == sessionID && s.idCustomer == sessionCustomerID);
 
-            payment _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
+            //payment _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
+
+            //// Value of previous reservation, just before edit reservation mode started
+            //ViewBag.PrimaryTotal = _payment.primaryTotal.ToString("N2");
+            //ViewBag.SelectionTotal = _payment.selectionTotal.ToString("N2");
+            //ViewBag.CancellationFee = _payment.cancellationFee.ToString("N2");
+            //// Suggested value for payment            
+            //if (_payment.amount >= 0)
+            //{
+            //    ViewBag.dueAmount = _payment.amount.ToString("N2");
+            //    ViewBag.refundAmount = "0.00";
+            //}
+            //else
+            //{
+            //    ViewBag.refundAmount = (_payment.amount * -1).ToString("N2");
+            //    ViewBag.dueAmount = "0.00";
+            //}
+
+            return View(_selecteditems);
+        }
+
+        // Data to be presented on the view
+        private void CreatePaymentViewBags(long sessionID, long sessionCustomerID)
+        {
+            // Data to be presented on the view
+            payment _payment = new payment();
+            _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
 
             // Value of previous reservation, just before edit reservation mode started
-            ViewBag.CupomTotal = _payment.cupomTotal.ToString("N2");
+            ViewBag.PrimaryTotal = _payment.primaryTotal.ToString("N2");
             ViewBag.SelectionTotal = _payment.selectionTotal.ToString("N2");
             ViewBag.CancellationFee = _payment.cancellationFee.ToString("N2");
             // Suggested value for payment            
@@ -596,10 +644,8 @@ namespace IPMRVPark.WebUI.Controllers
             else
             {
                 ViewBag.refundAmount = (_payment.amount * -1).ToString("N2");
-                ViewBag.duedAmount = "0.00";
+                ViewBag.dueAmount = "0.00";
             }
-
-            return View(_selecteditems);
         }
 
         public ActionResult EditReservationSummary()
@@ -614,7 +660,7 @@ namespace IPMRVPark.WebUI.Controllers
             payment _payment = paymentService.CalculateEditSelectedTotal(sessionID, sessionCustomerID);
 
             // Value of previous reservation, just before edit reservation mode started
-            ViewBag.CupomTotal = _payment.cupomTotal.ToString("N2");
+            ViewBag.PrimaryTotal = _payment.primaryTotal.ToString("N2");
             ViewBag.SelectionTotal = _payment.selectionTotal.ToString("N2");
             ViewBag.CancellationFee = _payment.cancellationFee.ToString("N2");
             // Suggested value for payment            

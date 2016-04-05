@@ -58,7 +58,7 @@ Site Reservation
                 <tbody>
 
                     @foreach (var item in Model)
-            {
+                    {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.site)</td>
                             <td>@Html.DisplayFor(modelItem => item.siteType)</td>
@@ -72,45 +72,46 @@ Site Reservation
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
-                                        <li>
-                                            <a href="@Url.Action("EditReserved", "Reservation", new { selectedID = item.ID })">
-                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
-                                            </a>
-                                        </li>
                                         @if (item.isSiteChecked)
                                         {
-                                            <li class="showWaitMsg"><a href="@Url.Action("RemoveReserved","Reservation", new { id=item.ID })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
+                                            <li>
+                                                <a href="@Url.Action("EditReserved", "Reservation", new { selectedID = item.ID })">
+                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
+                                                </a>
+                                            </li>
+                                            <li class="showWaitMsg"><a href="@Url.Action("RemoveReserved", "Reservation", new { id = item.ID })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
                                         }
                                         else
                                         {
-                                            <li class="showWaitMsg"><a href="@Url.Action("ReinsertReserved","Reservation", new { id=item.ID })"><span class="glyphicon glyphicon-plus"></span>&nbsp; Reinsert</a></li>
+                                            <li class="showWaitMsg"><a href="@Url.Action("ReinsertReserved", "Reservation", new { id = item.ID })"><span class="glyphicon glyphicon-plus"></span>&nbsp; Reinsert</a></li>
                                         }
                                     </ul>
                                 </div>
                             </td>
                         </tr>
                     <!-- Show changed values if there are changes-->
-                        if (item.reservationAmount != item.total)
+                        if (item.reservationAmount != item.total && item.isSiteChecked)
                         {
-                            if (item.total != 0)
-                            {
-                                <tr>
-                                    <td style="border-top:none; padding-top: 0;"></td>
-                                    <td style="border-top:none; padding-top: 0;">Changed to:</td>
-                                    <td style="border-top:none; padding-top: 0;">@item.checkInDate.ToString("ddd"), @item.checkInDate.ToString("dd") @item.checkInDate.ToString("MMM")</td>
-                                    <td style="border-top:none; padding-top: 0;">@item.checkOutDate.ToString("ddd"), @item.checkOutDate.ToString("dd") @item.checkOutDate.ToString("MMM")</td>
-                                    <td style="border-top:none; padding-top: 0; text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
-                                    <td style="border-top:none; padding-top: 0;"></td>
-                                </tr>
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td style="border-top:none; padding-top: 0;"></td>
-                                    <td style="border-top:none; padding-top: 0;">Cancelled:</td>
-                                    <td colspan="3" style="border-top:none; padding-top: 0; text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
-                                </tr>
-                            }
+                            <tr>
+                                <td style="border-top:none; padding-top: 0;"></td>
+                                <td style="border-top:none; padding-top: 0;">Changed to:</td>
+                                <td style="border-top:none; padding-top: 0;">@item.checkInDate.ToString("ddd"), @item.checkInDate.ToString("dd") @item.checkInDate.ToString("MMM")</td>
+                                <td style="border-top:none; padding-top: 0;">@item.checkOutDate.ToString("ddd"), @item.checkOutDate.ToString("dd") @item.checkOutDate.ToString("MMM")</td>
+                                <td style="border-top:none; padding-top: 0; text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr></tr>
+                        }
+                        if (!item.isSiteChecked)
+                        {
+                            <tr>
+                                <td style="border-top:none; padding-top: 0;"></td>
+                                <td style="border-top:none; padding-top: 0;">Cancelled:</td>
+                                <td colspan="3" style="border-top:none; padding-top: 0; text-align:right;">@Html.DisplayFor(modelItem => item.total)</td>
+                                <td style="border-top:none; padding-top: 0;"></td>
+                            </tr>
                         }
                         else
                         {
@@ -122,25 +123,25 @@ Site Reservation
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td style="text-align:right;">@ViewBag.reservationAmount</td>
+                        <td style="text-align:right;">@ViewBag.PrimaryTotal</td>
                         <td></td>
                     </tr>
                     <!-- There are changes-->
-                    @if (ViewBag.reservationAmount != ViewBag.totalAmount)
+                    @if (ViewBag.PrimaryTotal != ViewBag.SelectionTotal)
                     {
                         <tr>
                             <td>Changed Total</td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align:right;">@ViewBag.totalAmount</td>
+                            <td style="text-align:right;">@ViewBag.SelectionTotal</td>
                             <td></td>
                         </tr>
-                        if (ViewBag.cancelationFee != "0.00")
+                        if (ViewBag.CancellationFee != "0.00")
                         {
                             <tr>
-                                <td colspan="4" style="text-align:right;">Cancelation Fee</td>
-                                <td style="text-align:right;">@ViewBag.cancelationFee</td>
+                                <td colspan="4" style="text-align:right;">Cancellation Fee</td>
+                                <td style="text-align:right;">@ViewBag.CancellationFee</td>
                                 <td></td>
                             </tr>
                         }
@@ -171,7 +172,7 @@ Site Reservation
         <div class="showWaitMsg">
             <div class="row form-top-margin">
                 <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                    <a id="btnPayment" href="@Url.Action("ExtendReservation", "Payment")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                    <a id="btnPayment" href="@Url.Action("PaymentOrRefund", "Payment")" class="btn btn-block btn-default btn-mylink pagination-centered">
                         <span class="glyphicon glyphicon-usd"></span>
                         <span>Payment</span>
                         <span class="glyphicon glyphicon-chevron-right"></span>
@@ -186,7 +187,7 @@ Site Reservation
         <div class="showWaitMsg">
             <div class="row form-top-margin">
                 <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-                    <a id="btnRefund" href="@Url.Action("ShortenReservation", "Payment")" class="btn btn-block btn-warning btn-mylink pagination-centered">
+                    <a id="btnRefund" href="@Url.Action("PaymentOrRefund", "Payment")" class="btn btn-block btn-warning btn-mylink pagination-centered">
                         <span class="glyphicon glyphicon-usd"></span>
                         <span>Refund</span>
                         <span class="glyphicon glyphicon-chevron-right"></span>

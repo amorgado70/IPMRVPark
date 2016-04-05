@@ -52,6 +52,7 @@
           <ScalarProperty Name="countryCode" ColumnName="countryCode" />
           <ScalarProperty Name="comments" ColumnName="comments" />
           <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
+          <ScalarProperty Name="isPartyMember" ColumnName="isPartyMember" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -151,7 +152,7 @@
           <ScalarProperty Name="isCredit" ColumnName="isCredit" />
           <ScalarProperty Name="payDocType" ColumnName="payDocType" />
           <ScalarProperty Name="docNumber" ColumnName="docNumber" />
-          <ScalarProperty Name="cupomTotal" ColumnName="cupomTotal" />
+          <ScalarProperty Name="primaryTotal" ColumnName="primaryTotal" />
           <ScalarProperty Name="selectionTotal" ColumnName="selectionTotal" />
           <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="withoutTax" ColumnName="withoutTax" />
@@ -250,7 +251,10 @@
           <ScalarProperty Name="days" ColumnName="days" />
           <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
           <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
-          <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="additionalServicesDescription" ColumnName="additionalServicesDescription" />
+          <ScalarProperty Name="additionalServicesAmount" ColumnName="additionalServicesAmount" />
+          <ScalarProperty Name="total" ColumnName="total" />
           <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
           <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
           <ScalarProperty Name="comments" ColumnName="comments" />
@@ -292,11 +296,15 @@
           <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
           <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
           <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="additionalServicesDescription" ColumnName="additionalServicesDescription" />
+          <ScalarProperty Name="additionalServicesAmount" ColumnName="additionalServicesAmount" />
           <ScalarProperty Name="total" ColumnName="total" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
           <ScalarProperty Name="reservationCheckInDate" ColumnName="reservationCheckInDate" />
           <ScalarProperty Name="reservationCheckOutDate" ColumnName="reservationCheckOutDate" />
           <ScalarProperty Name="reservationAmount" ColumnName="reservationAmount" />
+          <ScalarProperty Name="reservationAdditionalServDescr" ColumnName="reservationAdditionalServDescr" />
+          <ScalarProperty Name="reservationAdditionalServAmount" ColumnName="reservationAdditionalServAmount" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
         </MappingFragment>
@@ -407,6 +415,7 @@
           <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
           <ScalarProperty Name="provinceName" ColumnName="provinceName" />
           <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
+          <ScalarProperty Name="isPartyMember" ColumnName="isPartyMember" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -432,22 +441,6 @@
           <ScalarProperty Name="provinceName" ColumnName="provinceName" />
           <ScalarProperty Name="countryCode" ColumnName="countryCode" />
           <ScalarProperty Name="countryName" ColumnName="countryName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="reservation_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.reservation_view">
-        <MappingFragment StoreEntitySet="reservation_view">
-          <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
-          <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
-          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
-          <ScalarProperty Name="RVSite" ColumnName="RVSite" />
-          <ScalarProperty Name="fullName" ColumnName="fullName" />
-          <ScalarProperty Name="checkInlDate" ColumnName="checkInlDate" />
-          <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
-          <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
-          <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
-          <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

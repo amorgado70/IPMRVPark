@@ -49,6 +49,7 @@
     <Property Name="countryCode" Type="char" MaxLength="3" />
     <Property Name="comments" Type="varchar" MaxLength="120" />
     <Property Name="isEmailReceipt" Type="bit" />
+    <Property Name="isPartyMember" Type="bit" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
@@ -141,7 +142,7 @@
     <Property Name="isCredit" Type="bit" />
     <Property Name="payDocType" Type="bigint" />
     <Property Name="docNumber" Type="varchar" MaxLength="100" />
-    <Property Name="cupomTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="primaryTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="withoutTax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
@@ -233,7 +234,10 @@
     <Property Name="days" Type="int" Nullable="false" />
     <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="additionalServicesDescription" Type="varchar" MaxLength="1024" />
+    <Property Name="additionalServicesAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="numberMemberInParty" Type="int" Nullable="false" />
     <Property Name="isCancelled" Type="bit" />
     <Property Name="comments" Type="varchar" MaxLength="120" />
@@ -273,11 +277,15 @@
     <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="additionalServicesDescription" Type="varchar" MaxLength="1024" />
+    <Property Name="additionalServicesAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="idReservationItem" Type="bigint" />
     <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
     <Property Name="reservationCheckOutDate" Type="date" Nullable="false" />
     <Property Name="reservationAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="reservationAdditionalServDescr" Type="varchar" MaxLength="1024" />
+    <Property Name="reservationAdditionalServAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
@@ -388,6 +396,7 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
     <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
     <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="isEmailReceipt" Type="bit" />
+    <Property Name="isPartyMember" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -420,30 +429,6 @@ warning 6002: The table/view 'def.ipmrvpark.province_view' does not have a prima
     <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="countryCode" Type="char" MaxLength="3" Nullable="false" />
     <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="reservation_view">
-    <Key>
-      <PropertyRef Name="idReservationItem" />
-      <PropertyRef Name="idRVSite" />
-      <PropertyRef Name="idCustomer" />
-      <PropertyRef Name="RVSite" />
-      <PropertyRef Name="checkInlDate" />
-      <PropertyRef Name="checkOutDate" />
-      <PropertyRef Name="totalAmount" />
-      <PropertyRef Name="numberMemberInParty" />
-    </Key>
-    <Property Name="idReservationItem" Type="bigint" Nullable="false" />
-    <Property Name="idRVSite" Type="bigint" Nullable="false" />
-    <Property Name="idCustomer" Type="bigint" Nullable="false" />
-    <Property Name="RVSite" Type="varchar" MaxLength="16" Nullable="false" />
-    <Property Name="fullName" Type="varchar" MaxLength="101" />
-    <Property Name="checkInlDate" Type="date" Nullable="false" />
-    <Property Name="checkOutDate" Type="date" Nullable="false" />
-    <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="numberMemberInParty" Type="int" Nullable="false" />
-    <Property Name="isCancelled" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1120,7 +1105,8 @@ warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary 
 `customer_view`.`countryName`, 
 `customer_view`.`provinceCode`, 
 `customer_view`.`provinceName`, 
-`customer_view`.`isEmailReceipt`
+`customer_view`.`isEmailReceipt`, 
+`customer_view`.`isPartyMember`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1143,20 +1129,6 @@ FROM `partymember_view` AS `partymember_view`</DefiningQuery>
 `province_view`.`countryCode`, 
 `province_view`.`countryName`
 FROM `province_view` AS `province_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
-      <DefiningQuery>SELECT
-`reservation_view`.`idReservationItem`, 
-`reservation_view`.`idRVSite`, 
-`reservation_view`.`idCustomer`, 
-`reservation_view`.`RVSite`, 
-`reservation_view`.`fullName`, 
-`reservation_view`.`checkInlDate`, 
-`reservation_view`.`checkOutDate`, 
-`reservation_view`.`totalAmount`, 
-`reservation_view`.`numberMemberInParty`, 
-`reservation_view`.`isCancelled`
-FROM `reservation_view` AS `reservation_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT

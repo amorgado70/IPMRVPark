@@ -129,9 +129,6 @@
     <Compile Include="reservationitem_partymember.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="reservation_view.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="rvsite_available_view.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

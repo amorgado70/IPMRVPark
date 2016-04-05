@@ -26,7 +26,6 @@ namespace IPMRVPark.WebUI
            
             container.RegisterType<IRepositoryBase<customer>, CustomerRepository>();
             container.RegisterType<IRepositoryBase<customer_view>, CustomerViewRepository>();
-            container.RegisterType<IRepositoryBase<reservation_view>, ReservationViewRepository>();
             container.RegisterType<IRepositoryBase<provincecode>, ProvinceRepository>();
             container.RegisterType<IRepositoryBase<countrycode>, CountryRepository>();
             container.RegisterType<IRepositoryBase<ipmevent>, IPMEventRepository>();

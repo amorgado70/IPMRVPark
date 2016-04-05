@@ -55,7 +55,6 @@ namespace IPMRVPark.Models
         public DbSet<customer_view> customer_view { get; set; }
         public DbSet<partymember_view> partymember_view { get; set; }
         public DbSet<province_view> province_view { get; set; }
-        public DbSet<reservation_view> reservation_view { get; set; }
         public DbSet<rvsite_available_view> rvsite_available_view { get; set; }
         public DbSet<rvsite_coord_view> rvsite_coord_view { get; set; }
         public DbSet<rvsite_status_view> rvsite_status_view { get; set; }

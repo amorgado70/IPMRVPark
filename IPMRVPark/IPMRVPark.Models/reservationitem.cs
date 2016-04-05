@@ -36,7 +36,10 @@ namespace IPMRVPark.Models
         public int days { get; set; }
         public decimal weeklyRate { get; set; }
         public decimal dailyRate { get; set; }
-        public decimal totalAmount { get; set; }
+        public decimal amount { get; set; }
+        public string additionalServicesDescription { get; set; }
+        public decimal additionalServicesAmount { get; set; }
+        public decimal total { get; set; }
         public int numberMemberInParty { get; set; }
         public Nullable<bool> isCancelled { get; set; }
         public string comments { get; set; }

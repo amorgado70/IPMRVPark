@@ -28,7 +28,7 @@ namespace IPMRVPark.Models
         public Nullable<bool> isCredit { get; set; }
         public Nullable<long> payDocType { get; set; }
         public string docNumber { get; set; }
-        public decimal cupomTotal { get; set; }
+        public decimal primaryTotal { get; set; }
         public decimal selectionTotal { get; set; }
         public decimal amount { get; set; }
         public decimal withoutTax { get; set; }

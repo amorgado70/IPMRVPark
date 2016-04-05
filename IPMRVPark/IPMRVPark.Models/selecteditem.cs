@@ -31,11 +31,15 @@ namespace IPMRVPark.Models
         public decimal weeklyRate { get; set; }
         public decimal dailyRate { get; set; }
         public decimal amount { get; set; }
+        public string additionalServicesDescription { get; set; }
+        public decimal additionalServicesAmount { get; set; }
         public decimal total { get; set; }
         public Nullable<long> idReservationItem { get; set; }
         public System.DateTime reservationCheckInDate { get; set; }
         public System.DateTime reservationCheckOutDate { get; set; }
         public decimal reservationAmount { get; set; }
+        public string reservationAdditionalServDescr { get; set; }
+        public decimal reservationAdditionalServAmount { get; set; }
         public Nullable<System.DateTime> createDate { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
     

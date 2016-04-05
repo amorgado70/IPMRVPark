@@ -54,6 +54,7 @@
           <Property Name="countryCode" Type="char" MaxLength="3" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
           <Property Name="isEmailReceipt" Type="bit" />
+          <Property Name="isPartyMember" Type="bit" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
@@ -146,7 +147,7 @@
           <Property Name="isCredit" Type="bit" />
           <Property Name="payDocType" Type="bigint" />
           <Property Name="docNumber" Type="varchar" MaxLength="100" />
-          <Property Name="cupomTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="primaryTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="withoutTax" Type="decimal" Precision="12" Scale="2" Nullable="false" />
@@ -238,7 +239,10 @@
           <Property Name="days" Type="int" Nullable="false" />
           <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="additionalServicesDescription" Type="varchar" MaxLength="1024" />
+          <Property Name="additionalServicesAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="numberMemberInParty" Type="int" Nullable="false" />
           <Property Name="isCancelled" Type="bit" />
           <Property Name="comments" Type="varchar" MaxLength="120" />
@@ -278,11 +282,15 @@
           <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="dailyRate" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="additionalServicesDescription" Type="varchar" MaxLength="1024" />
+          <Property Name="additionalServicesAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="total" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="idReservationItem" Type="bigint" />
           <Property Name="reservationCheckInDate" Type="date" Nullable="false" />
           <Property Name="reservationCheckOutDate" Type="date" Nullable="false" />
           <Property Name="reservationAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="reservationAdditionalServDescr" Type="varchar" MaxLength="1024" />
+          <Property Name="reservationAdditionalServAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
@@ -393,6 +401,7 @@ warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a prima
           <Property Name="provinceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="isEmailReceipt" Type="bit" />
+          <Property Name="isPartyMember" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -425,30 +434,6 @@ warning 6002: The table/view 'def.ipmrvpark.province_view' does not have a prima
           <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="countryCode" Type="char" MaxLength="3" Nullable="false" />
           <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.ipmrvpark.reservation_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="reservation_view">
-          <Key>
-            <PropertyRef Name="idReservationItem" />
-            <PropertyRef Name="idRVSite" />
-            <PropertyRef Name="idCustomer" />
-            <PropertyRef Name="RVSite" />
-            <PropertyRef Name="checkInlDate" />
-            <PropertyRef Name="checkOutDate" />
-            <PropertyRef Name="totalAmount" />
-            <PropertyRef Name="numberMemberInParty" />
-          </Key>
-          <Property Name="idReservationItem" Type="bigint" Nullable="false" />
-          <Property Name="idRVSite" Type="bigint" Nullable="false" />
-          <Property Name="idCustomer" Type="bigint" Nullable="false" />
-          <Property Name="RVSite" Type="varchar" MaxLength="16" Nullable="false" />
-          <Property Name="fullName" Type="varchar" MaxLength="101" />
-          <Property Name="checkInlDate" Type="date" Nullable="false" />
-          <Property Name="checkOutDate" Type="date" Nullable="false" />
-          <Property Name="totalAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="numberMemberInParty" Type="int" Nullable="false" />
-          <Property Name="isCancelled" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.ipmrvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1125,7 +1110,8 @@ warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary 
 `customer_view`.`countryName`, 
 `customer_view`.`provinceCode`, 
 `customer_view`.`provinceName`, 
-`customer_view`.`isEmailReceipt`
+`customer_view`.`isEmailReceipt`, 
+`customer_view`.`isPartyMember`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="ipmrvpark">
@@ -1148,20 +1134,6 @@ FROM `partymember_view` AS `partymember_view`</DefiningQuery>
 `province_view`.`countryCode`, 
 `province_view`.`countryName`
 FROM `province_view` AS `province_view`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="reservation_view" EntityType="Self.reservation_view" store:Type="Views" store:Schema="ipmrvpark">
-            <DefiningQuery>SELECT
-`reservation_view`.`idReservationItem`, 
-`reservation_view`.`idRVSite`, 
-`reservation_view`.`idCustomer`, 
-`reservation_view`.`RVSite`, 
-`reservation_view`.`fullName`, 
-`reservation_view`.`checkInlDate`, 
-`reservation_view`.`checkOutDate`, 
-`reservation_view`.`totalAmount`, 
-`reservation_view`.`numberMemberInParty`, 
-`reservation_view`.`isCancelled`
-FROM `reservation_view` AS `reservation_view`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
@@ -1460,6 +1432,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="countryCode" Type="String" />
           <Property Name="comments" Type="String" />
           <Property Name="isEmailReceipt" Type="Boolean" />
+          <Property Name="isPartyMember" Type="Boolean" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
           <NavigationProperty Name="countrycode1" Relationship="Self.Customer_countryCode_FK" FromRole="customer" ToRole="countrycode" />
@@ -1576,7 +1549,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="isCredit" Type="Boolean" />
           <Property Name="payDocType" Type="Int64" />
           <Property Name="docNumber" Type="String" />
-          <Property Name="cupomTotal" Type="Decimal" Nullable="false" />
+          <Property Name="primaryTotal" Type="Decimal" Nullable="false" />
           <Property Name="selectionTotal" Type="Decimal" Nullable="false" />
           <Property Name="amount" Type="Decimal" Nullable="false" />
           <Property Name="withoutTax" Type="Decimal" Nullable="false" />
@@ -1691,7 +1664,10 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="days" Type="Int32" Nullable="false" />
           <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
           <Property Name="dailyRate" Type="Decimal" Nullable="false" />
-          <Property Name="totalAmount" Type="Decimal" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" />
+          <Property Name="additionalServicesDescription" Type="String" />
+          <Property Name="additionalServicesAmount" Type="Decimal" Nullable="false" />
+          <Property Name="total" Type="Decimal" Nullable="false" />
           <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
           <Property Name="isCancelled" Type="Boolean" />
           <Property Name="comments" Type="String" />
@@ -1741,11 +1717,15 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="weeklyRate" Type="Decimal" Nullable="false" />
           <Property Name="dailyRate" Type="Decimal" Nullable="false" />
           <Property Name="amount" Type="Decimal" Nullable="false" />
+          <Property Name="additionalServicesDescription" Type="String" />
+          <Property Name="additionalServicesAmount" Type="Decimal" Nullable="false" />
           <Property Name="total" Type="Decimal" Nullable="false" />
           <Property Name="idReservationItem" Type="Int64" />
           <Property Name="reservationCheckInDate" Type="DateTime" Nullable="false" />
           <Property Name="reservationCheckOutDate" Type="DateTime" Nullable="false" />
           <Property Name="reservationAmount" Type="Decimal" Nullable="false" />
+          <Property Name="reservationAdditionalServDescr" Type="String" />
+          <Property Name="reservationAdditionalServAmount" Type="Decimal" Nullable="false" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
           <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
@@ -1881,6 +1861,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="provinceCode" Type="String" Nullable="false" />
           <Property Name="provinceName" Type="String" Nullable="false" />
           <Property Name="isEmailReceipt" Type="Boolean" />
+          <Property Name="isPartyMember" Type="Boolean" />
         </EntityType>
         <EntityType Name="partymember_view">
           <Key>
@@ -1909,28 +1890,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="provinceName" Type="String" Nullable="false" />
           <Property Name="countryCode" Type="String" Nullable="false" />
           <Property Name="countryName" Type="String" Nullable="false" />
-        </EntityType>
-        <EntityType Name="reservation_view">
-          <Key>
-            <PropertyRef Name="idReservationItem" />
-            <PropertyRef Name="idRVSite" />
-            <PropertyRef Name="idCustomer" />
-            <PropertyRef Name="RVSite" />
-            <PropertyRef Name="checkInlDate" />
-            <PropertyRef Name="checkOutDate" />
-            <PropertyRef Name="totalAmount" />
-            <PropertyRef Name="numberMemberInParty" />
-          </Key>
-          <Property Name="idReservationItem" Type="Int64" Nullable="false" />
-          <Property Name="idRVSite" Type="Int64" Nullable="false" />
-          <Property Name="idCustomer" Type="Int64" Nullable="false" />
-          <Property Name="RVSite" Type="String" Nullable="false" />
-          <Property Name="fullName" Type="String" />
-          <Property Name="checkInlDate" Type="DateTime" Nullable="false" />
-          <Property Name="checkOutDate" Type="DateTime" Nullable="false" />
-          <Property Name="totalAmount" Type="Decimal" Nullable="false" />
-          <Property Name="numberMemberInParty" Type="Int32" Nullable="false" />
-          <Property Name="isCancelled" Type="Boolean" />
         </EntityType>
         <EntityType Name="rvsite_available_view">
           <Key>
@@ -2581,7 +2540,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <EntitySet Name="customer_view" EntityType="Self.customer_view" />
           <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
           <EntitySet Name="province_view" EntityType="Self.province_view" />
-          <EntitySet Name="reservation_view" EntityType="Self.reservation_view" />
           <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
           <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
           <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" />
@@ -2825,6 +2783,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="countryCode" ColumnName="countryCode" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
                 <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
+                <ScalarProperty Name="isPartyMember" ColumnName="isPartyMember" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
               </MappingFragment>
@@ -2924,7 +2883,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="isCredit" ColumnName="isCredit" />
                 <ScalarProperty Name="payDocType" ColumnName="payDocType" />
                 <ScalarProperty Name="docNumber" ColumnName="docNumber" />
-                <ScalarProperty Name="cupomTotal" ColumnName="cupomTotal" />
+                <ScalarProperty Name="primaryTotal" ColumnName="primaryTotal" />
                 <ScalarProperty Name="selectionTotal" ColumnName="selectionTotal" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="withoutTax" ColumnName="withoutTax" />
@@ -3023,7 +2982,10 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="days" ColumnName="days" />
                 <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
                 <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
-                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="additionalServicesDescription" ColumnName="additionalServicesDescription" />
+                <ScalarProperty Name="additionalServicesAmount" ColumnName="additionalServicesAmount" />
+                <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
                 <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
@@ -3065,11 +3027,15 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="weeklyRate" ColumnName="weeklyRate" />
                 <ScalarProperty Name="dailyRate" ColumnName="dailyRate" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="additionalServicesDescription" ColumnName="additionalServicesDescription" />
+                <ScalarProperty Name="additionalServicesAmount" ColumnName="additionalServicesAmount" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
                 <ScalarProperty Name="reservationCheckInDate" ColumnName="reservationCheckInDate" />
                 <ScalarProperty Name="reservationCheckOutDate" ColumnName="reservationCheckOutDate" />
                 <ScalarProperty Name="reservationAmount" ColumnName="reservationAmount" />
+                <ScalarProperty Name="reservationAdditionalServDescr" ColumnName="reservationAdditionalServDescr" />
+                <ScalarProperty Name="reservationAdditionalServAmount" ColumnName="reservationAdditionalServAmount" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
               </MappingFragment>
@@ -3180,6 +3146,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
                 <ScalarProperty Name="provinceName" ColumnName="provinceName" />
                 <ScalarProperty Name="isEmailReceipt" ColumnName="isEmailReceipt" />
+                <ScalarProperty Name="isPartyMember" ColumnName="isPartyMember" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3205,22 +3172,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="provinceName" ColumnName="provinceName" />
                 <ScalarProperty Name="countryCode" ColumnName="countryCode" />
                 <ScalarProperty Name="countryName" ColumnName="countryName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="reservation_view">
-            <EntityTypeMapping TypeName="ipmrvparkModel.reservation_view">
-              <MappingFragment StoreEntitySet="reservation_view">
-                <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
-                <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
-                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
-                <ScalarProperty Name="RVSite" ColumnName="RVSite" />
-                <ScalarProperty Name="fullName" ColumnName="fullName" />
-                <ScalarProperty Name="checkInlDate" ColumnName="checkInlDate" />
-                <ScalarProperty Name="checkOutDate" ColumnName="checkOutDate" />
-                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
-                <ScalarProperty Name="numberMemberInParty" ColumnName="numberMemberInParty" />
-                <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
