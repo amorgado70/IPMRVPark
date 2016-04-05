@@ -197,7 +197,10 @@ namespace IPMRVPark.WebUI.Controllers
             payment _payment = new payment();
             _payment = paymentService.CalculateEditSelectedTotal(sessionID,customerID);
 
-            ViewBag.TempBalance = customerBalance - _payment.selectionTotal;
+            ViewBag.OwedAmount = _payment.selectionTotal
+                + _payment.cancellationFee
+                - customerBalance
+                - _payment.cupomTotal;
 
             return View(_payment);
         }

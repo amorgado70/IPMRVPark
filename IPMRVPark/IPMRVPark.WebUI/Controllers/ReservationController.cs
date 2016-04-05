@@ -533,7 +533,7 @@ namespace IPMRVPark.WebUI.Controllers
                 var _checkitem = selecteditems.GetAll().Where(s => s.idRVSite == item.idRVSite).FirstOrDefault();
                 if (_checkitem == null)
                 {
-                    var site_type_rates = sites_description_rate.GetById(item.idRVSite);
+                    var _site_description_rate = sites_description_rate.GetByKey("id", item.idRVSite);
                     // Add reserved item as selected item                
                     selecteditem _selecteditem = new selecteditem();
                     _selecteditem.idRVSite = item.idRVSite;
@@ -543,8 +543,8 @@ namespace IPMRVPark.WebUI.Controllers
                     _selecteditem.idCustomer = item.idCustomer;
                     _selecteditem.checkInDate = item.checkInDate;
                     _selecteditem.checkOutDate = item.checkOutDate;
-                    _selecteditem.site = site_type_rates.RVSite;
-                    _selecteditem.siteType = site_type_rates.description;
+                    _selecteditem.site = _site_description_rate.RVSite;
+                    _selecteditem.siteType = _site_description_rate.description;
                     _selecteditem.duration = item.duration;
                     _selecteditem.weeks = item.weeks;
                     _selecteditem.weeklyRate = item.weeklyRate;
@@ -555,8 +555,8 @@ namespace IPMRVPark.WebUI.Controllers
                     CalcSiteTotal calcResults = new CalcSiteTotal(
                         item.checkInDate,
                         item.checkOutDate,
-                        site_type_rates.weeklyRate.Value,
-                        site_type_rates.dailyRate.Value,
+                        _site_description_rate.weeklyRate.Value,
+                        _site_description_rate.dailyRate.Value,
                         true);
                     _selecteditem.duration = calcResults.duration;
                     _selecteditem.weeks = calcResults.weeks;

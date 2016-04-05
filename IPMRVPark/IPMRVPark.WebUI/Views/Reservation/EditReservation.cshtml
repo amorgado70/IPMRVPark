@@ -73,17 +73,17 @@ Site Reservation
                                     </button>
                                     <ul class="dropdown-menu pull-right">
                                         <li>
-                                            <a href="@Url.Action("EditReserved", "Reservation", new { selectedID = item.idSelected })">
+                                            <a href="@Url.Action("EditReserved", "Reservation", new { selectedID = item.ID })">
                                                 <span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit
                                             </a>
                                         </li>
                                         @if (item.isSiteChecked)
                                         {
-                                            <li class="showWaitMsg"><a href="@Url.Action("RemoveReserved","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
+                                            <li class="showWaitMsg"><a href="@Url.Action("RemoveReserved","Reservation", new { id=item.ID })"><span class="glyphicon glyphicon-erase"></span>&nbsp; Cancel</a></li>
                                         }
                                         else
                                         {
-                                            <li class="showWaitMsg"><a href="@Url.Action("ReinsertReserved","Reservation", new { id=item.idSelected })"><span class="glyphicon glyphicon-plus"></span>&nbsp; Reinsert</a></li>
+                                            <li class="showWaitMsg"><a href="@Url.Action("ReinsertReserved","Reservation", new { id=item.ID })"><span class="glyphicon glyphicon-plus"></span>&nbsp; Reinsert</a></li>
                                         }
                                     </ul>
                                 </div>

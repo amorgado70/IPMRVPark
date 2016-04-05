@@ -81,15 +81,15 @@ Payments & Refunds
         function updateTotal(){
             var cupomTotal = parseFloat(@Model.cupomTotal).toFixed(2);
             $('#cupomTotal').val(cupomTotal);
-            var tempBalance = parseFloat(@ViewBag.TempBalance).toFixed(2);
-            $('#tempBalance').text(tempBalance);
+            var owedAmount = parseFloat(@ViewBag.OwedAmount).toFixed(2);
+            $('#owedAmount').text(owedAmount);
             // Suggested amount for payment
             var amount = $('#amount').val();
             var amount = parseFloat(amount).toFixed(2);
             $('#amount').val(amount);
             // Balance after payment: due or refund amount
-            var tempBalance = @ViewBag.TempBalance;
-            var balance = (parseFloat(amount) + tempBalance);
+            var owedAmount = @ViewBag.OwedAmount;
+            var balance = (parseFloat(amount) - owedAmount);
             var balance = parseFloat(balance).toFixed(2);
             $('#balance').val(balance);
             $('#creditAmount').val(balance);
@@ -165,14 +165,35 @@ Payments & Refunds
                 <input style="display: none" type="date" id="createDate" class="form-control" />
             </div>
         </div>
+        <!-- Owed Amount -->
+        <div class="row top-margin">
+            <div class="col-sm-4 col-xs-12">
+                <label>(a) Owed Amount</label>
+            </div>
+            <div class="col-sm-4 col-xs-12 ">
+                <div id="owedAmount" disabled class="form-control payment-output"></div>
+            </div>
+            <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
+                <button type="button" class="btn btn-block btn-default" data-toggle="collapse" data-target="#calculation-details">
+                    <span class="col-xs-1 glyphicon glyphicon-info-sign"></span>
+                    <span class="col-xs-9"><b>Calc Details</b> &nbsp;<span class="caret"></span></span>
+                </button>
+            </div>
+        </div>
         <!-- Payment Calculation details -->
         <div id="calculation-details" class="collapse">
             <div class="row form-top-margin">
                 <!-- Customer Account History -->
-                <div class="col-sm-4 col-xs-12 form-top-margin">
-                    <label>(a) Account Balance</label>
+                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
+                    <label>(a) = (u) + (v) - (x) - (y)</label>
                 </div>
-                <div class="col-sm-4 col-xs-10 form-top-margin">
+            </div>
+            <div class="row form-top-margin">
+                <!-- Customer Account History -->
+                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
+                    <label>(u) Account Balance</label>
+                </div>
+                <div class="col-sm-3 col-xs-12 form-top-margin">
                     <div disabled class="form-control payment-output" type="text" id="customerBalance" name="customerBalance">@ViewBag.CustomerBalance</div>
                 </div>
                 <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Click To Expand/Collapse">
@@ -189,23 +210,33 @@ Payments & Refunds
             </div>
             <div class="row">
                 <!-- Previous Reservation  -->
-                <div class="col-sm-4 col-xs-12 form-top-margin">
-                    <label>(b) Previous Reservation Total</label>
+                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
+                    <label>(v) Previous Reservation Total</label>
                 </div>
-                <div class="col-sm-4 col-xs-12 form-top-margin">
+                <div class="col-sm-3 col-xs-12 form-top-margin">
                     <input type="text" class="form-control payment-output" value="@Model.cupomTotal" disabled>
                     <input type="hidden" name="cupomTotal" id="cupomTotal" class="form-control">
                 </div>
             </div>
             <div class="row">
-                <!-- New Reservation Details -->
-                <div class="col-sm-4 col-xs-12 form-top-margin">
-                    <label>(c) New Reservation Total</label>
+                <!-- Cancellation Fee  -->
+                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
+                    <label>(x) Cancellation Fee</label>
                 </div>
-                <div class="col-sm-4 col-xs-12 form-top-margin">
+                <div class="col-sm-3 col-xs-12 form-top-margin">
+                    <input type="text" class="form-control payment-output" value="@Model.cancellationFee" disabled>
+                    <input type="hidden" name="cancellationFee" id="cancellationFee" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <!-- New Reservation Details -->
+                <div class="col-sm-5 col-sm-push-1 col-xs-12 form-top-margin">
+                    <label>(y) New Reservation Total</label>
+                </div>
+                <div class="col-sm-3 col-xs-12 form-top-margin">
                     @if (Model.selectionTotal == 0)
                 {
-                        <div class="form-control reservationWarning">NO SITE SELECTED YET</div>
+                        <div class="form-control reservationWarning">NO SITE SELECTED</div>
                     }
                     else
                     {
@@ -232,19 +263,19 @@ Payments & Refunds
             </div>
             <div id="tax-calculation" class="collapse">
                 <div class="row form-top-margin">
-                    <div class="col-sm-4 col-sm-push-1 col-xs-12">
+                    <div class="col-sm-6 col-sm-push-2 col-xs-12">
                         <label>(i) Amount Without Tax</label>
                     </div>
-                    <div class="col-sm-4 col-xs-12">
+                    <div class="col-sm-2 col-xs-12">
                         <input type="text" class="form-control payment-output" value="@Model.withoutTax" disabled>
                         <input type="hidden" name="withoutTax" id="withoutTax" class="form-control" value="@Model.withoutTax">
                     </div>
                 </div>
                 <div class="row form-top-margin">
-                    <div class="col-sm-4 col-sm-push-1 col-xs-12">
+                    <div class="col-sm-6 col-sm-push-2 col-xs-12">
                         <label>(ii) Tax HST/QST/PST (@ViewBag.ProvinceTax%)</label>
                     </div>
-                    <div class="col-sm-4 col-xs-12">
+                    <div class="col-sm-2 col-xs-12">
                         <input type="text" class="form-control payment-output" value="@Model.tax" disabled>
                         <input type="hidden" name="tax" id="tax" class="form-control" value="@Model.tax">
                     </div>
@@ -252,25 +283,10 @@ Payments & Refunds
             </div>
         </div>
         <!-- End of calculation details -->
-        <div class="row top-margin">
-            <!-- Receive Total -->
-            <div class="col-sm-4 col-xs-12">
-                <label>(e) Owed Amount (a)+(b)-(c)-(d)</label>
-            </div>
-            <div class="col-sm-4 col-xs-12 ">
-                <div id="tempBalance" disabled class="form-control payment-output"></div>
-            </div>
-            <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
-                <button type="button" class="btn btn-block btn-default" data-toggle="collapse" data-target="#calculation-details">
-                    <span class="col-xs-1 glyphicon glyphicon-info-sign"></span>
-                    <span class="col-xs-9"><b>(a) (b) (c) (d)</b> &nbsp;<span class="caret"></span></span>
-                </button>
-            </div>
-        </div>
         <!-- Receive Total -->
         <div class="row top-margin">
             <div class="col-sm-4 col-xs-12">
-                <label>(f) Received Amount</label>
+                <label>(b) Received Amount</label>
             </div>
             <div class="col-sm-4 col-xs-12">
                 <input type="number" name="amount" id="amount" min="0.00" step="0.01" class="form-control payment-input">
@@ -279,8 +295,8 @@ Payments & Refunds
         <!-- Receive Total -->
         <div class="row form-top-margin">
             <div class="col-sm-4 col-xs-12">
-                <label id="dueLabel">(g) Due Amount |(f)-(e)|</label>
-                <label id="creditLabel">(g) Credit (f)-(e)</label>
+                <label id="dueLabel">(c) Due Amount |(b)-(a)|</label>
+                <label id="creditLabel">(c) Credit (b)-(a)</label>
             </div>
             <div class="col-sm-4 col-xs-12">
                 <input type="text" name="dueAmount" id="dueAmount" class="form-control payment-output" value="0.00" disabled>
