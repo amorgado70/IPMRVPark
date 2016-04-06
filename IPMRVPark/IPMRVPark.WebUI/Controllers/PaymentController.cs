@@ -56,22 +56,52 @@ namespace IPMRVPark.WebUI.Controllers
         #region Common        
         const long IDnotFound = -1;
 
+        private class reasonForPayment
+        {
+            public enum E
+            {
+                NewReservation = 1,
+                ExtendReservation = 2,
+                ShortenReservation = 3
+            }
+        }
+        private void updateReasonForPayment()
+        {
+            foreach (reasonForPayment.E e in Enum.GetValues(typeof(reasonForPayment.E)))
+            {
+                var r = reasonsforpayment.GetByKey("ID", (long)e);
+                if (r == null)
+                {
+                    reasonforpayment new_r = new reasonforpayment();
+                    new_r.ID = (long)e;
+                    new_r.description = e.ToString();
+                    reasonsforpayment.Insert(new_r);
+                }
+                else
+                {
+                    r.description = e.ToString();
+                    reasonsforpayment.Update(r);
+                }
+            }
+            reasonsforpayment.Commit();
+        }
+
         // Configure dropdown list items
         private void reasonsForPayment(string defaultReason)
         {
-            var reasonforpayment = reasonsforpayment.GetAll().OrderBy(s => s.description);
-            List<SelectListItem> selectReasonForPayment = new List<SelectListItem>();
-            foreach (var item in reasonforpayment)
-            {
-                SelectListItem selectListItem = new SelectListItem();
-                selectListItem.Value = item.ID.ToString();
-                selectListItem.Text = item.description;
-                string selectedText = defaultReason;
-                selectListItem.Selected =
-                         (selectListItem.Text == selectedText);
-                selectReasonForPayment.Add(selectListItem);
-            }
-            ViewBag.ReasonForPayment = selectReasonForPayment;
+            //var reasonforpayment = reasonsforpayment.GetAll().OrderBy(s => s.description);
+            //List<SelectListItem> selectReasonForPayment = new List<SelectListItem>();
+            //foreach (var item in reasonforpayment)
+            //{
+            //    SelectListItem selectListItem = new SelectListItem();
+            //    selectListItem.Value = item.ID.ToString();
+            //    selectListItem.Text = item.description;
+            //    string selectedText = defaultReason;
+            //    selectListItem.Selected =
+            //             (selectListItem.Text == selectedText);
+            //    selectReasonForPayment.Add(selectListItem);
+            //}
+            //ViewBag.ReasonForPayment = selectReasonForPayment;
         }
         // Configure dropdown list items
         private void paymentMethods(string defaultMethod)
@@ -152,8 +182,11 @@ namespace IPMRVPark.WebUI.Controllers
             var _customer = customers.GetByKey("id", _payment.idCustomer);
 
             ViewBag.CustomerName = (_customer.fullName + ", " + _customer.mainPhone);
+            
+            decimal previousBalance = paymentService.CustomerPreviousBalance(_payment.idCustomer, _payment.ID);
+            ViewBag.PreviousBalance = previousBalance;
             decimal finalBalance = paymentService.CustomerAccountBalance(_payment.idCustomer);
-            ViewBag.CustomerBalance = finalBalance;
+            ViewBag.FinalBalance = finalBalance;
 
             // Tax Percentage
             ViewBag.ProvinceTax = paymentService.GetProvinceTax(
@@ -163,14 +196,11 @@ namespace IPMRVPark.WebUI.Controllers
             return View(_reservationitems);
         }
         #endregion
-
-        #region
-        #endregion
-
-        #region Payment for New Reservation
+        #region Payment or Refund
         public ActionResult PaymentOrRefund(bool isCredit = true)
         {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
+
             long sessionID = sessionService.GetSessionID(this.HttpContext);
             long customerID = sessionService.GetSessionCustomerID(sessionID);
             string customerName = sessionService.GetSessionCustomerNamePhone(sessionID);
@@ -186,20 +216,22 @@ namespace IPMRVPark.WebUI.Controllers
                 + _payment.cancellationFee
                 - customerBalance
                 - _payment.primaryTotal;
-            
-            string pageTitle = string.Empty;
-            string owedText = string.Empty;
-            string balanceText = string.Empty;
+
+            long reasonID = (long)reasonForPayment.E.NewReservation;
+            string pageTitle = "Payment Or Refund";
+            string owedText = "(a) Owed Amount";
+            string balanceText = "(u) Account Balance";
             string primaryText = string.Empty;
             string feeText = string.Empty;
             string selectionText = string.Empty;
-            string amountText = string.Empty;
-            string dueText = string.Empty;
+            string amountText = "(b) Customer Paid";
+            string dueText = "(c) Due Amount |(b)-(a)|";
 
             // Payment for a New Reservation
             if (owedAmount > 0 && _payment.primaryTotal == 0)
             {
                 isCredit = true;
+                reasonID = (long)reasonForPayment.E.NewReservation;
                 pageTitle = "Payment For New Reservation";
                 owedText = "(a) Owed Amount (u)-(y)";
                 balanceText = "(u) Account Balance";
@@ -213,6 +245,7 @@ namespace IPMRVPark.WebUI.Controllers
             if (owedAmount > 0 && _payment.primaryTotal > 0)
             {
                 isCredit = true;
+                reasonID = (long)reasonForPayment.E.ExtendReservation;
                 pageTitle = "Payment For Extend Reservation";
                 owedText = "(a) Owed Amount (u)+(v)-(y)";
                 balanceText = "(u) Account Balance";
@@ -226,6 +259,7 @@ namespace IPMRVPark.WebUI.Controllers
             if (owedAmount < 0 && _payment.primaryTotal > 0)
             {
                 isCredit = false;
+                reasonID = (long)reasonForPayment.E.ShortenReservation;
                 pageTitle = "Refund For Shorten Reservation";
                 owedText = "(a) Refund Amount (u)+(v)-(x)-(y)";
                 balanceText = "(u) Account Balance";
@@ -236,8 +270,12 @@ namespace IPMRVPark.WebUI.Controllers
                 dueText = "(c) Credit Amount (b)-(a)";
             }
 
+            // Set reason for payment
+            updateReasonForPayment();            
+
             // Texts for payment page
             ViewBag.IsCredit = isCredit;
+            ViewBag.ReasonForPayment = reasonID;
             ViewBag.PageTitle = pageTitle;
             ViewBag.OwedText = owedText;
             ViewBag.BalanceText = balanceText;
@@ -264,15 +302,13 @@ namespace IPMRVPark.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NewReservation(payment _payment)
+        public ActionResult PaymentOrRefund(payment _payment)
         {
             // Identify session
-            session _session = sessionService.GetSession(this.HttpContext);
-            long sessionID = _session.ID;
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
 
             // Create and insert payment
             _payment.idSession = sessionID;
-            _payment.idReasonForPayment = 2; // New Reservation
             _payment.createDate = DateTime.Now;
             _payment.lastUpdate = DateTime.Now;
 
@@ -316,18 +352,11 @@ namespace IPMRVPark.WebUI.Controllers
             }
 
             // Clean selected items
-            paymentService.CleanSelectedItemList(sessionID);
+            paymentService.CleanAllSelectedItems(sessionID);
             // 
             sessionService.ResetSessionCustomer(sessionID);
 
             return RedirectToAction("PrintPayment", new { id = ID });
-        }
-        #endregion
-        #region Payment for Extend Reservation
-        public ActionResult ExtendReservation()
-        {
-            string reason = "Extend Reservation";
-            return View();
         }
         #endregion
     }

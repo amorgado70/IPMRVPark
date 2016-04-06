@@ -32,7 +32,24 @@ namespace IPMRVPark.Services
         const long IDnotFound = -1;
 
         // Clean selected items
-        public void CleanSelectedItemList(long sessionID)
+        const int cleanAll = 1;
+        const int cleanNew = 2;
+        const int cleanEdit = 3;
+
+        public void CleanAllSelectedItems(long sessionID)
+        {
+            CleanSelectedItemList(sessionID, cleanAll);
+        }
+        public void CleanNewSelectedItems(long sessionID)
+        {
+            CleanSelectedItemList(sessionID, cleanNew);
+        }
+        public void CleanEditSelectedItems(long sessionID)
+        {
+            CleanSelectedItemList(sessionID, cleanEdit);
+        }
+
+        private void CleanSelectedItemList(long sessionID, int cleanCode)
         {
             // Clean edit items that are in selected table
             var _olditems_to_be_removed = selecteditems.GetAll().
@@ -51,7 +68,12 @@ namespace IPMRVPark.Services
             {
                 foreach (var _olditem in _olditems_to_be_removed)
                 {
-                    selecteditems.Delete(_olditem.ID);
+                    if (cleanCode == cleanAll ||
+                        (cleanCode == cleanNew && _olditem.reservationAmount == 0) ||
+                        (cleanCode == cleanEdit && _olditem.reservationAmount != 0))
+                    {
+                        selecteditems.Delete(_olditem.ID);
+                    }
                 }
                 selecteditems.Commit();
             }
@@ -154,7 +176,7 @@ namespace IPMRVPark.Services
             _payment.cancellationFee = cancelationFee;
             /// Suggested value for payment
             _payment.amount = dueAmount - refundAmount - CustomerAccountBalance(customerID);
-            _payment.tax = Math.Round((dueAmount * GetProvinceTax(sessionID) / 100 ), 2, MidpointRounding.AwayFromZero);
+            _payment.tax = Math.Round((dueAmount * GetProvinceTax(sessionID) / 100), 2, MidpointRounding.AwayFromZero);
             _payment.withoutTax = dueAmount - _payment.tax;
 
             return _payment;
@@ -176,50 +198,29 @@ namespace IPMRVPark.Services
             return finalBalance;
         }
 
+        public decimal CustomerPreviousBalance(long customerID, long paymentID)
+        {
+            if (customerID == IDnotFound)
+            {
+                return 0;
+            };
 
-        //    public void GetPaymentTotal(HttpContextBase httpContext)
-        //    {
+            var _payments = payments.GetAll().
+                Where(p => p.idCustomer == customerID && p.ID < paymentID ).OrderByDescending(p => p.ID);
+            var _p = _payments.ToList();
+
+            if (_p.Count() < 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return _p.First().balance;
+            };              
+        }
 
 
-        //    // Data to be presented on the view
-        //    var _edititems = totals_per_edititem.GetAll().Where(s => s.idSession == _session.ID && s.idCustomer == _session.idCustomer);
-        //    int count = 0;
-        //    decimal sum = 0;
-        //    decimal reservationsum = 0;
-        //        foreach (var item in _edititems)
-        //        {
-        //            count = count + 1;
-        //            sum = sum + item.total.Value;
-        //            reservationsum = reservationsum + item.reservationAmount.Value;
-        //        }
 
-        //decimal dueAmount = Math.Max((sum - reservationsum), 0);
-        //decimal refundAmount = Math.Max((reservationsum - sum), 0);
-        //// Check if there is a cancellation fee
-        //decimal cancelationFee = sessionService.GetCancelationFee(this.HttpContext);
-        //        if (sum<reservationsum)
-        //        {
-        //            if ((reservationsum - sum) < cancelationFee)
-        //            {
-        //                refundAmount = 0;
-        //                dueAmount = cancelationFee - (reservationsum - sum);
-        //            }
-        //            else
-        //            {
-        //                refundAmount = refundAmount - cancelationFee;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            cancelationFee = 0;
-        //        }
-
-        //        ViewBag.totalAmount = sum.ToString("N2");
-        //        ViewBag.reservationAmount = reservationsum.ToString("N2");
-        //        ViewBag.dueAmount = dueAmount.ToString("N2");
-        //        ViewBag.refundAmount = refundAmount.ToString("N2");
-        //        ViewBag.cancelationFee = cancelationFee.ToString("N2");
-        //    }
         #endregion
     }
 }

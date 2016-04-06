@@ -150,7 +150,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
             // Clean items that are in selected table
-            paymentService.CleanSelectedItemList(
+            paymentService.CleanEditSelectedItems(
                 sessionService.GetSessionID(this.HttpContext)
                 );
 
@@ -298,6 +298,33 @@ namespace IPMRVPark.WebUI.Controllers
                 long sessionCustomerID = sessionService.GetSessionCustomerID(sessionID);
                 CreatePaymentViewBags(sessionID, sessionCustomerID);
                 return PartialView("SelectionSummary", _selecteditem);
+            }
+            else
+            {
+                return PartialView("../Login/EmptyPartial");
+            }
+        }
+
+
+        // For Partial View : Show Reservation Summary
+        public ActionResult ShowReservationSummary()
+        {
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            var _selecteditem = selecteditems.GetAll().
+                Where(q => q.idSession == sessionID).OrderByDescending(o => o.ID);
+
+            CreateViewBagForSelectedTotal(sessionID);
+
+            ViewBag.Customer = sessionService.GetSessionCustomerNamePhone(sessionID);
+
+
+
+
+            if (_selecteditem.Count() > 0)
+            {
+                long sessionCustomerID = sessionService.GetSessionCustomerID(sessionID);
+                CreatePaymentViewBags(sessionID, sessionCustomerID);
+                return PartialView("ReservationSummary", _selecteditem);
             }
             else
             {
@@ -496,7 +523,7 @@ namespace IPMRVPark.WebUI.Controllers
         {
             ViewBag.UserID = sessionService.GetSessionUserID(this.HttpContext);
             // Clean items that are in selected table
-            paymentService.CleanSelectedItemList(
+            paymentService.CleanNewSelectedItems(
                 sessionService.GetSessionID(this.HttpContext)
                 );
 
@@ -524,7 +551,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult GoToEditReservation()
         {
             // Clean items that are in selected table
-            paymentService.CleanSelectedItemList(
+            paymentService.CleanNewSelectedItems(
                 sessionService.GetSessionID(this.HttpContext));
             return RedirectToAction("EditReservation");
         }

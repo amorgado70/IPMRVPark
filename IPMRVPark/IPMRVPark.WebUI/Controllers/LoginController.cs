@@ -10,28 +10,54 @@ namespace IPMRVPark.WebUI.Controllers
 {
     public class LoginController : Controller
     {
+        IRepositoryBase<staff> users;
+        IRepositoryBase<customer_view> customers;
         IRepositoryBase<ipmevent> ipmevents;
         IRepositoryBase<session> sessions;
-        IRepositoryBase<customer_view> customers;
+        IRepositoryBase<placeinmap> placesinmap;
         IRepositoryBase<selecteditem> selecteditems;
-        IRepositoryBase<staff> users;
+        IRepositoryBase<reservationitem> reservationitems;
+        IRepositoryBase<payment> payments;
+        IRepositoryBase<paymentreservationitem> paymentsreservationitems;
+        IRepositoryBase<rvsite_available_view> rvsites_available;
+        IRepositoryBase<site_description_rate_view> sites_description_rate;
         SessionService sessionService;
+        PaymentService paymentService;
 
         public LoginController(
-            IRepositoryBase<ipmevent> ipmevents,
-            IRepositoryBase<customer_view> customers,
-            IRepositoryBase<selecteditem> selecteditems,
             IRepositoryBase<staff> users,
-            IRepositoryBase<session> sessions)
+            IRepositoryBase<customer_view> customers,
+            IRepositoryBase<ipmevent> ipmevents,
+            IRepositoryBase<placeinmap> placesinmap,
+            IRepositoryBase<rvsite_available_view> rvsites_available,
+            IRepositoryBase<selecteditem> selecteditems,
+            IRepositoryBase<reservationitem> reservationitems,
+            IRepositoryBase<payment> payments,
+            IRepositoryBase<paymentreservationitem> paymentsreservationitems,
+            IRepositoryBase<session> sessions,
+            IRepositoryBase<site_description_rate_view> sites_description_rate
+            )
         {
-            this.ipmevents = ipmevents;
-            this.sessions = sessions;
-            this.customers = customers;
-            this.selecteditems = selecteditems;
             this.users = users;
+            this.customers = customers;
+            this.ipmevents = ipmevents;
+            this.payments = payments;
+            this.paymentsreservationitems = paymentsreservationitems;
+            this.placesinmap = placesinmap;
+            this.selecteditems = selecteditems;
+            this.reservationitems = reservationitems;
+            this.rvsites_available = rvsites_available;
+            this.sites_description_rate = sites_description_rate;
+            this.sessions = sessions;
             sessionService = new SessionService(
                 this.sessions,
                 this.customers
+                );
+            paymentService = new PaymentService(
+                this.selecteditems,
+                this.reservationitems,
+                this.payments,
+                this.paymentsreservationitems
                 );
         }//end Constructor
 
@@ -51,21 +77,30 @@ namespace IPMRVPark.WebUI.Controllers
 
         public ActionResult Logout()
         {
+            // Clean selected items
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            paymentService.CleanAllSelectedItems(sessionID);
             return View();
         }
 
         public ActionResult Login()
         {
+            
             List<SelectListItem> items = new List<SelectListItem>();
             var _ipmevents = ipmevents.GetAll();
-            var _session = sessionService.GetSession(this.HttpContext);
+            long sessionID = sessionService.GetSessionID(this.HttpContext);
+            long IPMEventID = sessionService.GetSessionIPMEventID(sessionID);
+
+            // Clean selected items
+            paymentService.CleanAllSelectedItems(sessionID);
+
             foreach (ipmevent _ipmevent in _ipmevents)
             {
                 SelectListItem i = new SelectListItem();
                 i.Value = _ipmevent.ID.ToString();
                 i.Text = _ipmevent.year.ToString();
                 items.Add(i);
-                if (_ipmevent.ID == _session.idIPMEvent)
+                if (_ipmevent.ID == IPMEventID)
                 {
                     i.Selected = true;
                 }
