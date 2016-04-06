@@ -321,6 +321,15 @@ namespace IPMRVPark.WebUI.Controllers
             {
                 if (item.isSiteChecked)
                 {
+                    // Update existing reservation item - For edit mode
+                    if (item.idReservationItem != null &&
+                        item.idReservationItem != IDnotFound)
+                    {
+                        var old_reservationitem = reservationitems.GetById(item.idReservationItem);
+                        old_reservationitem.isCancelled = true;
+                        old_reservationitem.total = 0;
+                        reservationitems.Update(old_reservationitem);
+                    }
                     // Create and insert reservation items
                     var _reservationitem = new reservationitem();
                     _reservationitem.idRVSite = item.idRVSite.Value;
