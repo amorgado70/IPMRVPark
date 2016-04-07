@@ -32,10 +32,16 @@ namespace IPMRVPark.WebUI
             container.RegisterType<IRepositoryBase<session>, SessionRepository>();
             container.RegisterType<IRepositoryBase<selecteditem>, SelectedItemRepository>();
             container.RegisterType<IRepositoryBase<staff>, StaffRepository>();
+            container.RegisterType<IRepositoryBase<person>, PersonRepository>();
+            container.RegisterType<IRepositoryBase<partymember>, PartyMemberRepository>();
             container.RegisterType<IRepositoryBase<rvsite_available_view>, RVSiteAvailableViewRepository>();
             container.RegisterType<IRepositoryBase<placeinmap>, PlaceInMapRepository>();
             container.RegisterType<IRepositoryBase<reasonforpayment>, ReasonForPaymentRepository>();
             container.RegisterType<IRepositoryBase<paymentmethod>, PaymentMethodRepository>();
+            container.RegisterType<IRepositoryBase<paydoctype>, PayDocTypeRepository>();
+            container.RegisterType<IRepositoryBase<service>, ServiceRepository>();
+            container.RegisterType<IRepositoryBase<sitesize>, SiteSizeRepository>();
+            container.RegisterType<IRepositoryBase<reasonforpayment>, ReasonForPaymentRepository>();
             container.RegisterType<IRepositoryBase<payment>, PaymentRepository>();
             container.RegisterType<IRepositoryBase<reservationitem>, ReservationItemRepository>();
             container.RegisterType<IRepositoryBase<paymentreservationitem>, PaymentReservationItemRepository>();
