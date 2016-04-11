@@ -50,9 +50,15 @@ namespace IPMRVPark.WebUI.Controllers
             return View(customer_view);
         }
 
+        public ActionResult SearchCustomer()
+        {
+            return View();
+        }
+
         // GET: /Details/5
         public ActionResult CustomerDetails(int? id)
         {
+            ViewBag.CustomerID = id;
             customer_view customer_view = customers_view.GetAll().
                 Where(c => c.id == id).FirstOrDefault();
             //var customer_view = customers_view.GetById(id);
@@ -112,7 +118,9 @@ namespace IPMRVPark.WebUI.Controllers
             customers.Commit();
 
             session _session = sessions.GetById(sessionService.GetSession(this.HttpContext).ID);
-            _session.idCustomer = _customer.ID;                ;
+            _session.idCustomer = _customer.ID;
+            sessions.Update(_session);
+            sessions.Commit();
 
             return RedirectToAction("CustomerDetails", new { id = _customer.ID});
         }

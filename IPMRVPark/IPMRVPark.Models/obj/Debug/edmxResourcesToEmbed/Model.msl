@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ipmrvparkModelStoreContainer" CdmEntityContainer="ipmrvparkEntities">
+  <EntityContainerMapping StorageEntityContainer="rvparkModelStoreContainer" CdmEntityContainer="rvparkEntities">
     <EntitySetMapping Name="checkinouts">
-      <EntityTypeMapping TypeName="ipmrvparkModel.checkinout">
+      <EntityTypeMapping TypeName="rvparkModel.checkinout">
         <MappingFragment StoreEntitySet="checkinout">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
@@ -15,7 +15,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="coordinates">
-      <EntityTypeMapping TypeName="ipmrvparkModel.coordinate">
+      <EntityTypeMapping TypeName="rvparkModel.coordinate">
         <MappingFragment StoreEntitySet="coordinates">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -29,7 +29,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="countrycodes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.countrycode">
+      <EntityTypeMapping TypeName="rvparkModel.countrycode">
         <MappingFragment StoreEntitySet="countrycode">
           <ScalarProperty Name="code" ColumnName="code" />
           <ScalarProperty Name="name" ColumnName="name" />
@@ -39,7 +39,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="customers">
-      <EntityTypeMapping TypeName="ipmrvparkModel.customer">
+      <EntityTypeMapping TypeName="rvparkModel.customer">
         <MappingFragment StoreEntitySet="customer">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
@@ -59,7 +59,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="customeraccounts">
-      <EntityTypeMapping TypeName="ipmrvparkModel.customeraccount">
+      <EntityTypeMapping TypeName="rvparkModel.customeraccount">
         <MappingFragment StoreEntitySet="customeraccount">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
@@ -76,7 +76,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="fees">
-      <EntityTypeMapping TypeName="ipmrvparkModel.fee">
+      <EntityTypeMapping TypeName="rvparkModel.fee">
         <MappingFragment StoreEntitySet="fees">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -89,7 +89,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ipmevents">
-      <EntityTypeMapping TypeName="ipmrvparkModel.ipmevent">
+      <EntityTypeMapping TypeName="rvparkModel.ipmevent">
         <MappingFragment StoreEntitySet="ipmevent">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="year" ColumnName="year" />
@@ -108,7 +108,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="outofserviceitems">
-      <EntityTypeMapping TypeName="ipmrvparkModel.outofserviceitem">
+      <EntityTypeMapping TypeName="rvparkModel.outofserviceitem">
         <MappingFragment StoreEntitySet="outofserviceitem">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
@@ -120,7 +120,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="partymembers">
-      <EntityTypeMapping TypeName="ipmrvparkModel.partymember">
+      <EntityTypeMapping TypeName="rvparkModel.partymember">
         <MappingFragment StoreEntitySet="partymember">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
@@ -132,7 +132,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="paydoctypes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.paydoctype">
+      <EntityTypeMapping TypeName="rvparkModel.paydoctype">
         <MappingFragment StoreEntitySet="paydoctype">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -142,7 +142,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="payments">
-      <EntityTypeMapping TypeName="ipmrvparkModel.payment">
+      <EntityTypeMapping TypeName="rvparkModel.payment">
         <MappingFragment StoreEntitySet="payment">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idPaymentMethod" ColumnName="idPaymentMethod" />
@@ -166,7 +166,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="paymentmethods">
-      <EntityTypeMapping TypeName="ipmrvparkModel.paymentmethod">
+      <EntityTypeMapping TypeName="rvparkModel.paymentmethod">
         <MappingFragment StoreEntitySet="paymentmethod">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -177,7 +177,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="paymentreservationitems">
-      <EntityTypeMapping TypeName="ipmrvparkModel.paymentreservationitem">
+      <EntityTypeMapping TypeName="rvparkModel.paymentreservationitem">
         <MappingFragment StoreEntitySet="paymentreservationitem">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idPayment" ColumnName="idPayment" />
@@ -188,7 +188,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="people">
-      <EntityTypeMapping TypeName="ipmrvparkModel.person">
+      <EntityTypeMapping TypeName="rvparkModel.person">
         <MappingFragment StoreEntitySet="person">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -201,7 +201,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="placeinmaps">
-      <EntityTypeMapping TypeName="ipmrvparkModel.placeinmap">
+      <EntityTypeMapping TypeName="rvparkModel.placeinmap">
         <MappingFragment StoreEntitySet="placeinmap">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -215,7 +215,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="provincecodes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.provincecode">
+      <EntityTypeMapping TypeName="rvparkModel.provincecode">
         <MappingFragment StoreEntitySet="provincecode">
           <ScalarProperty Name="code" ColumnName="code" />
           <ScalarProperty Name="countryCode" ColumnName="countryCode" />
@@ -226,7 +226,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="reasonforpayments">
-      <EntityTypeMapping TypeName="ipmrvparkModel.reasonforpayment">
+      <EntityTypeMapping TypeName="rvparkModel.reasonforpayment">
         <MappingFragment StoreEntitySet="reasonforpayment">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -236,7 +236,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="reservationitems">
-      <EntityTypeMapping TypeName="ipmrvparkModel.reservationitem">
+      <EntityTypeMapping TypeName="rvparkModel.reservationitem">
         <MappingFragment StoreEntitySet="reservationitem">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
@@ -265,7 +265,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="reservationitem_partymember">
-      <EntityTypeMapping TypeName="ipmrvparkModel.reservationitem_partymember">
+      <EntityTypeMapping TypeName="rvparkModel.reservationitem_partymember">
         <MappingFragment StoreEntitySet="reservationitem_partymember">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
@@ -277,7 +277,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="selecteditems">
-      <EntityTypeMapping TypeName="ipmrvparkModel.selecteditem">
+      <EntityTypeMapping TypeName="rvparkModel.selecteditem">
         <MappingFragment StoreEntitySet="selecteditem">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idSession" ColumnName="idSession" />
@@ -307,11 +307,12 @@
           <ScalarProperty Name="reservationAdditionalServAmount" ColumnName="reservationAdditionalServAmount" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
           <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+          <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="services">
-      <EntityTypeMapping TypeName="ipmrvparkModel.service">
+      <EntityTypeMapping TypeName="rvparkModel.service">
         <MappingFragment StoreEntitySet="service">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -321,7 +322,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sessions">
-      <EntityTypeMapping TypeName="ipmrvparkModel.session">
+      <EntityTypeMapping TypeName="rvparkModel.session">
         <MappingFragment StoreEntitySet="session">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="sessionGUID" ColumnName="sessionGUID" />
@@ -337,7 +338,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="siterates">
-      <EntityTypeMapping TypeName="ipmrvparkModel.siterate">
+      <EntityTypeMapping TypeName="rvparkModel.siterate">
         <MappingFragment StoreEntitySet="siterate">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
@@ -350,7 +351,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sitesizes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.sitesize">
+      <EntityTypeMapping TypeName="rvparkModel.sitesize">
         <MappingFragment StoreEntitySet="sitesize">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -360,7 +361,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sitetypes">
-      <EntityTypeMapping TypeName="ipmrvparkModel.sitetype">
+      <EntityTypeMapping TypeName="rvparkModel.sitetype">
         <MappingFragment StoreEntitySet="sitetype">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -373,7 +374,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="staffs">
-      <EntityTypeMapping TypeName="ipmrvparkModel.staff">
+      <EntityTypeMapping TypeName="rvparkModel.staff">
         <MappingFragment StoreEntitySet="staff">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="role" ColumnName="role" />
@@ -383,7 +384,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="styleurls">
-      <EntityTypeMapping TypeName="ipmrvparkModel.styleurl">
+      <EntityTypeMapping TypeName="rvparkModel.styleurl">
         <MappingFragment StoreEntitySet="styleurl">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="styleUrl1" ColumnName="styleUrl" />
@@ -395,7 +396,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="customer_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.customer_view">
+      <EntityTypeMapping TypeName="rvparkModel.customer_view">
         <MappingFragment StoreEntitySet="customer_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -420,7 +421,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="partymember_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.partymember_view">
+      <EntityTypeMapping TypeName="rvparkModel.partymember_view">
         <MappingFragment StoreEntitySet="partymember_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -435,7 +436,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="province_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.province_view">
+      <EntityTypeMapping TypeName="rvparkModel.province_view">
         <MappingFragment StoreEntitySet="province_view">
           <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
           <ScalarProperty Name="provinceName" ColumnName="provinceName" />
@@ -445,7 +446,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="rvsite_available_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_available_view">
+      <EntityTypeMapping TypeName="rvparkModel.rvsite_available_view">
         <MappingFragment StoreEntitySet="rvsite_available_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="RVSite" ColumnName="RVSite" />
@@ -454,7 +455,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="rvsite_coord_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_coord_view">
+      <EntityTypeMapping TypeName="rvparkModel.rvsite_coord_view">
         <MappingFragment StoreEntitySet="rvsite_coord_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="seq" ColumnName="seq" />
@@ -466,7 +467,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="rvsite_status_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_status_view">
+      <EntityTypeMapping TypeName="rvparkModel.rvsite_status_view">
         <MappingFragment StoreEntitySet="rvsite_status_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="Year" ColumnName="Year" />
@@ -485,7 +486,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="site_description_rate_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.site_description_rate_view">
+      <EntityTypeMapping TypeName="rvparkModel.site_description_rate_view">
         <MappingFragment StoreEntitySet="site_description_rate_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -497,8 +498,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sitetype_service_rate_view">
+      <EntityTypeMapping TypeName="rvparkModel.sitetype_service_rate_view">
+        <MappingFragment StoreEntitySet="sitetype_service_rate_view">
+          <ScalarProperty Name="eventId" ColumnName="eventId" />
+          <ScalarProperty Name="typeid" ColumnName="typeid" />
+          <ScalarProperty Name="styleId" ColumnName="styleId" />
+          <ScalarProperty Name="sizeId" ColumnName="sizeId" />
+          <ScalarProperty Name="serviceId" ColumnName="serviceId" />
+          <ScalarProperty Name="size" ColumnName="size" />
+          <ScalarProperty Name="service" ColumnName="service" />
+          <ScalarProperty Name="week" ColumnName="week" />
+          <ScalarProperty Name="day" ColumnName="day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="staff_view">
-      <EntityTypeMapping TypeName="ipmrvparkModel.staff_view">
+      <EntityTypeMapping TypeName="rvparkModel.staff_view">
         <MappingFragment StoreEntitySet="staff_view">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />

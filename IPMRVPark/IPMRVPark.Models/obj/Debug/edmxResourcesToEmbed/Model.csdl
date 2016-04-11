@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ipmrvparkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+<Schema Namespace="rvparkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
   <EntityType Name="checkinout">
     <Key>
       <PropertyRef Name="ID" />
@@ -351,6 +351,7 @@
     <Property Name="reservationAdditionalServAmount" Type="Decimal" Nullable="false" />
     <Property Name="createDate" Type="DateTime" />
     <Property Name="lastUpdate" Type="DateTime" />
+    <Property Name="timeStamp" Type="String" />
     <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
     <NavigationProperty Name="ipmevent" Relationship="Self.SelectedItem_IPMEvent_FK" FromRole="selecteditem" ToRole="ipmevent" />
     <NavigationProperty Name="placeinmap" Relationship="Self.SelectedItem_RVSite_FK" FromRole="selecteditem" ToRole="placeinmap" />
@@ -577,6 +578,25 @@
     <Property Name="description" Type="String" />
     <Property Name="dailyRate" Type="Decimal" />
     <Property Name="weeklyRate" Type="Decimal" />
+  </EntityType>
+  <EntityType Name="sitetype_service_rate_view">
+    <Key>
+      <PropertyRef Name="eventId" />
+      <PropertyRef Name="typeid" />
+      <PropertyRef Name="sizeId" />
+      <PropertyRef Name="serviceId" />
+      <PropertyRef Name="size" />
+      <PropertyRef Name="service" />
+    </Key>
+    <Property Name="eventId" Type="Int64" Nullable="false" />
+    <Property Name="typeid" Type="Int64" Nullable="false" />
+    <Property Name="styleId" Type="Int64" />
+    <Property Name="sizeId" Type="Int64" Nullable="false" />
+    <Property Name="serviceId" Type="Int64" Nullable="false" />
+    <Property Name="size" Type="String" Nullable="false" />
+    <Property Name="service" Type="String" Nullable="false" />
+    <Property Name="week" Type="Decimal" />
+    <Property Name="day" Type="Decimal" />
   </EntityType>
   <EntityType Name="staff_view">
     <Key>
@@ -1132,7 +1152,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ipmrvparkEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="rvparkEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="checkinouts" EntityType="Self.checkinout" />
     <EntitySet Name="coordinates" EntityType="Self.coordinate" />
     <EntitySet Name="countrycodes" EntityType="Self.countrycode" />
@@ -1167,6 +1187,7 @@
     <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
     <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" />
     <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" />
+    <EntitySet Name="sitetype_service_rate_view" EntityType="Self.sitetype_service_rate_view" />
     <EntitySet Name="staff_view" EntityType="Self.staff_view" />
     <AssociationSet Name="CheckInOut_PlaceInMap_FK" Association="Self.CheckInOut_PlaceInMap_FK">
       <End Role="placeinmap" EntitySet="placeinmaps" />

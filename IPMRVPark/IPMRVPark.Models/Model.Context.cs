@@ -13,10 +13,10 @@ namespace IPMRVPark.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ipmrvparkEntities : DbContext
+    public partial class rvparkEntities : DbContext
     {
-        public ipmrvparkEntities()
-            : base("name=ipmrvparkEntities")
+        public rvparkEntities()
+            : base("name=rvparkEntities")
         {
         }
     
@@ -59,6 +59,7 @@ namespace IPMRVPark.Models
         public DbSet<rvsite_coord_view> rvsite_coord_view { get; set; }
         public DbSet<rvsite_status_view> rvsite_status_view { get; set; }
         public DbSet<site_description_rate_view> site_description_rate_view { get; set; }
+        public DbSet<sitetype_service_rate_view> sitetype_service_rate_view { get; set; }
         public DbSet<staff_view> staff_view { get; set; }
     }
 }
