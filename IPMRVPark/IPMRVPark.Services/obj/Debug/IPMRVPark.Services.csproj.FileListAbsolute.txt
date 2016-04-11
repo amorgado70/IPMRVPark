@@ -11,3 +11,16 @@ D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPar
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Services\bin\Debug\System.Net.Http.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Services.pdb
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Contracts.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\mysql.data.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\System.Net.Http.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Contracts.pdb
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\IPMRVPark.Models.pdb
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\bin\Debug\EntityFramework.xml
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.csprojResolveAssemblyReference.cache
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.dll
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Services\obj\Debug\IPMRVPark.Services.pdb

@@ -69,17 +69,48 @@ namespace IPMRVPark.WebUI.Controllers
             return View(customer_view);
         }
 
+        // Configure dropdown list items
+        private void countryCodes(string defaultCountry)
+        {
+            var countries = countrycodes.GetAll().OrderBy(s => s.name);
+            List<SelectListItem> selectCountry = new List<SelectListItem>();
+            foreach (var item in countries)
+            {
+                SelectListItem selectList1Item = new SelectListItem();
+                selectList1Item.Value = item.code.ToString();
+                selectList1Item.Text = item.name;
+                string selectedText = defaultCountry;
+                selectList1Item.Selected =
+                 (selectList1Item.Text.Contains(selectedText));
+                selectCountry.Add(selectList1Item);
+            }
+            ViewBag.countryCode = selectCountry;
+        }
+        private void provinceCodes(string defaultProvince)
+        {
+            var provinces = provincecodes.GetAll().OrderBy(s => s.name);
+            List<SelectListItem> selectProvince = new List<SelectListItem>();
+            foreach (var item in provinces)
+            {
+                SelectListItem selectList1Item = new SelectListItem();
+                selectList1Item.Value = item.code.ToString();
+                selectList1Item.Text = item.name;
+                string selectedText = defaultProvince;
+                selectList1Item.Selected =
+                 (selectList1Item.Text.Contains(selectedText));
+                selectProvince.Add(selectList1Item);
+            }
+            ViewBag.provinceCode = selectProvince;
+        }
+
         // GET: /Create
         public ActionResult CreateCustomer()
         {
             //Dropdown list for country
-            var country = countrycodes.GetAll();
-            ViewBag.Country = country.OrderBy(q => q.name);
+            countryCodes("CANADA");
 
             //Dropdown list for province
-            //ViewBag.Province = provincecodes.GetAll().OrderBy(s => s.name);
-            var province = provincecodes.GetAll();
-            ViewBag.Province = province.OrderBy(s => s.name);
+            provinceCodes("ONTARIO");
 
             var customer_view = new customer_view();
             return View(customer_view);
@@ -128,16 +159,15 @@ namespace IPMRVPark.WebUI.Controllers
         // GET: /Edit/5
         public ActionResult EditCustomer(int id)
         {
-            //Dropdown list for country
-            var country = countrycodes.GetAll();
-            ViewBag.Country = country.OrderBy(q => q.name);
-
-            //Dropdown list for province
-            var province = provincecodes.GetAll();
-            ViewBag.Province = province.OrderBy(s => s.name);
 
             customer_view customer_view = customers_view.GetAll().
                 Where(c => c.id == id).FirstOrDefault();
+
+            //Dropdown list for country
+            countryCodes(customer_view.countryName);
+
+            //Dropdown list for province
+            provinceCodes(customer_view.provinceName);
 
             if (customer_view == null)
             {
@@ -177,7 +207,7 @@ namespace IPMRVPark.WebUI.Controllers
             customers.Update(_customer);
             customers.Commit();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("CustomerDetails", new { id = _customer.ID });
         }
 
 

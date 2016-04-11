@@ -21,9 +21,9 @@ Maintenance
             var root = '../';
         }
         // ***** Customer Selection
-        $('#btnSelectCustomer').prop('disabled', true);
+        $('#btnNewReservation').prop('disabled', true);
         //function will be called on button click
-        $('#btnSelectCustomer').click(function () {
+        $('#btnNewReservation').click(function () {
             $('#waitMsg').show();// Show wait message
             $('#btnPayment').focus();
             var postpath = '/Login/SelectCustomer';
@@ -36,12 +36,37 @@ Maintenance
                     idCustomer: customerID
                 },
                 success: function (result) {
-                    $('#btnSelectCustomer').prop('disabled', true);
+                    $('#btnNewReservation').prop('disabled', true);
                     var urlpath = '/Reservation/NewReservation';
                     window.location.replace(urlpath);
                 },
                 error: function (result) {
-                    alert('7 Some error occured.');
+                    alert('71 Some error occured.');
+                }
+            });
+        });
+        // ***** Customer Selection
+        $('#btnNewPayment').prop('disabled', true);
+        //function will be called on button click
+        $('#btnNewPayment').click(function () {
+            $('#waitMsg').show();// Show wait message
+            $('#btnPayment').focus();
+            var postpath = '/Login/SelectCustomer';
+            var customerID = @ViewBag.CustomerID;
+            $.ajax({
+                url: postpath, // Controller/View
+                type: 'POST', //HTTP POST Method
+                dataType: 'json',
+                data: { //Passing data
+                    idCustomer: customerID
+                },
+                success: function (result) {
+                    $('#btnNewPayment').prop('disabled', true);
+                    var urlpath = '/Payment/PaymentOrRefund';
+                    window.location.replace(urlpath);
+                },
+                error: function (result) {
+                    alert('72 Some error occured.');
                 }
             });
         });
@@ -209,20 +234,27 @@ Maintenance
                 </div>
             </div>
             <div class="row top-margin">
-                <div class="form-group">
-                    <div class="display-label col-sm-6 col-xs-12 form-top-margin">
-                        <a href="@Url.Action("EditCustomer", "Customer", new { id = Model.id })" class="btn btn-block btn-default btn-mylink pagination-centered">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <span>Edit Customer Info</span>
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
+                <div class="display-label col-sm-6 col-xs-12 form-top-margin">
+                    <a href="@Url.Action("EditCustomer", "Customer", new { id = Model.id })" class="btn btn-block btn-default btn-mylink pagination-centered">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span>Edit Customer Info</span>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+                <div class="display-label col-sm-6 colxs-12 form-top-margin">
+                    <div id="btnNewReservation" class="btn btn-block btn-default btn-mylink pagination-centered">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span>Go To New Reservation</span>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
                     </div>
-                    <div class="display-label col-sm-6 colxs-12 form-top-margin">
-                        <div id="btnSelectCustomer" class="btn btn-block btn-default btn-mylink pagination-centered">
-                            <span class="glyphicon glyphicon-map-marker"></span>
-                            <span>Go To New Reservation</span>
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </div>
+                </div>
+            </div>
+            <div class="row form-top-margin">
+                <div class="display-label col-sm-6 col-sm-push-6 colxs-12 form-top-margin">
+                    <div id="btnNewPayment" class="btn btn-block btn-default btn-mylink pagination-centered">
+                        <span class="glyphicon glyphicon-usd"></span>
+                        <span>Go To New Payment</span>
+                        <span class="glyphicon glyphicon-chevron-right"></span>
                     </div>
                 </div>
             </div>
