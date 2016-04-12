@@ -18,11 +18,11 @@ namespace IPMRVPark.WebUI.Controllers
         IRepositoryBase<session> sessions;
         SessionService sessionService;
 
-        public CustomerController(IRepositoryBase<customer_view> customers_view, 
-                IRepositoryBase<person> persons, 
+        public CustomerController(IRepositoryBase<customer_view> customers_view,
+                IRepositoryBase<person> persons,
                 IRepositoryBase<customer> customers,
                 IRepositoryBase<session> sessions,
-                IRepositoryBase<provincecode> provincecodes, 
+                IRepositoryBase<provincecode> provincecodes,
                 IRepositoryBase<countrycode> countrycodes)
         {
             this.customers_view = customers_view;
@@ -44,7 +44,7 @@ namespace IPMRVPark.WebUI.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                customer_view = customer_view.Where(s => s.fullName.Contains(searchString)).OrderBy(r =>r.fullName);
+                customer_view = customer_view.Where(s => s.fullName.Contains(searchString)).OrderBy(r => r.fullName);
             }
 
             return View(customer_view);
@@ -143,7 +143,7 @@ namespace IPMRVPark.WebUI.Controllers
             _customer.countryCode = customer_form_page.countryCode;
             _customer.isEmailReceipt = customer_form_page.isEmailReceipt;
             _customer.isPartyMember = customer_form_page.isPartyMember;
-            _customer.createDate = DateTime.Now; 
+            _customer.createDate = DateTime.Now;
             _customer.lastUpdate = DateTime.Now;
             customers.Insert(_customer);
             customers.Commit();
@@ -153,7 +153,7 @@ namespace IPMRVPark.WebUI.Controllers
             sessions.Update(_session);
             sessions.Commit();
 
-            return RedirectToAction("CustomerDetails", new { id = _customer.ID});
+            return RedirectToAction("CustomerDetails", new { id = _customer.ID });
         }
 
         // GET: /Edit/5
@@ -228,7 +228,7 @@ namespace IPMRVPark.WebUI.Controllers
         public ActionResult DeleteConfirm(int id)
         {
             //customer_view customer_view = customers_view.GetAll().
-                    //Where(c => c.id == id).FirstOrDefault();
+            //Where(c => c.id == id).FirstOrDefault();
             //var _person = persons.GetById(customer_form_page.id);
             //persons.Delete(customers_view.GetAll().
             //        Where(c => c.id == id).FirstOrDefault().id);

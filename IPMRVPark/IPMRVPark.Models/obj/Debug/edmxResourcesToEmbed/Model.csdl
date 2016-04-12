@@ -503,6 +503,18 @@
     <Property Name="petDescription" Type="String" />
     <Property Name="comments" Type="String" />
   </EntityType>
+  <EntityType Name="payment_view">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="amount" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="createDate" Type="DateTime" />
+    <Property Name="sites" Type="String" />
+    <Property Name="fullName" Type="String" />
+    <Property Name="mainPhone" Type="String" />
+  </EntityType>
   <EntityType Name="province_view">
     <Key>
       <PropertyRef Name="provinceCode" />
@@ -1182,6 +1194,7 @@
     <EntitySet Name="styleurls" EntityType="Self.styleurl" />
     <EntitySet Name="customer_view" EntityType="Self.customer_view" />
     <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
+    <EntitySet Name="payment_view" EntityType="Self.payment_view" />
     <EntitySet Name="province_view" EntityType="Self.province_view" />
     <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
     <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />

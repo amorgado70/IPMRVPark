@@ -768,5 +768,19 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         #endregion
+
+        public ActionResult SiteName(int id)
+        {
+            var _site = sites_description_rate.GetByKey("id", id);
+
+            string siteName = string.Empty;
+
+            if (_site != null)
+            {
+                siteName = _site.RVSite;
+            }
+
+            return Content(siteName);
+        }
     }
 }

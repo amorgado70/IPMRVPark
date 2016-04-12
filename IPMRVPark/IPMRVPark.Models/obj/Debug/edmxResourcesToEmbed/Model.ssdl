@@ -418,6 +418,20 @@ warning 6002: The table/view 'def.rvpark.partymember_view' does not have a prima
     <Property Name="comments" Type="varchar" MaxLength="120" />
   </EntityType>
   <!--Errors Found During Generation:
+warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="payment_view">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="amount" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="createDate" Type="date" />
+    <Property Name="sites" Type="text" />
+    <Property Name="fullName" Type="varchar" MaxLength="101" />
+    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <!--Errors Found During Generation:
 warning 6002: The table/view 'def.rvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="province_view">
     <Key>
@@ -1143,6 +1157,16 @@ FROM `customer_view` AS `customer_view`</DefiningQuery>
 `partymember_view`.`petDescription`, 
 `partymember_view`.`comments`
 FROM `partymember_view` AS `partymember_view`</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
+      <DefiningQuery>SELECT
+`payment_view`.`id`, 
+`payment_view`.`amount`, 
+`payment_view`.`createDate`, 
+`payment_view`.`sites`, 
+`payment_view`.`fullName`, 
+`payment_view`.`mainPhone`
+FROM `payment_view` AS `payment_view`</DefiningQuery>
     </EntitySet>
     <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="rvpark">
       <DefiningQuery>SELECT

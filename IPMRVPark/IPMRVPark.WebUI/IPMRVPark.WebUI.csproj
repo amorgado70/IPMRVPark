@@ -461,6 +461,7 @@
     <Content Include="Views\SiteSize\Index.cshtml" />
     <Content Include="Views\SiteSize\SiteSizeDetails.cshtml" />
     <Content Include="Views\Customer\SearchCustomer.cshtml" />
+    <Content Include="Views\Payment\SearchPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

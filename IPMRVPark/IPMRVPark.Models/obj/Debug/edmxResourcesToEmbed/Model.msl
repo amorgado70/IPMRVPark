@@ -435,6 +435,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="payment_view">
+      <EntityTypeMapping TypeName="rvparkModel.payment_view">
+        <MappingFragment StoreEntitySet="payment_view">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="sites" ColumnName="sites" />
+          <ScalarProperty Name="fullName" ColumnName="fullName" />
+          <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="province_view">
       <EntityTypeMapping TypeName="rvparkModel.province_view">
         <MappingFragment StoreEntitySet="province_view">

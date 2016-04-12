@@ -423,6 +423,20 @@ warning 6002: The table/view 'def.rvpark.partymember_view' does not have a prima
           <Property Name="comments" Type="varchar" MaxLength="120" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="payment_view">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="amount" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="createDate" Type="date" />
+          <Property Name="sites" Type="text" />
+          <Property Name="fullName" Type="varchar" MaxLength="101" />
+          <Property Name="mainPhone" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'def.rvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="province_view">
           <Key>
@@ -1148,6 +1162,16 @@ FROM `customer_view` AS `customer_view`</DefiningQuery>
 `partymember_view`.`petDescription`, 
 `partymember_view`.`comments`
 FROM `partymember_view` AS `partymember_view`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
+            <DefiningQuery>SELECT
+`payment_view`.`id`, 
+`payment_view`.`amount`, 
+`payment_view`.`createDate`, 
+`payment_view`.`sites`, 
+`payment_view`.`fullName`, 
+`payment_view`.`mainPhone`
+FROM `payment_view` AS `payment_view`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="rvpark">
             <DefiningQuery>SELECT
@@ -1915,6 +1939,18 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="petDescription" Type="String" />
           <Property Name="comments" Type="String" />
         </EntityType>
+        <EntityType Name="payment_view">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="amount" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" />
+          <Property Name="createDate" Type="DateTime" />
+          <Property Name="sites" Type="String" />
+          <Property Name="fullName" Type="String" />
+          <Property Name="mainPhone" Type="String" />
+        </EntityType>
         <EntityType Name="province_view">
           <Key>
             <PropertyRef Name="provinceCode" />
@@ -2594,6 +2630,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <EntitySet Name="styleurls" EntityType="Self.styleurl" />
           <EntitySet Name="customer_view" EntityType="Self.customer_view" />
           <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
+          <EntitySet Name="payment_view" EntityType="Self.payment_view" />
           <EntitySet Name="province_view" EntityType="Self.province_view" />
           <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
           <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
@@ -3219,6 +3256,18 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
                 <ScalarProperty Name="petDescription" ColumnName="petDescription" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_view">
+            <EntityTypeMapping TypeName="rvparkModel.payment_view">
+              <MappingFragment StoreEntitySet="payment_view">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="sites" ColumnName="sites" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

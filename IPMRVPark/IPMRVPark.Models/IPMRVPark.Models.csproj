@@ -109,6 +109,9 @@
     <Compile Include="paymentreservationitem.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="payment_view.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="person.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
