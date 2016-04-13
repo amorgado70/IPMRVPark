@@ -234,6 +234,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PrototypeUIController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
+    <Compile Include="Controllers\RVSiteCoordViewController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -404,6 +405,7 @@
     <Content Include="Views\Reservation\EditReservationSummary.cshtml" />
     <Content Include="Views\Payment\NewReservation - Copy.cshtml" />
     <Content Include="Views\Reservation\SelectionSummary.cshtml" />
+    <Content Include="Views\RVSiteCoordView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

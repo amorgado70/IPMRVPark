@@ -68,6 +68,7 @@
     <Compile Include="Repositories\PaymentRepository.cs" />
     <Compile Include="Repositories\ReasonForPaymentRepository.cs" />
     <Compile Include="Repositories\PaymentReservationItemRepository.cs" />
+    <Compile Include="Repositories\RVSiteCoordViewRepository.cs" />
     <Compile Include="Repositories\SiteDescriptionRateViewRepository.cs" />
     <Compile Include="Repositories\ReservationItemRepository.cs" />
     <Compile Include="Repositories\StaffRepository.cs" />

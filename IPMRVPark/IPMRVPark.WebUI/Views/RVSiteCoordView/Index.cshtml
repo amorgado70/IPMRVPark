@@ -1,0 +1,106 @@
+﻿@model IEnumerable<IPMRVPark.Models.rvsite_coord_view>
+
+@{
+    ViewBag.Title = "GetSitesCoord";
+}
+
+<h2>GetSitesCoord</h2>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // ***** Site Search
+        $('#siteName').click(function () {
+            $('#siteName').val('');
+        });
+        $('#siteName').autocomplete({
+            source: function (request, response) {
+                var postpath = '../RVSiteCoordView/GetSitesCoord';
+                $.ajax({
+                    url: postpath,
+                    type: 'POST',
+                    dataType: 'json',
+                    // query will be the param used by the action method
+                    data: { query: request.term },
+                    success: response
+                });
+            },
+            minLength: 1, // require at least one character from the user
+            select: function (event, ui) {
+                $('#idRVSite').val(ui.item.ID); // name of form input field: CustomerID, ProductID
+            }
+        });
+    });
+</script>
+
+<div class="container-fluid">
+    <!-- RV Site Selection -->
+    <div class="row form-top-margin">
+        <div class="col-sm-2 col-xs-12 form-top-margin">
+            <label>RV Site</label>
+        </div>
+        <div class="col-sm-4 col-xs-12 form-top-margin" data-toggle="tooltip" title="Search and selecte with autocomplete">
+            <input type="text" class="form-control" id="siteName" placeholder="Type letter or number then select from the list"/>
+            <input class="text-box single-line" id="idRVSite" name="idRVSite" type="hidden" />
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.seq)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RVSite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.latitude)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.seq)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RVSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.latitude)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

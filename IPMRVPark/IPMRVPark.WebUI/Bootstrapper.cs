@@ -40,6 +40,7 @@ namespace IPMRVPark.WebUI
             container.RegisterType<IRepositoryBase<reservationitem>, ReservationItemRepository>();
             container.RegisterType<IRepositoryBase<paymentreservationitem>, PaymentReservationItemRepository>();
             container.RegisterType<IRepositoryBase<site_description_rate_view>, SiteDescriptionRateViewRepository>();
+            container.RegisterType<IRepositoryBase<rvsite_coord_view>, RVSiteCoordViewRepository>();
 
             return container;
         }
