@@ -11,6 +11,5 @@ D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\IPMRVPark.Models.dll
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\IPMRVPark.Models.pdb
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.dll
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\bin\Debug\EntityFramework.xml
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.csprojResolveAssemblyReference.cache
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.dll
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Models\obj\Debug\IPMRVPark.Models.pdb

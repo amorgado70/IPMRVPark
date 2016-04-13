@@ -28,16 +28,16 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetSitesCoord(string query)
+        public ActionResult GetSites(string query)
         {
-            return Json(SiteList(query).Select(c => new { label = c.Label, ID = c.ID }));
+            return Json(SiteList(query).Select(c => new { ID = c.ID, label = c.Label, Latitude = c.Latitude, Longitude = c.Longitude }));
         }
 
-        private List<SelectionOptionID> SiteList(string searchString)
+        private List<SiteCoord> SiteList(string searchString)
         {
 
             //Return value
-            List<SelectionOptionID> results = new List<SelectionOptionID>();
+            List<SiteCoord> results = new List<SiteCoord>();
 
             //Regex for site name
             Regex rgx = new Regex("[^a-zA-Z0-9]");
@@ -56,17 +56,10 @@ namespace IPMRVPark.WebUI.Controllers
                     string rvsiteShort = rgx.Replace(_site.RVSite, "").ToUpper();
                     if (rvsiteShort.Contains(searchString))
                     {
-                        results.Add(new SelectionOptionID(_site.id, _site.RVSite));
-                    }
-                    if (results.Count() > 25)
-                    {
-                        results.OrderBy(q => q.Label).ToList();
-                        results.Add(new SelectionOptionID(-1, "..."));
-                        return results;
+                        results.Add(new SiteCoord(_site.id, _site.RVSite, _site.latitude, _site.longitude));
                     }
                 }
             }
-
             return results.OrderBy(q => q.Label).ToList();
         }
 

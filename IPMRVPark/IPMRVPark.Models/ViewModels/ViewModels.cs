@@ -5,6 +5,22 @@ using System.Text;
 
 namespace IPMRVPark.Models
 {
+    public class SiteCoord
+    {
+        public long ID { get; set; }
+        public string Label { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public SiteCoord(long id, string label, string latitude, string longitude)
+        {
+            ID = id;
+            Label = label;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+    }
+
+
     public class SelectionOptionID
     {
         public long ID { get; set; }
