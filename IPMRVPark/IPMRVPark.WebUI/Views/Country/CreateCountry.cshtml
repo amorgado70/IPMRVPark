@@ -1,0 +1,61 @@
+﻿@model IPMRVPark.Models.countrycode
+
+@{
+    ViewBag.Title = "Add Country";
+    ViewBag.PageTitle = "Add Country";
+}
+@Html.ActionLink("Home", "Menu", "Login")
+<span class="glyphicon glyphicon-chevron-right"></span>
+Maintenance<span class="glyphicon glyphicon-chevron-right"></span>
+@Html.ActionLink("Add Country", "CreateCountry", "Country")
+
+    @using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+<div class="container-fluid">
+    <fieldset>
+        <legend></legend>
+        <div class="row top-margin">
+            <div class="form-group">
+                <div class="col-sm-2 col-xs-12 form-top-margin">
+                    <label>Country Code</label>
+                </div>
+                <div class="col-sm-10 col-xs-12 form-top-margin">
+                    @Html.TextBoxFor(model => model.code, new { placeholder = "enter 3 characters code ...", @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.code)
+                </div>
+
+                <div class="col-sm-2 col-xs-12 form-top-margin">
+                    <label>Country Name</label>
+                </div>
+                <div class="col-sm-10 col-xs-12 form-top-margin">
+                    @Html.TextBoxFor(model => model.name, new { placeholder = "enter country name here ...", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.name)
+                </div>
+            </div>
+        </div>
+        <div class="row top-margin">
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-push-6 col-xs-12 form-top-margin">
+                    <button type="submit" class="btn btn-block btn-default">
+                        <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                        <span class="col-xs-9">Confirm Country</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row top-margin">
+            <div class="col-sm-6 col-sm-push-6 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
+                <a href="@Url.Action("Index", "Country")" class="btn btn-block btn-default btn-mylink pagination-centered">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span>Back to List</span>
+                </a>
+            </div>
+        </div>
+    </fieldset>
+</div>
+    
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
