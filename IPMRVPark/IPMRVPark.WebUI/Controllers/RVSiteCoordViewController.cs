@@ -27,7 +27,16 @@ namespace IPMRVPark.WebUI.Controllers
             return View(_sites);
         }
 
-        [HttpPost]
+        public class AllowCrossSiteJsonAttribute : ActionFilterAttribute
+        {
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
+            {
+                filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                base.OnActionExecuting(filterContext);
+            }
+        }
+
+        [AllowCrossSiteJson]
         public ActionResult GetSites(string query)
         {
             return Json(SiteList(query).Select(c => new { ID = c.ID, label = c.Label, Latitude = c.Latitude, Longitude = c.Longitude }));
