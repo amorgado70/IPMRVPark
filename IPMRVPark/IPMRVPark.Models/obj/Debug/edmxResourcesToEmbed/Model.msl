@@ -439,9 +439,13 @@
       <EntityTypeMapping TypeName="rvparkModel.payment_view">
         <MappingFragment StoreEntitySet="payment_view">
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="selectionTotal" ColumnName="selectionTotal" />
           <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="balance" ColumnName="balance" />
           <ScalarProperty Name="createDate" ColumnName="createDate" />
+          <ScalarProperty Name="reasonforpayment" ColumnName="reasonforpayment" />
           <ScalarProperty Name="sites" ColumnName="sites" />
+          <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
           <ScalarProperty Name="fullName" ColumnName="fullName" />
           <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
         </MappingFragment>
@@ -538,5 +542,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_delete_sitetype_dependants" FunctionName="rvparkModel.Store.sp_delete_sitetype_dependants">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="rvparkModel.sp_delete_sitetype_dependants_Result" />
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_reset_event_derivatives" FunctionName="rvparkModel.Store.sp_reset_event_derivatives">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="rvparkModel.sp_reset_event_derivatives_Result" />
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

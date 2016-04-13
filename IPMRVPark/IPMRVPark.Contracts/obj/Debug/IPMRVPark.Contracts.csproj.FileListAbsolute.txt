@@ -2,8 +2,3 @@ D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPa
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.dll
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\bin\Debug\IPMRVPark.Contracts.pdb
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.csprojResolveAssemblyReference.cache
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.dll
-D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.Contracts\obj\Debug\IPMRVPark.Contracts.pdb

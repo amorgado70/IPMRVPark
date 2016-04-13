@@ -427,12 +427,19 @@ warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary k
         <EntityType Name="payment_view">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="selectionTotal" />
             <PropertyRef Name="amount" />
+            <PropertyRef Name="balance" />
+            <PropertyRef Name="idCustomer" />
           </Key>
           <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="balance" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="createDate" Type="date" />
+          <Property Name="reasonforpayment" Type="varchar" MaxLength="45" />
           <Property Name="sites" Type="text" />
+          <Property Name="idCustomer" Type="bigint" Nullable="false" />
           <Property Name="fullName" Type="varchar" MaxLength="101" />
           <Property Name="mainPhone" Type="varchar" MaxLength="30" />
         </EntityType>
@@ -1099,6 +1106,16 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_delete_sitetype_dependants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
+          <Parameter Name="typeID" Type="bigint" Mode="In" />
+          <Parameter Name="success" Type="bit" Mode="Out" />
+          <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="sp_reset_event_derivatives" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
+          <Parameter Name="eventID" Type="bigint" Mode="In" />
+          <Parameter Name="success" Type="bit" Mode="Out" />
+          <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
+        </Function>
         <EntityContainer Name="rvparkModelStoreContainer">
           <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="rvpark" store:Type="Tables" />
           <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="rvpark" store:Type="Tables" />
@@ -1166,9 +1183,13 @@ FROM `partymember_view` AS `partymember_view`</DefiningQuery>
           <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
             <DefiningQuery>SELECT
 `payment_view`.`id`, 
+`payment_view`.`selectionTotal`, 
 `payment_view`.`amount`, 
+`payment_view`.`balance`, 
 `payment_view`.`createDate`, 
+`payment_view`.`reasonforpayment`, 
 `payment_view`.`sites`, 
+`payment_view`.`idCustomer`, 
 `payment_view`.`fullName`, 
 `payment_view`.`mainPhone`
 FROM `payment_view` AS `payment_view`</DefiningQuery>
@@ -1942,12 +1963,19 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
         <EntityType Name="payment_view">
           <Key>
             <PropertyRef Name="id" />
+            <PropertyRef Name="selectionTotal" />
             <PropertyRef Name="amount" />
+            <PropertyRef Name="balance" />
+            <PropertyRef Name="idCustomer" />
           </Key>
           <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="selectionTotal" Type="Decimal" Nullable="false" />
           <Property Name="amount" Type="Decimal" Nullable="false" />
+          <Property Name="balance" Type="Decimal" Nullable="false" />
           <Property Name="createDate" Type="DateTime" />
+          <Property Name="reasonforpayment" Type="String" />
           <Property Name="sites" Type="String" />
+          <Property Name="idCustomer" Type="Int64" Nullable="false" />
           <Property Name="fullName" Type="String" />
           <Property Name="mainPhone" Type="String" />
         </EntityType>
@@ -2818,7 +2846,19 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             <End Role="styleurl" EntitySet="styleurls" />
             <End Role="sitetype" EntitySet="sitetypes" />
           </AssociationSet>
+          <FunctionImport Name="sp_delete_sitetype_dependants" ReturnType="Collection(rvparkModel.sp_delete_sitetype_dependants_Result)">
+            <Parameter Name="typeID" Mode="In" Type="Int64" />
+            <Parameter Name="success" Mode="Out" Type="Boolean" />
+            <Parameter Name="errMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_reset_event_derivatives" ReturnType="Collection(rvparkModel.sp_reset_event_derivatives_Result)">
+            <Parameter Name="eventID" Mode="In" Type="Int64" />
+            <Parameter Name="success" Mode="Out" Type="Boolean" />
+            <Parameter Name="errMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_delete_sitetype_dependants_Result" />
+        <ComplexType Name="sp_reset_event_derivatives_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3263,9 +3303,13 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             <EntityTypeMapping TypeName="rvparkModel.payment_view">
               <MappingFragment StoreEntitySet="payment_view">
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="selectionTotal" ColumnName="selectionTotal" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="reasonforpayment" ColumnName="reasonforpayment" />
                 <ScalarProperty Name="sites" ColumnName="sites" />
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
                 <ScalarProperty Name="fullName" ColumnName="fullName" />
                 <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
               </MappingFragment>
@@ -3362,6 +3406,16 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_delete_sitetype_dependants" FunctionName="rvparkModel.Store.sp_delete_sitetype_dependants">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="rvparkModel.sp_delete_sitetype_dependants_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_reset_event_derivatives" FunctionName="rvparkModel.Store.sp_reset_event_derivatives">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="rvparkModel.sp_reset_event_derivatives_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

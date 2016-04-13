@@ -422,12 +422,19 @@ warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary k
   <EntityType Name="payment_view">
     <Key>
       <PropertyRef Name="id" />
+      <PropertyRef Name="selectionTotal" />
       <PropertyRef Name="amount" />
+      <PropertyRef Name="balance" />
+      <PropertyRef Name="idCustomer" />
     </Key>
     <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+    <Property Name="balance" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="createDate" Type="date" />
+    <Property Name="reasonforpayment" Type="varchar" MaxLength="45" />
     <Property Name="sites" Type="text" />
+    <Property Name="idCustomer" Type="bigint" Nullable="false" />
     <Property Name="fullName" Type="varchar" MaxLength="101" />
     <Property Name="mainPhone" Type="varchar" MaxLength="30" />
   </EntityType>
@@ -1094,6 +1101,16 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_delete_sitetype_dependants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
+    <Parameter Name="typeID" Type="bigint" Mode="In" />
+    <Parameter Name="success" Type="bit" Mode="Out" />
+    <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="sp_reset_event_derivatives" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
+    <Parameter Name="eventID" Type="bigint" Mode="In" />
+    <Parameter Name="success" Type="bit" Mode="Out" />
+    <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
+  </Function>
   <EntityContainer Name="rvparkModelStoreContainer">
     <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="rvpark" store:Type="Tables" />
     <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="rvpark" store:Type="Tables" />
@@ -1161,9 +1178,13 @@ FROM `partymember_view` AS `partymember_view`</DefiningQuery>
     <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
       <DefiningQuery>SELECT
 `payment_view`.`id`, 
+`payment_view`.`selectionTotal`, 
 `payment_view`.`amount`, 
+`payment_view`.`balance`, 
 `payment_view`.`createDate`, 
+`payment_view`.`reasonforpayment`, 
 `payment_view`.`sites`, 
+`payment_view`.`idCustomer`, 
 `payment_view`.`fullName`, 
 `payment_view`.`mainPhone`
 FROM `payment_view` AS `payment_view`</DefiningQuery>

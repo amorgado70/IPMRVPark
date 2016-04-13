@@ -506,12 +506,19 @@
   <EntityType Name="payment_view">
     <Key>
       <PropertyRef Name="id" />
+      <PropertyRef Name="selectionTotal" />
       <PropertyRef Name="amount" />
+      <PropertyRef Name="balance" />
+      <PropertyRef Name="idCustomer" />
     </Key>
     <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="selectionTotal" Type="Decimal" Nullable="false" />
     <Property Name="amount" Type="Decimal" Nullable="false" />
+    <Property Name="balance" Type="Decimal" Nullable="false" />
     <Property Name="createDate" Type="DateTime" />
+    <Property Name="reasonforpayment" Type="String" />
     <Property Name="sites" Type="String" />
+    <Property Name="idCustomer" Type="Int64" Nullable="false" />
     <Property Name="fullName" Type="String" />
     <Property Name="mainPhone" Type="String" />
   </EntityType>
@@ -1382,5 +1389,17 @@
       <End Role="styleurl" EntitySet="styleurls" />
       <End Role="sitetype" EntitySet="sitetypes" />
     </AssociationSet>
+    <FunctionImport Name="sp_delete_sitetype_dependants" ReturnType="Collection(rvparkModel.sp_delete_sitetype_dependants_Result)">
+      <Parameter Name="typeID" Mode="In" Type="Int64" />
+      <Parameter Name="success" Mode="Out" Type="Boolean" />
+      <Parameter Name="errMsg" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_reset_event_derivatives" ReturnType="Collection(rvparkModel.sp_reset_event_derivatives_Result)">
+      <Parameter Name="eventID" Mode="In" Type="Int64" />
+      <Parameter Name="success" Mode="Out" Type="Boolean" />
+      <Parameter Name="errMsg" Mode="InOut" Type="String" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="sp_delete_sitetype_dependants_Result" />
+  <ComplexType Name="sp_reset_event_derivatives_Result" />
 </Schema>

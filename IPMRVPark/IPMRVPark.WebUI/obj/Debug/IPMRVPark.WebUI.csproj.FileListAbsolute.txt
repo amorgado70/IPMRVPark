@@ -1,3 +1,4 @@
+D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\obj\Debug\IPMRVPark.WebUI.csprojResolveAssemblyReference.cache
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\IPMRVPark.WebUI.dll.config
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\IPMRVPark.WebUI.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\IPMRVPark.WebUI.pdb
@@ -64,6 +65,7 @@ D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.Razor.
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.xml
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.Deployment.xml
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.Razor.xml
+D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\WebMatrix.Data.xml
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\Microsoft.Web.WebPages.OAuth.xml
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\WebMatrix.WebData.xml
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\DotNetOpenAuth.AspNet.xml
@@ -105,7 +107,6 @@ D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\ko\System.Spatial
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\ru\System.Spatial.resources.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\zh-Hans\System.Spatial.resources.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\bin\zh-Hant\System.Spatial.resources.dll
-D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\obj\Debug\IPMRVPark.WebUI.csprojResolveAssemblyReference.cache
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\obj\Debug\IPMRVPark.WebUI.dll
 D:\Temp\Capstone_IPM_RV\solution\IPMRVPark\IPMRVPark.WebUI\obj\Debug\IPMRVPark.WebUI.pdb
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\IPMRVPark.WebUI.dll.config
@@ -174,6 +175,7 @@ D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.Razor.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.Deployment.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\System.Web.WebPages.Razor.xml
+D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\WebMatrix.Data.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\Microsoft.Web.WebPages.OAuth.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\WebMatrix.WebData.xml
 D:\Temp\IPMRVPark\IPMRVPark\IPMRVPark.WebUI\bin\DotNetOpenAuth.AspNet.xml

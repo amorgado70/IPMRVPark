@@ -15,7 +15,6 @@ namespace IPMRVPark.Contracts.Data
         {
 
         }
-
         public DbSet<checkinout> checkinouts { get; set; }
         public DbSet<coordinate> coordinates { get; set; }
         public DbSet<countrycode> countrycodes { get; set; }
