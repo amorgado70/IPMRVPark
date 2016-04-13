@@ -12,14 +12,11 @@ namespace IPMRVPark.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Objects;
-    using System.Data.Objects.DataClasses;
-    using System.Linq;
     
-    public partial class rvparkEntities : DbContext
+    public partial class ipmrvparkEntities : DbContext
     {
-        public rvparkEntities()
-            : base("name=rvparkEntities")
+        public ipmrvparkEntities()
+            : base("name=ipmrvparkEntities")
         {
         }
     
@@ -57,31 +54,11 @@ namespace IPMRVPark.Models
         public DbSet<styleurl> styleurls { get; set; }
         public DbSet<customer_view> customer_view { get; set; }
         public DbSet<partymember_view> partymember_view { get; set; }
-        public DbSet<payment_view> payment_view { get; set; }
         public DbSet<province_view> province_view { get; set; }
         public DbSet<rvsite_available_view> rvsite_available_view { get; set; }
         public DbSet<rvsite_coord_view> rvsite_coord_view { get; set; }
         public DbSet<rvsite_status_view> rvsite_status_view { get; set; }
         public DbSet<site_description_rate_view> site_description_rate_view { get; set; }
-        public DbSet<sitetype_service_rate_view> sitetype_service_rate_view { get; set; }
         public DbSet<staff_view> staff_view { get; set; }
-    
-        public virtual ObjectResult<sp_delete_sitetype_dependants_Result> sp_delete_sitetype_dependants(Nullable<long> typeID, ObjectParameter success, ObjectParameter errMsg)
-        {
-            var typeIDParameter = typeID.HasValue ?
-                new ObjectParameter("typeID", typeID) :
-                new ObjectParameter("typeID", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_delete_sitetype_dependants_Result>("sp_delete_sitetype_dependants", typeIDParameter, success, errMsg);
-        }
-    
-        public virtual ObjectResult<sp_reset_event_derivatives_Result> sp_reset_event_derivatives(Nullable<long> eventID, ObjectParameter success, ObjectParameter errMsg)
-        {
-            var eventIDParameter = eventID.HasValue ?
-                new ObjectParameter("eventID", eventID) :
-                new ObjectParameter("eventID", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reset_event_derivatives_Result>("sp_reset_event_derivatives", eventIDParameter, success, errMsg);
-        }
     }
 }

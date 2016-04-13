@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="rvparkModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+<Schema Namespace="ipmrvparkModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityType Name="checkinout">
     <Key>
       <PropertyRef Name="ID" />
@@ -288,7 +288,6 @@
     <Property Name="reservationAdditionalServAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
     <Property Name="createDate" Type="date" />
     <Property Name="lastUpdate" Type="date" />
-    <Property Name="timeStamp" Type="varchar" MaxLength="45" />
   </EntityType>
   <EntityType Name="service">
     <Key>
@@ -368,7 +367,7 @@
     <Property Name="lastUpdate" Type="date" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="customer_view">
     <Key>
       <PropertyRef Name="id" />
@@ -400,7 +399,7 @@ warning 6002: The table/view 'def.rvpark.customer_view' does not have a primary 
     <Property Name="isPartyMember" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="partymember_view">
     <Key>
       <PropertyRef Name="id" />
@@ -418,28 +417,7 @@ warning 6002: The table/view 'def.rvpark.partymember_view' does not have a prima
     <Property Name="comments" Type="varchar" MaxLength="120" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="payment_view">
-    <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="selectionTotal" />
-      <PropertyRef Name="amount" />
-      <PropertyRef Name="balance" />
-      <PropertyRef Name="idCustomer" />
-    </Key>
-    <Property Name="id" Type="bigint" Nullable="false" />
-    <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="balance" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-    <Property Name="createDate" Type="date" />
-    <Property Name="reasonforpayment" Type="varchar" MaxLength="45" />
-    <Property Name="sites" Type="text" />
-    <Property Name="idCustomer" Type="bigint" Nullable="false" />
-    <Property Name="fullName" Type="varchar" MaxLength="101" />
-    <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="province_view">
     <Key>
       <PropertyRef Name="provinceCode" />
@@ -453,7 +431,7 @@ warning 6002: The table/view 'def.rvpark.province_view' does not have a primary 
     <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="rvsite_available_view">
     <Key>
       <PropertyRef Name="id" />
@@ -465,7 +443,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_available_view' does not have a 
     <Property Name="idIPMEvent" Type="bigint" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_coord_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_coord_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="rvsite_coord_view">
     <Key>
       <PropertyRef Name="id" />
@@ -483,7 +461,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_coord_view' does not have a prim
     <Property Name="latitude" Type="varchar" MaxLength="30" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_status_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_status_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="rvsite_status_view">
     <Key>
       <PropertyRef Name="id" />
@@ -508,7 +486,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_status_view' does not have a pri
     <Property Name="OutOfServiceUntil" Type="date" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.site_description_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.site_description_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="site_description_rate_view">
     <Key>
       <PropertyRef Name="id" />
@@ -525,28 +503,7 @@ warning 6002: The table/view 'def.rvpark.site_description_rate_view' does not ha
     <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.sitetype_service_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="sitetype_service_rate_view">
-    <Key>
-      <PropertyRef Name="eventId" />
-      <PropertyRef Name="typeid" />
-      <PropertyRef Name="sizeId" />
-      <PropertyRef Name="serviceId" />
-      <PropertyRef Name="size" />
-      <PropertyRef Name="service" />
-    </Key>
-    <Property Name="eventId" Type="bigint" Nullable="false" />
-    <Property Name="typeid" Type="bigint" Nullable="false" />
-    <Property Name="styleId" Type="bigint" />
-    <Property Name="sizeId" Type="bigint" Nullable="false" />
-    <Property Name="serviceId" Type="bigint" Nullable="false" />
-    <Property Name="size" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="service" Type="varchar" MaxLength="20" Nullable="false" />
-    <Property Name="week" Type="decimal" Precision="12" Scale="2" />
-    <Property Name="day" Type="decimal" Precision="12" Scale="2" />
-  </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="staff_view">
     <Key>
       <PropertyRef Name="id" />
@@ -1101,45 +1058,35 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="sp_delete_sitetype_dependants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
-    <Parameter Name="typeID" Type="bigint" Mode="In" />
-    <Parameter Name="success" Type="bit" Mode="Out" />
-    <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
-  </Function>
-  <Function Name="sp_reset_event_derivatives" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
-    <Parameter Name="eventID" Type="bigint" Mode="In" />
-    <Parameter Name="success" Type="bit" Mode="Out" />
-    <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
-  </Function>
-  <EntityContainer Name="rvparkModelStoreContainer">
-    <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="countrycode" EntityType="Self.countrycode" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="customer" EntityType="Self.customer" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="customeraccount" EntityType="Self.customeraccount" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="fees" EntityType="Self.fees" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="ipmevent" EntityType="Self.ipmevent" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="outofserviceitem" EntityType="Self.outofserviceitem" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="partymember" EntityType="Self.partymember" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="paydoctype" EntityType="Self.paydoctype" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="payment" EntityType="Self.payment" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="paymentmethod" EntityType="Self.paymentmethod" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="paymentreservationitem" EntityType="Self.paymentreservationitem" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="person" EntityType="Self.person" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="placeinmap" EntityType="Self.placeinmap" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="provincecode" EntityType="Self.provincecode" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="reasonforpayment" EntityType="Self.reasonforpayment" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="reservationitem" EntityType="Self.reservationitem" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="reservationitem_partymember" EntityType="Self.reservationitem_partymember" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="selecteditem" EntityType="Self.selecteditem" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="service" EntityType="Self.service" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="session" EntityType="Self.session" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="siterate" EntityType="Self.siterate" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="sitesize" EntityType="Self.sitesize" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="sitetype" EntityType="Self.sitetype" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="staff" EntityType="Self.staff" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="styleurl" EntityType="Self.styleurl" Schema="rvpark" store:Type="Tables" />
-    <EntitySet Name="customer_view" EntityType="Self.customer_view" store:Type="Views" store:Schema="rvpark">
+  <EntityContainer Name="ipmrvparkModelStoreContainer">
+    <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="countrycode" EntityType="Self.countrycode" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="customeraccount" EntityType="Self.customeraccount" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="fees" EntityType="Self.fees" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="ipmevent" EntityType="Self.ipmevent" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="outofserviceitem" EntityType="Self.outofserviceitem" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="partymember" EntityType="Self.partymember" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="paydoctype" EntityType="Self.paydoctype" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="payment" EntityType="Self.payment" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="paymentmethod" EntityType="Self.paymentmethod" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="paymentreservationitem" EntityType="Self.paymentreservationitem" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="person" EntityType="Self.person" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="placeinmap" EntityType="Self.placeinmap" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="provincecode" EntityType="Self.provincecode" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="reasonforpayment" EntityType="Self.reasonforpayment" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="reservationitem" EntityType="Self.reservationitem" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="reservationitem_partymember" EntityType="Self.reservationitem_partymember" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="selecteditem" EntityType="Self.selecteditem" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="service" EntityType="Self.service" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="session" EntityType="Self.session" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="siterate" EntityType="Self.siterate" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="sitesize" EntityType="Self.sitesize" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="sitetype" EntityType="Self.sitetype" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="staff" EntityType="Self.staff" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="styleurl" EntityType="Self.styleurl" Schema="ipmrvpark" store:Type="Tables" />
+    <EntitySet Name="customer_view" EntityType="Self.customer_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `customer_view`.`id`, 
 `customer_view`.`firstName`, 
@@ -1162,7 +1109,7 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
 `customer_view`.`isPartyMember`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `partymember_view`.`id`, 
 `partymember_view`.`firstName`, 
@@ -1175,21 +1122,7 @@ FROM `customer_view` AS `customer_view`</DefiningQuery>
 `partymember_view`.`comments`
 FROM `partymember_view` AS `partymember_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
-      <DefiningQuery>SELECT
-`payment_view`.`id`, 
-`payment_view`.`selectionTotal`, 
-`payment_view`.`amount`, 
-`payment_view`.`balance`, 
-`payment_view`.`createDate`, 
-`payment_view`.`reasonforpayment`, 
-`payment_view`.`sites`, 
-`payment_view`.`idCustomer`, 
-`payment_view`.`fullName`, 
-`payment_view`.`mainPhone`
-FROM `payment_view` AS `payment_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `province_view`.`provinceCode`, 
 `province_view`.`provinceName`, 
@@ -1197,14 +1130,14 @@ FROM `payment_view` AS `payment_view`</DefiningQuery>
 `province_view`.`countryName`
 FROM `province_view` AS `province_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `rvsite_available_view`.`id`, 
 `rvsite_available_view`.`RVSite`, 
 `rvsite_available_view`.`idIPMEvent`
 FROM `rvsite_available_view` AS `rvsite_available_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `rvsite_coord_view`.`id`, 
 `rvsite_coord_view`.`seq`, 
@@ -1214,7 +1147,7 @@ FROM `rvsite_available_view` AS `rvsite_available_view`</DefiningQuery>
 `rvsite_coord_view`.`latitude`
 FROM `rvsite_coord_view` AS `rvsite_coord_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `rvsite_status_view`.`id`, 
 `rvsite_status_view`.`Year`, 
@@ -1231,7 +1164,7 @@ FROM `rvsite_coord_view` AS `rvsite_coord_view`</DefiningQuery>
 `rvsite_status_view`.`OutOfServiceUntil`
 FROM `rvsite_status_view` AS `rvsite_status_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `site_description_rate_view`.`id`, 
 `site_description_rate_view`.`idIPMEvent`, 
@@ -1242,20 +1175,7 @@ FROM `rvsite_status_view` AS `rvsite_status_view`</DefiningQuery>
 `site_description_rate_view`.`weeklyRate`
 FROM `site_description_rate_view` AS `site_description_rate_view`</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="sitetype_service_rate_view" EntityType="Self.sitetype_service_rate_view" store:Type="Views" store:Schema="rvpark">
-      <DefiningQuery>SELECT
-`sitetype_service_rate_view`.`eventId`, 
-`sitetype_service_rate_view`.`typeid`, 
-`sitetype_service_rate_view`.`styleId`, 
-`sitetype_service_rate_view`.`sizeId`, 
-`sitetype_service_rate_view`.`serviceId`, 
-`sitetype_service_rate_view`.`size`, 
-`sitetype_service_rate_view`.`service`, 
-`sitetype_service_rate_view`.`week`, 
-`sitetype_service_rate_view`.`day`
-FROM `sitetype_service_rate_view` AS `sitetype_service_rate_view`</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="staff_view" EntityType="Self.staff_view" store:Type="Views" store:Schema="rvpark">
+    <EntitySet Name="staff_view" EntityType="Self.staff_view" store:Type="Views" store:Schema="ipmrvpark">
       <DefiningQuery>SELECT
 `staff_view`.`id`, 
 `staff_view`.`firstName`, 

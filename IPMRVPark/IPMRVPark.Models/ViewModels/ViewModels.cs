@@ -46,5 +46,4 @@ namespace IPMRVPark.Models
             total = (isChecked) ? amount : 0;
         }
     }
-
 }

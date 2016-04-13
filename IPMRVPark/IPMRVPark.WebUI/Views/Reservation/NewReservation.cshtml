@@ -3,11 +3,11 @@
     ViewBag.PageTitle = "New Reservation";
 }
 
-@Html.ActionLink("Home", "Menu", "Login")
+@Html.ActionLink("Home", "Menu", "PrototypeUI")
 <span class="glyphicon glyphicon-chevron-right"></span>
 Site Reservation
 <span class="glyphicon glyphicon-chevron-right"></span>
-@Html.ActionLink("New Reservation", "NewReservation", "Reservation")
+@Html.ActionLink("New Reservation", "Reservation", "PrototypeUI")
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -137,7 +137,7 @@ Site Reservation
         <div class="col-sm-4 col-xs-12" data-toggle="tooltip" title="Click To Expand/Collapse">
             <button class="btn btn-block btn-default" data-toggle="collapse" data-target="#selected-list">
                 <span class="col-xs-1 glyphicon glyphicon-list"></span>
-                <span class="col-xs-9">Selected Sites &nbsp;<span class="collapsible"></span></span>
+                <span class="col-xs-9">Selected Sites &nbsp;<span class="caret"></span></span>
             </button>
         </div>
         <div class="col-sm-4 col-xs-12 form-top-margin">
@@ -171,7 +171,7 @@ Site Reservation
     </div>
     <div class="row top-margin">
         <div class="col-sm-4 col-sm-push-8 col-xs-12 form-top-margin" data-toggle="tooltip" title="Go To">
-            <a href="@Url.Action("CreateCustomer", "Customer")" class="btn btn-block btn-default btn-mylink pagination-centered">
+            <a href="@Url.Action("Customer", "PrototypeUI")" class="btn btn-block btn-default btn-mylink pagination-centered">
                 <span class="glyphicon glyphicon-user"></span>
                 <span>New Customer</span>
                 <span class="glyphicon glyphicon-chevron-right"></span>

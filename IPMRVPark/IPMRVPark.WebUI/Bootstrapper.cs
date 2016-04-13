@@ -27,35 +27,19 @@ namespace IPMRVPark.WebUI
             container.RegisterType<IRepositoryBase<customer>, CustomerRepository>();
             container.RegisterType<IRepositoryBase<customer_view>, CustomerViewRepository>();
             container.RegisterType<IRepositoryBase<provincecode>, ProvinceRepository>();
-            container.RegisterType<IRepositoryBase<province_view>, ProvinceViewRepository>();
             container.RegisterType<IRepositoryBase<countrycode>, CountryRepository>();
             container.RegisterType<IRepositoryBase<ipmevent>, IPMEventRepository>();
             container.RegisterType<IRepositoryBase<session>, SessionRepository>();
             container.RegisterType<IRepositoryBase<selecteditem>, SelectedItemRepository>();
             container.RegisterType<IRepositoryBase<staff>, StaffRepository>();
-            container.RegisterType<IRepositoryBase<staff_view>, StaffViewRepository>();
-            container.RegisterType<IRepositoryBase<person>, PersonRepository>();
-            container.RegisterType<IRepositoryBase<partymember>, PartyMemberRepository>();
             container.RegisterType<IRepositoryBase<rvsite_available_view>, RVSiteAvailableViewRepository>();
             container.RegisterType<IRepositoryBase<placeinmap>, PlaceInMapRepository>();
             container.RegisterType<IRepositoryBase<reasonforpayment>, ReasonForPaymentRepository>();
             container.RegisterType<IRepositoryBase<paymentmethod>, PaymentMethodRepository>();
-            container.RegisterType<IRepositoryBase<paydoctype>, PayDocTypeRepository>();
-            container.RegisterType<IRepositoryBase<service>, ServiceRepository>();
-            container.RegisterType<IRepositoryBase<sitesize>, SiteSizeRepository>();
-            container.RegisterType<IRepositoryBase<reasonforpayment>, ReasonForPaymentRepository>();
             container.RegisterType<IRepositoryBase<payment>, PaymentRepository>();
             container.RegisterType<IRepositoryBase<reservationitem>, ReservationItemRepository>();
             container.RegisterType<IRepositoryBase<paymentreservationitem>, PaymentReservationItemRepository>();
             container.RegisterType<IRepositoryBase<site_description_rate_view>, SiteDescriptionRateViewRepository>();
-
-            container.RegisterType<IRepositoryBase<coordinate>, CoordinateRepository>();
-            container.RegisterType<IRepositoryBase<sitetype_service_rate_view>, SiteType_Rate_Repository>();
-            container.RegisterType<IRepositoryBase<rvsite_status_view>, RvSiteStatusRepository>();
-            container.RegisterType<IRepositoryBase<styleurl>, StyleurlRepository>();
-            container.RegisterType<IRepositoryBase<sitetype>, SitetypeRepository>();
-            container.RegisterType<IRepositoryBase<siterate>, SiterateRepository>();
-			container.RegisterType<IRepositoryBase<payment_view>, PaymentViewRepository>();
 
             return container;
         }

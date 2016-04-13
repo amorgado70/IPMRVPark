@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="rvparkModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="ipmrvparkModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="checkinout">
           <Key>
             <PropertyRef Name="ID" />
@@ -293,7 +293,6 @@
           <Property Name="reservationAdditionalServAmount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
           <Property Name="createDate" Type="date" />
           <Property Name="lastUpdate" Type="date" />
-          <Property Name="timeStamp" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="service">
           <Key>
@@ -373,7 +372,7 @@
           <Property Name="lastUpdate" Type="date" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.customer_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="customer_view">
           <Key>
             <PropertyRef Name="id" />
@@ -405,7 +404,7 @@ warning 6002: The table/view 'def.rvpark.customer_view' does not have a primary 
           <Property Name="isPartyMember" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.partymember_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="partymember_view">
           <Key>
             <PropertyRef Name="id" />
@@ -423,28 +422,7 @@ warning 6002: The table/view 'def.rvpark.partymember_view' does not have a prima
           <Property Name="comments" Type="varchar" MaxLength="120" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.payment_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="payment_view">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="selectionTotal" />
-            <PropertyRef Name="amount" />
-            <PropertyRef Name="balance" />
-            <PropertyRef Name="idCustomer" />
-          </Key>
-          <Property Name="id" Type="bigint" Nullable="false" />
-          <Property Name="selectionTotal" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="amount" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="balance" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="createDate" Type="date" />
-          <Property Name="reasonforpayment" Type="varchar" MaxLength="45" />
-          <Property Name="sites" Type="text" />
-          <Property Name="idCustomer" Type="bigint" Nullable="false" />
-          <Property Name="fullName" Type="varchar" MaxLength="101" />
-          <Property Name="mainPhone" Type="varchar" MaxLength="30" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.province_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="province_view">
           <Key>
             <PropertyRef Name="provinceCode" />
@@ -458,7 +436,7 @@ warning 6002: The table/view 'def.rvpark.province_view' does not have a primary 
           <Property Name="countryName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_available_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rvsite_available_view">
           <Key>
             <PropertyRef Name="id" />
@@ -470,7 +448,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_available_view' does not have a 
           <Property Name="idIPMEvent" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_coord_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_coord_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rvsite_coord_view">
           <Key>
             <PropertyRef Name="id" />
@@ -488,7 +466,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_coord_view' does not have a prim
           <Property Name="latitude" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.rvsite_status_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.rvsite_status_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="rvsite_status_view">
           <Key>
             <PropertyRef Name="id" />
@@ -513,7 +491,7 @@ warning 6002: The table/view 'def.rvpark.rvsite_status_view' does not have a pri
           <Property Name="OutOfServiceUntil" Type="date" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.site_description_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.site_description_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="site_description_rate_view">
           <Key>
             <PropertyRef Name="id" />
@@ -530,28 +508,7 @@ warning 6002: The table/view 'def.rvpark.site_description_rate_view' does not ha
           <Property Name="weeklyRate" Type="decimal" Precision="12" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.sitetype_service_rate_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="sitetype_service_rate_view">
-          <Key>
-            <PropertyRef Name="eventId" />
-            <PropertyRef Name="typeid" />
-            <PropertyRef Name="sizeId" />
-            <PropertyRef Name="serviceId" />
-            <PropertyRef Name="size" />
-            <PropertyRef Name="service" />
-          </Key>
-          <Property Name="eventId" Type="bigint" Nullable="false" />
-          <Property Name="typeid" Type="bigint" Nullable="false" />
-          <Property Name="styleId" Type="bigint" />
-          <Property Name="sizeId" Type="bigint" Nullable="false" />
-          <Property Name="serviceId" Type="bigint" Nullable="false" />
-          <Property Name="size" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="service" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="week" Type="decimal" Precision="12" Scale="2" />
-          <Property Name="day" Type="decimal" Precision="12" Scale="2" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'def.ipmrvpark.staff_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="staff_view">
           <Key>
             <PropertyRef Name="id" />
@@ -1106,45 +1063,35 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="sp_delete_sitetype_dependants" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
-          <Parameter Name="typeID" Type="bigint" Mode="In" />
-          <Parameter Name="success" Type="bit" Mode="Out" />
-          <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="sp_reset_event_derivatives" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="rvpark">
-          <Parameter Name="eventID" Type="bigint" Mode="In" />
-          <Parameter Name="success" Type="bit" Mode="Out" />
-          <Parameter Name="errMsg" Type="varchar" Mode="InOut" />
-        </Function>
-        <EntityContainer Name="rvparkModelStoreContainer">
-          <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="countrycode" EntityType="Self.countrycode" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="customer" EntityType="Self.customer" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="customeraccount" EntityType="Self.customeraccount" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="fees" EntityType="Self.fees" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="ipmevent" EntityType="Self.ipmevent" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="outofserviceitem" EntityType="Self.outofserviceitem" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="partymember" EntityType="Self.partymember" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="paydoctype" EntityType="Self.paydoctype" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="payment" EntityType="Self.payment" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="paymentmethod" EntityType="Self.paymentmethod" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="paymentreservationitem" EntityType="Self.paymentreservationitem" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="person" EntityType="Self.person" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="placeinmap" EntityType="Self.placeinmap" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="provincecode" EntityType="Self.provincecode" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="reasonforpayment" EntityType="Self.reasonforpayment" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="reservationitem" EntityType="Self.reservationitem" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="reservationitem_partymember" EntityType="Self.reservationitem_partymember" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="selecteditem" EntityType="Self.selecteditem" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="service" EntityType="Self.service" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="session" EntityType="Self.session" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="siterate" EntityType="Self.siterate" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="sitesize" EntityType="Self.sitesize" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="sitetype" EntityType="Self.sitetype" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="staff" EntityType="Self.staff" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="styleurl" EntityType="Self.styleurl" Schema="rvpark" store:Type="Tables" />
-          <EntitySet Name="customer_view" EntityType="Self.customer_view" store:Type="Views" store:Schema="rvpark">
+        <EntityContainer Name="ipmrvparkModelStoreContainer">
+          <EntitySet Name="checkinout" EntityType="Self.checkinout" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="coordinates" EntityType="Self.coordinates" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="countrycode" EntityType="Self.countrycode" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="customeraccount" EntityType="Self.customeraccount" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="fees" EntityType="Self.fees" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="ipmevent" EntityType="Self.ipmevent" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="outofserviceitem" EntityType="Self.outofserviceitem" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="partymember" EntityType="Self.partymember" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="paydoctype" EntityType="Self.paydoctype" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="payment" EntityType="Self.payment" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="paymentmethod" EntityType="Self.paymentmethod" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="paymentreservationitem" EntityType="Self.paymentreservationitem" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="placeinmap" EntityType="Self.placeinmap" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="provincecode" EntityType="Self.provincecode" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="reasonforpayment" EntityType="Self.reasonforpayment" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="reservationitem" EntityType="Self.reservationitem" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="reservationitem_partymember" EntityType="Self.reservationitem_partymember" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="selecteditem" EntityType="Self.selecteditem" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="service" EntityType="Self.service" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="session" EntityType="Self.session" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="siterate" EntityType="Self.siterate" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="sitesize" EntityType="Self.sitesize" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="sitetype" EntityType="Self.sitetype" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="staff" EntityType="Self.staff" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="styleurl" EntityType="Self.styleurl" Schema="ipmrvpark" store:Type="Tables" />
+          <EntitySet Name="customer_view" EntityType="Self.customer_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `customer_view`.`id`, 
 `customer_view`.`firstName`, 
@@ -1167,7 +1114,7 @@ warning 6002: The table/view 'def.rvpark.staff_view' does not have a primary key
 `customer_view`.`isPartyMember`
 FROM `customer_view` AS `customer_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="partymember_view" EntityType="Self.partymember_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `partymember_view`.`id`, 
 `partymember_view`.`firstName`, 
@@ -1180,21 +1127,7 @@ FROM `customer_view` AS `customer_view`</DefiningQuery>
 `partymember_view`.`comments`
 FROM `partymember_view` AS `partymember_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="payment_view" EntityType="Self.payment_view" store:Type="Views" store:Schema="rvpark">
-            <DefiningQuery>SELECT
-`payment_view`.`id`, 
-`payment_view`.`selectionTotal`, 
-`payment_view`.`amount`, 
-`payment_view`.`balance`, 
-`payment_view`.`createDate`, 
-`payment_view`.`reasonforpayment`, 
-`payment_view`.`sites`, 
-`payment_view`.`idCustomer`, 
-`payment_view`.`fullName`, 
-`payment_view`.`mainPhone`
-FROM `payment_view` AS `payment_view`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="province_view" EntityType="Self.province_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `province_view`.`provinceCode`, 
 `province_view`.`provinceName`, 
@@ -1202,14 +1135,14 @@ FROM `payment_view` AS `payment_view`</DefiningQuery>
 `province_view`.`countryName`
 FROM `province_view` AS `province_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `rvsite_available_view`.`id`, 
 `rvsite_available_view`.`RVSite`, 
 `rvsite_available_view`.`idIPMEvent`
 FROM `rvsite_available_view` AS `rvsite_available_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `rvsite_coord_view`.`id`, 
 `rvsite_coord_view`.`seq`, 
@@ -1219,7 +1152,7 @@ FROM `rvsite_available_view` AS `rvsite_available_view`</DefiningQuery>
 `rvsite_coord_view`.`latitude`
 FROM `rvsite_coord_view` AS `rvsite_coord_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `rvsite_status_view`.`id`, 
 `rvsite_status_view`.`Year`, 
@@ -1236,7 +1169,7 @@ FROM `rvsite_coord_view` AS `rvsite_coord_view`</DefiningQuery>
 `rvsite_status_view`.`OutOfServiceUntil`
 FROM `rvsite_status_view` AS `rvsite_status_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `site_description_rate_view`.`id`, 
 `site_description_rate_view`.`idIPMEvent`, 
@@ -1247,20 +1180,7 @@ FROM `rvsite_status_view` AS `rvsite_status_view`</DefiningQuery>
 `site_description_rate_view`.`weeklyRate`
 FROM `site_description_rate_view` AS `site_description_rate_view`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="sitetype_service_rate_view" EntityType="Self.sitetype_service_rate_view" store:Type="Views" store:Schema="rvpark">
-            <DefiningQuery>SELECT
-`sitetype_service_rate_view`.`eventId`, 
-`sitetype_service_rate_view`.`typeid`, 
-`sitetype_service_rate_view`.`styleId`, 
-`sitetype_service_rate_view`.`sizeId`, 
-`sitetype_service_rate_view`.`serviceId`, 
-`sitetype_service_rate_view`.`size`, 
-`sitetype_service_rate_view`.`service`, 
-`sitetype_service_rate_view`.`week`, 
-`sitetype_service_rate_view`.`day`
-FROM `sitetype_service_rate_view` AS `sitetype_service_rate_view`</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="staff_view" EntityType="Self.staff_view" store:Type="Views" store:Schema="rvpark">
+          <EntitySet Name="staff_view" EntityType="Self.staff_view" store:Type="Views" store:Schema="ipmrvpark">
             <DefiningQuery>SELECT
 `staff_view`.`id`, 
 `staff_view`.`firstName`, 
@@ -1456,7 +1376,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="rvparkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="ipmrvparkModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityType Name="checkinout">
           <Key>
             <PropertyRef Name="ID" />
@@ -1808,7 +1728,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="reservationAdditionalServAmount" Type="Decimal" Nullable="false" />
           <Property Name="createDate" Type="DateTime" />
           <Property Name="lastUpdate" Type="DateTime" />
-          <Property Name="timeStamp" Type="String" />
           <NavigationProperty Name="customer" Relationship="Self.SelectedItem_Customer_FK" FromRole="selecteditem" ToRole="customer" />
           <NavigationProperty Name="ipmevent" Relationship="Self.SelectedItem_IPMEvent_FK" FromRole="selecteditem" ToRole="ipmevent" />
           <NavigationProperty Name="placeinmap" Relationship="Self.SelectedItem_RVSite_FK" FromRole="selecteditem" ToRole="placeinmap" />
@@ -1960,25 +1879,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="petDescription" Type="String" />
           <Property Name="comments" Type="String" />
         </EntityType>
-        <EntityType Name="payment_view">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="selectionTotal" />
-            <PropertyRef Name="amount" />
-            <PropertyRef Name="balance" />
-            <PropertyRef Name="idCustomer" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" />
-          <Property Name="selectionTotal" Type="Decimal" Nullable="false" />
-          <Property Name="amount" Type="Decimal" Nullable="false" />
-          <Property Name="balance" Type="Decimal" Nullable="false" />
-          <Property Name="createDate" Type="DateTime" />
-          <Property Name="reasonforpayment" Type="String" />
-          <Property Name="sites" Type="String" />
-          <Property Name="idCustomer" Type="Int64" Nullable="false" />
-          <Property Name="fullName" Type="String" />
-          <Property Name="mainPhone" Type="String" />
-        </EntityType>
         <EntityType Name="province_view">
           <Key>
             <PropertyRef Name="provinceCode" />
@@ -2054,25 +1954,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <Property Name="description" Type="String" />
           <Property Name="dailyRate" Type="Decimal" />
           <Property Name="weeklyRate" Type="Decimal" />
-        </EntityType>
-        <EntityType Name="sitetype_service_rate_view">
-          <Key>
-            <PropertyRef Name="eventId" />
-            <PropertyRef Name="typeid" />
-            <PropertyRef Name="sizeId" />
-            <PropertyRef Name="serviceId" />
-            <PropertyRef Name="size" />
-            <PropertyRef Name="service" />
-          </Key>
-          <Property Name="eventId" Type="Int64" Nullable="false" />
-          <Property Name="typeid" Type="Int64" Nullable="false" />
-          <Property Name="styleId" Type="Int64" />
-          <Property Name="sizeId" Type="Int64" Nullable="false" />
-          <Property Name="serviceId" Type="Int64" Nullable="false" />
-          <Property Name="size" Type="String" Nullable="false" />
-          <Property Name="service" Type="String" Nullable="false" />
-          <Property Name="week" Type="Decimal" />
-          <Property Name="day" Type="Decimal" />
         </EntityType>
         <EntityType Name="staff_view">
           <Key>
@@ -2628,7 +2509,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="rvparkEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ipmrvparkEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="checkinouts" EntityType="Self.checkinout" />
           <EntitySet Name="coordinates" EntityType="Self.coordinate" />
           <EntitySet Name="countrycodes" EntityType="Self.countrycode" />
@@ -2658,13 +2539,11 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
           <EntitySet Name="styleurls" EntityType="Self.styleurl" />
           <EntitySet Name="customer_view" EntityType="Self.customer_view" />
           <EntitySet Name="partymember_view" EntityType="Self.partymember_view" />
-          <EntitySet Name="payment_view" EntityType="Self.payment_view" />
           <EntitySet Name="province_view" EntityType="Self.province_view" />
           <EntitySet Name="rvsite_available_view" EntityType="Self.rvsite_available_view" />
           <EntitySet Name="rvsite_coord_view" EntityType="Self.rvsite_coord_view" />
           <EntitySet Name="rvsite_status_view" EntityType="Self.rvsite_status_view" />
           <EntitySet Name="site_description_rate_view" EntityType="Self.site_description_rate_view" />
-          <EntitySet Name="sitetype_service_rate_view" EntityType="Self.sitetype_service_rate_view" />
           <EntitySet Name="staff_view" EntityType="Self.staff_view" />
           <AssociationSet Name="CheckInOut_PlaceInMap_FK" Association="Self.CheckInOut_PlaceInMap_FK">
             <End Role="placeinmap" EntitySet="placeinmaps" />
@@ -2846,27 +2725,15 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             <End Role="styleurl" EntitySet="styleurls" />
             <End Role="sitetype" EntitySet="sitetypes" />
           </AssociationSet>
-          <FunctionImport Name="sp_delete_sitetype_dependants" ReturnType="Collection(rvparkModel.sp_delete_sitetype_dependants_Result)">
-            <Parameter Name="typeID" Mode="In" Type="Int64" />
-            <Parameter Name="success" Mode="Out" Type="Boolean" />
-            <Parameter Name="errMsg" Mode="InOut" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_reset_event_derivatives" ReturnType="Collection(rvparkModel.sp_reset_event_derivatives_Result)">
-            <Parameter Name="eventID" Mode="In" Type="Int64" />
-            <Parameter Name="success" Mode="Out" Type="Boolean" />
-            <Parameter Name="errMsg" Mode="InOut" Type="String" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_delete_sitetype_dependants_Result" />
-        <ComplexType Name="sp_reset_event_derivatives_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="rvparkModelStoreContainer" CdmEntityContainer="rvparkEntities">
+        <EntityContainerMapping StorageEntityContainer="ipmrvparkModelStoreContainer" CdmEntityContainer="ipmrvparkEntities">
           <EntitySetMapping Name="checkinouts">
-            <EntityTypeMapping TypeName="rvparkModel.checkinout">
+            <EntityTypeMapping TypeName="ipmrvparkModel.checkinout">
               <MappingFragment StoreEntitySet="checkinout">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
@@ -2879,7 +2746,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="coordinates">
-            <EntityTypeMapping TypeName="rvparkModel.coordinate">
+            <EntityTypeMapping TypeName="ipmrvparkModel.coordinate">
               <MappingFragment StoreEntitySet="coordinates">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -2893,7 +2760,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="countrycodes">
-            <EntityTypeMapping TypeName="rvparkModel.countrycode">
+            <EntityTypeMapping TypeName="ipmrvparkModel.countrycode">
               <MappingFragment StoreEntitySet="countrycode">
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -2903,7 +2770,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="customers">
-            <EntityTypeMapping TypeName="rvparkModel.customer">
+            <EntityTypeMapping TypeName="ipmrvparkModel.customer">
               <MappingFragment StoreEntitySet="customer">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
@@ -2923,7 +2790,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="customeraccounts">
-            <EntityTypeMapping TypeName="rvparkModel.customeraccount">
+            <EntityTypeMapping TypeName="ipmrvparkModel.customeraccount">
               <MappingFragment StoreEntitySet="customeraccount">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="transactionDate" ColumnName="transactionDate" />
@@ -2940,7 +2807,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="fees">
-            <EntityTypeMapping TypeName="rvparkModel.fee">
+            <EntityTypeMapping TypeName="ipmrvparkModel.fee">
               <MappingFragment StoreEntitySet="fees">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -2953,7 +2820,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ipmevents">
-            <EntityTypeMapping TypeName="rvparkModel.ipmevent">
+            <EntityTypeMapping TypeName="ipmrvparkModel.ipmevent">
               <MappingFragment StoreEntitySet="ipmevent">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="year" ColumnName="year" />
@@ -2972,7 +2839,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="outofserviceitems">
-            <EntityTypeMapping TypeName="rvparkModel.outofserviceitem">
+            <EntityTypeMapping TypeName="ipmrvparkModel.outofserviceitem">
               <MappingFragment StoreEntitySet="outofserviceitem">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
@@ -2984,7 +2851,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="partymembers">
-            <EntityTypeMapping TypeName="rvparkModel.partymember">
+            <EntityTypeMapping TypeName="ipmrvparkModel.partymember">
               <MappingFragment StoreEntitySet="partymember">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
@@ -2996,7 +2863,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="paydoctypes">
-            <EntityTypeMapping TypeName="rvparkModel.paydoctype">
+            <EntityTypeMapping TypeName="ipmrvparkModel.paydoctype">
               <MappingFragment StoreEntitySet="paydoctype">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -3006,7 +2873,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="payments">
-            <EntityTypeMapping TypeName="rvparkModel.payment">
+            <EntityTypeMapping TypeName="ipmrvparkModel.payment">
               <MappingFragment StoreEntitySet="payment">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idPaymentMethod" ColumnName="idPaymentMethod" />
@@ -3030,7 +2897,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="paymentmethods">
-            <EntityTypeMapping TypeName="rvparkModel.paymentmethod">
+            <EntityTypeMapping TypeName="ipmrvparkModel.paymentmethod">
               <MappingFragment StoreEntitySet="paymentmethod">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -3041,7 +2908,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="paymentreservationitems">
-            <EntityTypeMapping TypeName="rvparkModel.paymentreservationitem">
+            <EntityTypeMapping TypeName="ipmrvparkModel.paymentreservationitem">
               <MappingFragment StoreEntitySet="paymentreservationitem">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idPayment" ColumnName="idPayment" />
@@ -3052,7 +2919,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="people">
-            <EntityTypeMapping TypeName="rvparkModel.person">
+            <EntityTypeMapping TypeName="ipmrvparkModel.person">
               <MappingFragment StoreEntitySet="person">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -3065,7 +2932,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="placeinmaps">
-            <EntityTypeMapping TypeName="rvparkModel.placeinmap">
+            <EntityTypeMapping TypeName="ipmrvparkModel.placeinmap">
               <MappingFragment StoreEntitySet="placeinmap">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -3079,7 +2946,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="provincecodes">
-            <EntityTypeMapping TypeName="rvparkModel.provincecode">
+            <EntityTypeMapping TypeName="ipmrvparkModel.provincecode">
               <MappingFragment StoreEntitySet="provincecode">
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="countryCode" ColumnName="countryCode" />
@@ -3090,7 +2957,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reasonforpayments">
-            <EntityTypeMapping TypeName="rvparkModel.reasonforpayment">
+            <EntityTypeMapping TypeName="ipmrvparkModel.reasonforpayment">
               <MappingFragment StoreEntitySet="reasonforpayment">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -3100,7 +2967,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reservationitems">
-            <EntityTypeMapping TypeName="rvparkModel.reservationitem">
+            <EntityTypeMapping TypeName="ipmrvparkModel.reservationitem">
               <MappingFragment StoreEntitySet="reservationitem">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idRVSite" ColumnName="idRVSite" />
@@ -3129,7 +2996,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="reservationitem_partymember">
-            <EntityTypeMapping TypeName="rvparkModel.reservationitem_partymember">
+            <EntityTypeMapping TypeName="ipmrvparkModel.reservationitem_partymember">
               <MappingFragment StoreEntitySet="reservationitem_partymember">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idReservationItem" ColumnName="idReservationItem" />
@@ -3141,7 +3008,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="selecteditems">
-            <EntityTypeMapping TypeName="rvparkModel.selecteditem">
+            <EntityTypeMapping TypeName="ipmrvparkModel.selecteditem">
               <MappingFragment StoreEntitySet="selecteditem">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idSession" ColumnName="idSession" />
@@ -3171,12 +3038,11 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
                 <ScalarProperty Name="reservationAdditionalServAmount" ColumnName="reservationAdditionalServAmount" />
                 <ScalarProperty Name="createDate" ColumnName="createDate" />
                 <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
-                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="services">
-            <EntityTypeMapping TypeName="rvparkModel.service">
+            <EntityTypeMapping TypeName="ipmrvparkModel.service">
               <MappingFragment StoreEntitySet="service">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -3186,7 +3052,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sessions">
-            <EntityTypeMapping TypeName="rvparkModel.session">
+            <EntityTypeMapping TypeName="ipmrvparkModel.session">
               <MappingFragment StoreEntitySet="session">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sessionGUID" ColumnName="sessionGUID" />
@@ -3202,7 +3068,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="siterates">
-            <EntityTypeMapping TypeName="rvparkModel.siterate">
+            <EntityTypeMapping TypeName="ipmrvparkModel.siterate">
               <MappingFragment StoreEntitySet="siterate">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idSiteType" ColumnName="idSiteType" />
@@ -3215,7 +3081,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sitesizes">
-            <EntityTypeMapping TypeName="rvparkModel.sitesize">
+            <EntityTypeMapping TypeName="ipmrvparkModel.sitesize">
               <MappingFragment StoreEntitySet="sitesize">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -3225,7 +3091,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sitetypes">
-            <EntityTypeMapping TypeName="rvparkModel.sitetype">
+            <EntityTypeMapping TypeName="ipmrvparkModel.sitetype">
               <MappingFragment StoreEntitySet="sitetype">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -3238,7 +3104,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="staffs">
-            <EntityTypeMapping TypeName="rvparkModel.staff">
+            <EntityTypeMapping TypeName="ipmrvparkModel.staff">
               <MappingFragment StoreEntitySet="staff">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="role" ColumnName="role" />
@@ -3248,7 +3114,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="styleurls">
-            <EntityTypeMapping TypeName="rvparkModel.styleurl">
+            <EntityTypeMapping TypeName="ipmrvparkModel.styleurl">
               <MappingFragment StoreEntitySet="styleurl">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="styleUrl1" ColumnName="styleUrl" />
@@ -3260,7 +3126,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="customer_view">
-            <EntityTypeMapping TypeName="rvparkModel.customer_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.customer_view">
               <MappingFragment StoreEntitySet="customer_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -3285,7 +3151,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="partymember_view">
-            <EntityTypeMapping TypeName="rvparkModel.partymember_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.partymember_view">
               <MappingFragment StoreEntitySet="partymember_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -3299,24 +3165,8 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="payment_view">
-            <EntityTypeMapping TypeName="rvparkModel.payment_view">
-              <MappingFragment StoreEntitySet="payment_view">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="selectionTotal" ColumnName="selectionTotal" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="balance" ColumnName="balance" />
-                <ScalarProperty Name="createDate" ColumnName="createDate" />
-                <ScalarProperty Name="reasonforpayment" ColumnName="reasonforpayment" />
-                <ScalarProperty Name="sites" ColumnName="sites" />
-                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
-                <ScalarProperty Name="fullName" ColumnName="fullName" />
-                <ScalarProperty Name="mainPhone" ColumnName="mainPhone" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="province_view">
-            <EntityTypeMapping TypeName="rvparkModel.province_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.province_view">
               <MappingFragment StoreEntitySet="province_view">
                 <ScalarProperty Name="provinceCode" ColumnName="provinceCode" />
                 <ScalarProperty Name="provinceName" ColumnName="provinceName" />
@@ -3326,7 +3176,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="rvsite_available_view">
-            <EntityTypeMapping TypeName="rvparkModel.rvsite_available_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_available_view">
               <MappingFragment StoreEntitySet="rvsite_available_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="RVSite" ColumnName="RVSite" />
@@ -3335,7 +3185,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="rvsite_coord_view">
-            <EntityTypeMapping TypeName="rvparkModel.rvsite_coord_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_coord_view">
               <MappingFragment StoreEntitySet="rvsite_coord_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="seq" ColumnName="seq" />
@@ -3347,7 +3197,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="rvsite_status_view">
-            <EntityTypeMapping TypeName="rvparkModel.rvsite_status_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.rvsite_status_view">
               <MappingFragment StoreEntitySet="rvsite_status_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
@@ -3366,7 +3216,7 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="site_description_rate_view">
-            <EntityTypeMapping TypeName="rvparkModel.site_description_rate_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.site_description_rate_view">
               <MappingFragment StoreEntitySet="site_description_rate_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idIPMEvent" ColumnName="idIPMEvent" />
@@ -3378,23 +3228,8 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sitetype_service_rate_view">
-            <EntityTypeMapping TypeName="rvparkModel.sitetype_service_rate_view">
-              <MappingFragment StoreEntitySet="sitetype_service_rate_view">
-                <ScalarProperty Name="eventId" ColumnName="eventId" />
-                <ScalarProperty Name="typeid" ColumnName="typeid" />
-                <ScalarProperty Name="styleId" ColumnName="styleId" />
-                <ScalarProperty Name="sizeId" ColumnName="sizeId" />
-                <ScalarProperty Name="serviceId" ColumnName="serviceId" />
-                <ScalarProperty Name="size" ColumnName="size" />
-                <ScalarProperty Name="service" ColumnName="service" />
-                <ScalarProperty Name="week" ColumnName="week" />
-                <ScalarProperty Name="day" ColumnName="day" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="staff_view">
-            <EntityTypeMapping TypeName="rvparkModel.staff_view">
+            <EntityTypeMapping TypeName="ipmrvparkModel.staff_view">
               <MappingFragment StoreEntitySet="staff_view">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -3406,16 +3241,6 @@ FROM `staff_view` AS `staff_view`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_delete_sitetype_dependants" FunctionName="rvparkModel.Store.sp_delete_sitetype_dependants">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="rvparkModel.sp_delete_sitetype_dependants_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_reset_event_derivatives" FunctionName="rvparkModel.Store.sp_reset_event_derivatives">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="rvparkModel.sp_reset_event_derivatives_Result" />
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

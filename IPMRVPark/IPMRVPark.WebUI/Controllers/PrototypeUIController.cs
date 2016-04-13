@@ -49,7 +49,7 @@ namespace IPMRVPark.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult DigitizeMap_parse(HttpPostedFileBase file, long eventId)
+        public ActionResult DigitizeMap_parse(HttpPostedFileBase file)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -57,7 +57,7 @@ namespace IPMRVPark.WebUI.Controllers
                 {
                     XmlReader reader = XmlReader.Create(file.InputStream);
                     XDocument xDoc = System.Xml.Linq.XDocument.Load(reader);
-                    kmlParser.Parse(xDoc, eventId);
+                    kmlParser.Parse(xDoc);
                     ViewBag.Message = "File is uploaded and parsed successfully";
                 }
                 catch (Exception ex)
